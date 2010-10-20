@@ -41,15 +41,28 @@ fi
 # Checks for libraries
 AC_SEARCH_LIBS([cos], [m])
 
-# Check for GLawt
-error_no_glawt() {
+# Check for images
+images_help='No support for loading 2D images as textures.'
+AC_ARG_ENABLE(images, AS_HELP_STRING([--disable-images], [$images_help]))
+error_no_pixbufs() {
 	echo "-------------------------------------------------------"
-	echo " Cannot find GLawt.                                    "
-	echo " Visit http://gander.sourceforge.net                   "
+	echo " GDK Pixbufs are needed to load images for textures.   "
+	echo " Try 'sudo apt-get install libgtkmm-2.4-dev'           "
+	echo " Or visit 'http://www.gtkmm.org/'                      "
+	echo " Alternatively, add '--disable-images' to ignore.      "
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
-AC_CHECK_HEADER([glawt/common.h], , [error_no_glawt])
+if test "x$enable_images" != 'xno'; then
+	echo -n "checking for gdkmm-2.4... "
+	PKG_CHECK_EXISTS([gdkmm-2.4], [echo "yes"], [error_no_pixbufs])
+	AC_DEFINE([HAVE_PIXBUFS], [1], [Define to 1 if GDK Pixbufs are available.])
+else
+	echo "-------------------------------------------------------"
+	echo " You chose to disable images.                          "
+	echo " Loading images for textures will not be available.    "
+	echo "-------------------------------------------------------"
+fi
 
 # Checks for library functions
 AC_CHECK_FUNCS([pow])
@@ -84,7 +97,7 @@ htmldir='${docdir}'/html
 
 # Finish
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile test/Makefile])
-PKG_CHECK_MODULES([DEPS], [gtkmm-2.4 gtkglextmm-1.2])
+PKG_CHECK_MODULES([DEPS], [gtkmm-2.4])
 AC_OUTPUT
 
 echo \
