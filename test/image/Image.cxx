@@ -5,11 +5,18 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "Image.hpp"
-#include "CanvasGTK.hpp"
+#include "glawt/CanvasGTK.hpp"
 #include <cassert>
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 
+
+/* Fake image for testing. */
+class FakeImage : public Image {
+public:
+	FakeImage(const string &filename) : Image(filename) {}
+	virtual GLchar* getData() const {return NULL;}
+};
 
 /* Test for Image. */
 class ImageTest : public CanvasListener {
