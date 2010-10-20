@@ -6,9 +6,9 @@
  */
 #include <cstring>
 #include "DatasetViewer.hpp"
-#include "Toolkit.hpp"
-#include "CanvasFactory.hpp"
-#include "WindowFactory.hpp"
+#include "glawt/Toolkit.hpp"
+#include "glawt/CanvasFactory.hpp"
+#include "glawt/WindowFactory.hpp"
 
 
 int main(int argc, char *argv[]) {
