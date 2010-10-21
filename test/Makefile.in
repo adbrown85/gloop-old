@@ -14,13 +14,14 @@ datarootdir := @datarootdir@
 datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
-modules     := @modules@
+moduledirs  := ${filter %/,${wildcard $(srcdir)/*/}}
+modules     := ${patsubst $(srcdir)/%/,%,$(moduledirs)}
 
 # Tools
 CXX         := @CXX@
-INCLUDES    := -I../ -I$(srcdir)/ ${foreach i,$(modules),-I$(srcdir)/$(i)/}
+INCLUDES    := -I../ -I$(srcdir)/ ${foreach m,$(modules),-I$(srcdir)/$(m)/}
 DEFS        := @DEFS@
-DEFS_EXTRA  := -DGANDER_DATA_DIR='"$(datadir)"'
+DEFS_EXTRA  := 
 DEPS_CFLAGS := @DEPS_CFLAGS@
 CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
 LIBS        := @LIBS@
@@ -32,10 +33,10 @@ INSTALL     := @INSTALL@
 
 # Files
 archive     := $(srcdir)/lib$(tarname).a
-mains       := ${foreach i,$(modules),${wildcard $(i)/*.cxx}}
+mains       := ${foreach m,$(modules),${wildcard $(m)/*.cxx}}
 tests       := ${subst .cxx,,$(mains)}
 objects     := ${subst .cxx,.o,$(mains)}
-VPATH       := @modules@ $(srcdir) ${addprefix $(srcdir),$(modules)}
+VPATH       := $(modules) $(srcdir) ${addprefix $(srcdir),$(modules)}
 
 # General phony targets
 .PHONY: all clean mostlyclean tests check
@@ -46,6 +47,7 @@ mostlyclean:
 	@echo "  Removing tests..."
 	@$(RM) $(tests)
 check:
+	@echo "  MODULES = $(modules)"
 	@echo "  MAINS   = $(mains)"
 	@echo "  OBJECTS = $(objects)"
 	@echo "  TESTS   = $(tests)"
