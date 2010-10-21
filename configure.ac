@@ -45,6 +45,15 @@ AC_FUNC_MALLOC
 AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
+# Check for GLawt
+warning_no_glawt() {
+	echo "-------------------------------------------------------"
+	echo " GLawt is needed to build GLoop tests.                 "
+	echo " Visit 'http://gander.sourceforge.net'                 "
+	echo "-------------------------------------------------------"
+}
+AC_CHECK_HEADER([glawt/common.h], , [warning_no_glawt])
+
 # Check for images
 images_help='No support for loading 2D images as textures.'
 AC_ARG_ENABLE(images, AS_HELP_STRING([--disable-images], [$images_help]))
