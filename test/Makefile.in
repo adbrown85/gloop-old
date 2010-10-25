@@ -14,8 +14,8 @@ datarootdir := @datarootdir@
 datadir     := @datadir@
 docdir      := @docdir@
 htmldir     := @htmldir@
-moduledirs  := ${filter %/,${wildcard $(srcdir)/*/}}
-modules     := ${patsubst $(srcdir)/%/,%,$(moduledirs)}
+srcmodules  := ${filter %/,${wildcard $(srcdir)/*/}}
+modules     := ${patsubst $(srcdir)/%/,%,$(srcmodules)}
 
 # Tools
 CXX         := @CXX@
@@ -25,7 +25,7 @@ DEFS_EXTRA  :=
 DEPS_CFLAGS := @DEPS_CFLAGS@
 CXXFLAGS    := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
 LIBS        := @LIBS@
-LIBS_EXTRA  := 
+LIBS_EXTRA  := -lglawt
 DEPS_LIBS   := @DEPS_LIBS@
 LDFLAGS     := @LDFLAGS@ $(LIBS) $(LIBS_EXTRA) $(DEPS_LIBS)
 ARFLAGS     := -cr
@@ -36,21 +36,23 @@ archive     := $(srcdir)/lib$(tarname).a
 mains       := ${foreach m,$(modules),${wildcard $(m)/*.cxx}}
 tests       := ${subst .cxx,,$(mains)}
 objects     := ${subst .cxx,.o,$(mains)}
-VPATH       := $(modules) $(srcdir) ${addprefix $(srcdir),$(modules)}
+depends     := ${subst .cxx,.t,$(mains)}
+VPATH       := $(modules) $(srcdir) $(srcmodules)
 
 # General phony targets
-.PHONY: all clean mostlyclean tests check
+.PHONY: all clean mostlyclean tests dump
 .DEFAULT: all
 all: tests
 clean: mostlyclean
 mostlyclean:
 	@echo "  Removing tests..."
 	@$(RM) $(tests)
-check:
+dump:
 	@echo "  MODULES = $(modules)"
 	@echo "  MAINS   = $(mains)"
 	@echo "  OBJECTS = $(objects)"
 	@echo "  TESTS   = $(tests)"
+	@echo "  VPATH   = $(VPATH)"
 
 # Modules
 .PHONY: $(modules)
@@ -65,7 +67,18 @@ ${foreach i,$(modules),${eval ${call module,$(i)}}}
 	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LDFLAGS)
 tests: ${notdir $(tests)}
 ${notdir $(tests)}:
+${notdir $(objects)}:
 
 # Objects
 %.o:
-	$(MAKE) -C $(srcdir) ${notdir $@}
+	@$(MAKE) -C $(srcdir) ${notdir $@}
+
+# Dependencies
+%.t: %.cxx
+	@echo "  Generating dependencies for $<..."
+	@$(CXX) $(CXXFLAGS) -MM $< -MT ${notdir ${subst .cxx,,$<}} \
+        | sed 's/.hpp/.o/g' >> $@;
+ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
+  -include $(depends)
+endif
+
