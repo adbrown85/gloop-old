@@ -4,11 +4,11 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Configuration.hpp"
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 #include <gtkmm/gl/init.h>
-#include "CanvasGTK.hpp"
+#include <glawt/CanvasGTK.hpp>
+#include "Configuration.hpp"
 
 
 typedef int (*function_t)();

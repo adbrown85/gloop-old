@@ -4,10 +4,12 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Toolkit.hpp"
-#include "WindowFactory.hpp"
-#include "CanvasFactory.hpp"
+#include <gtkmm/main.h>
+#include <glawt/Toolkit.hpp>
+#include <glawt/WindowFactory.hpp>
+#include <glawt/CanvasFactory.hpp>
 #include "VertexBufferObject.hpp"
+#include "ErrorChecker.hpp"
 
 
 /* CanvasListener. */

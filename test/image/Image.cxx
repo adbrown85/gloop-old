@@ -4,11 +4,11 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Image.hpp"
-#include "glawt/CanvasGTK.hpp"
 #include <cassert>
+#include <glawt/CanvasGTK.hpp>
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
+#include "Image.hpp"
 
 
 /* Fake image for testing. */
@@ -39,7 +39,7 @@ void ImageTest::setUp() {
 	cout << "Setting up..." << endl;
 	
 	// Create image
-	image = new Image("../../textures/crate.jpg");
+	image = new FakeImage("../../textures/crate.jpg");
 }
 
 
