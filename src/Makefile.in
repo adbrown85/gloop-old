@@ -68,7 +68,7 @@ ${foreach m,$(modules),${eval ${call module,$(m)}}}
 $(archive): ${notdir $(objects)}
 
 # Dependencies
-%.d: %.cpp %.hpp
+%.d: %.hpp
 	@echo "  Generating dependencies for $<..."
 	@$(CXX) $(CXXFLAGS) -MM $< > $@
 ifneq ($(findstring clean,$(MAKECMDGOALS)),clean)
