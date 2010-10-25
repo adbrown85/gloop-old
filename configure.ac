@@ -101,7 +101,7 @@ htmldir='${docdir}'/html
 
 # Finish
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile test/Makefile])
-PKG_CHECK_MODULES([DEPS], [gtkmm-2.4])
+PKG_CHECK_MODULES([DEPS], [gtkmm-2.4 gtkglextmm-1.2])
 AC_OUTPUT
 
 echo \
