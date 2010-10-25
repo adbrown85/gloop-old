@@ -1,6 +1,14 @@
+Configuration
+Dataset
+DatasetAnalyzer
+DatasetHeader
+DatasetWriter
 Exception
+Image
 Log
 Matrix
+OctreeBuilder
+OctreeNode
 Parser
 Path
 Preprocessor
@@ -8,4 +16,5 @@ Quaternion
 Tag
 Text
 Vector
+VertexBufferObject
 *.t
