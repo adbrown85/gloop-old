@@ -27,8 +27,6 @@ distdir      := $(tarname)-$(version)
 tarball      := $(tarname)-$(version)-src.tar.gz
 zipfile      := $(tarname)-$(version)-src.zip
 archive      := lib$(tarname).a
-winbuild     := $(tarname)-win-build.zip
-winbuilddir  := win
 
 # Targets to pass down
 src_targets  := all $(modules) 
@@ -107,9 +105,6 @@ $(distdir):
 	@cp doc/doxygen.css $(distdir)/doc
 	@echo "    textures"
 	@mkdir $(distdir)/textures
-$(winbuild):
-	@echo "  Zipping Windows build environment..."
-	@cd $(winbuilddir) && zip -r ../$(winbuild) * > /dev/null
 distcheck: $(tarball)
 	@echo "  Unpacking and checking tarball."
 	@tar -zxf $(tarball) $(distdir)
