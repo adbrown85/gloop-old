@@ -138,12 +138,11 @@ uninstall:
 
 # Distribution
 .PHONY: FORCE dist distcheck
-dist: FORCE $(distdir) $(tarball) $(zipfile) $(winbuild) CLEANUP
+dist: FORCE $(distdir) $(tarball) $(zipfile) CLEANUP
 FORCE:
 	@-$(RM) $(tarball) &> /dev/null
 	@-$(RM) $(zipfile) &> /dev/null
 	@-$(RM) -r $(distdir) &> /dev/null
-	@-$(RM) $(winbuild) &> /dev/null
 CLEANUP:
 	@$(RM) -r $(distdir)
 $(tarball): 
@@ -197,4 +196,3 @@ distclean: clean
 	@$(RM) config.h
 	@$(RM) config.in~
 	@$(RM) $(tarball)
-	@$(RM) $(winbuild)
