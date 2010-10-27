@@ -47,8 +47,8 @@ int main(int argc, char *argv[]) {
 	try {
 		test.setUp();
 		test.testLines();
-	} catch (Exception &e) {
-		cerr << e << endl;
+	} catch (exception &e) {
+		cerr << e.what() << endl;
 	}
 	
 	// Finish

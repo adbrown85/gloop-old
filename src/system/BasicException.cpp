@@ -32,7 +32,7 @@ ostream& BasicException::operator<<(const string &message) {
 }
 
 
-ostream& BasicException::operator<<(const Exception &e) {
+ostream& BasicException::operator<<(const BasicException &e) {
 	
 	buffer << e.getMessage();
 	return buffer;

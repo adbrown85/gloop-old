@@ -52,8 +52,8 @@ int main(int argc,
 		analyzer.printHistogram();
 		cout << (double)(clock()-ticks)/CLOCKS_PER_SEC << "s" << endl;
 	}
-	catch (Exception &e) {
-		cerr << e << endl;
+	catch (exception &e) {
+		cerr << e.what() << endl;
 		exit(1);
 	}
 	

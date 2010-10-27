@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
 	
 	try {
 		test.setUp();
-	} catch (Exception &e) {
+	} catch (BasicException &e) {
 		cerr << e.getMessage() << endl;
 	}
 	

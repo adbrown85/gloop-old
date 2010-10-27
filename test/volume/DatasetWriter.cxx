@@ -39,8 +39,8 @@ int main(int argc,
 		dw.setOutput(output);
 		dw.setJump(jump);
 		dw.write();
-	} catch (Exception &e) {
-		cerr << e << endl;
+	} catch (exception &e) {
+		cerr << e.what() << endl;
 	}
 	
 	// Finish

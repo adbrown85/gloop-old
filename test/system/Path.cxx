@@ -144,16 +144,16 @@ void PathTest::testRelativePath() {
 		                     "../glsl/file.frag",
 		                     "/glsl/file.frag");
 		assert(false);
-	} catch (Exception &e) {
-		cerr << e << endl;
+	} catch (exception &e) {
+		cerr << e.what() << endl;
 	}
 	try {
 		testRelativePathWith("C:\\scene.xml",
 		                     "../glsl/file.frag",
 		                     "C:\\glsl/file.frag");
 		assert(false);
-	} catch (Exception &e) {
-		cerr << e << endl;
+	} catch (exception &e) {
+		cerr << e.what() << endl;
 	}
 }
 

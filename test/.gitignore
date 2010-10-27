@@ -1,9 +1,9 @@
+BasicException
 Configuration
 Dataset
 DatasetAnalyzer
 DatasetHeader
 DatasetWriter
-Exception
 Image
 Log
 Matrix

@@ -35,8 +35,8 @@ int main(int argc,
 		DatasetHeader header(filename);
 		header.print();
 	}
-	catch (Exception &e) {
-		cerr << e << endl;
+	catch (exception &e) {
+		cerr << e.what() << endl;
 	}
 	
 	// Finish

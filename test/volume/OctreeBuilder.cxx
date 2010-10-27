@@ -113,8 +113,8 @@ int main(int argc,
 		cout << "\nTotal Nodes: " << endl;
 		cout << "  " << builder->getTotalNodes() << endl;
 	}
-	catch (Exception &e) {
-		cerr << e << endl;
+	catch (exception &e) {
+		cerr << e.what() << endl;
 	}
 	
 	// Finish
