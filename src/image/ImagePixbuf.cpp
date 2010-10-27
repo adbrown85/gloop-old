@@ -53,7 +53,7 @@ void ImagePixbuf::unpack() {
 	
 	// Verify
 	if (bitsPerSample != 8) {
-		throw Exception("[Image] Does not have 8 bits per sample.");
+		throw ImageException("[Image] Does not have 8 bits per sample.");
 	}
 	
 	// Initialize the data

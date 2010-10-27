@@ -7,9 +7,21 @@
 #ifndef IMAGE_HPP
 #define IMAGE_HPP
 #include "common.h"
-#include "Exception.hpp"
 using namespace std;
 
+
+/* Exception thrown from a canvas. */
+class ImageException : public exception {
+public:
+	ImageException() {};
+	ImageException(const ImageException &e) : message(e.getMessage()) {}
+	ImageException(const string &message) : message(message) {}
+	~ImageException() throw() {}
+	string getMessage() const {return message;}
+	const char* what() const throw() {return message.c_str();}
+private:
+	string message;
+};
 
 /** @brief Abstract class representing an image loaded from a file.
  * 

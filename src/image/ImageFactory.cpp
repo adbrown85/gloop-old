@@ -7,13 +7,11 @@
 #include "ImageFactory.hpp"
 
 
-
 Image* ImageFactory::create(const string &filename) {
-	
 #ifdef HAVE_PIXBUFS
 	return new ImagePixbuf(filename);
 #else
-	throw new Exception("Gander compiled without support for images.");
+	throw ImageException("[ImageFactory] Compiled without image support.");
 #endif
 }
 
