@@ -6,45 +6,67 @@
  */
 #include "Vec4.hpp"
 
+class Vec4Test {
+public:
+	void setUp();
+	void tearDown();
+	void testPrint();
+	void testAddSubtract();
+	void testMultiplyDivide();
+	void testDoubleHalf();
+private:
+	Vec4 *A, *B;
+};
 
-/** Unit test for Vec4. */
+void Vec4Test::setUp() {
+	
+	A = new Vec4(2, 2, 2);
+	B = new Vec4(3, 4, 5);
+}
+
+void Vec4Test::tearDown() {
+	
+	delete A;
+	delete B;
+}
+
+void Vec4Test::testPrint() {
+	
+	cout << "Printing vectors:" << endl;
+	cout << " A: " << (*A) << endl;
+	cout << " B: " << (*B) << endl;
+}
+
+void Vec4Test::testAddSubtract() {
+	
+	cout << "\nAdd/subtract of A, B:" << endl;
+	cout << "  " <<  (*A) + (*B) << endl;
+	cout << "  " <<  (*A) - (*B) << endl;
+}
+
+void Vec4Test::testMultiplyDivide() {
+	
+	cout << "\nMultiply/divide of A, B:" << endl;
+	cout << "  " <<  (*A) * (*B) << endl;
+	cout << "  " <<  (*A) / (*B) << endl;
+}
+
+void Vec4Test::testDoubleHalf() {
+	
+	cout << "\nDouble/half of A:" << endl;
+	cout << "  " <<  (*A) * 2 << endl;
+	cout << "  " <<  (*A) / 2 << endl;
+}
+
 int main(int argc, char *argv[]) {
 	
-	Vec4 A(2, 2, 2);
-	Vec4 B(3, 4, 5);
+	Vec4Test test;
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Vector" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test print
-	cout << "Printing vectors:" << endl;
-	cout << "  A: " << A << endl;
-	cout << "  B: " <<  B << endl;
-	
-	// Plus/minus
-	cout << "\nPlus/minus of A, B:" << endl;
-	cout << "  " <<  A + B << endl;
-	cout << "  " <<  A - B << endl;
-	
-	// Multiply/divide
-	cout << "\nMultiply/divide of A, B:" << endl;
-	cout << "  " <<  A * B << endl;
-	cout << "  " <<  A / B << endl;
-	
-	// Double/half
-	cout << "\nDouble/half of A:" << endl;
-	cout << "  " <<  A * 2 << endl;
-	cout << "  " <<  A / 2 << endl;
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Vector" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
+	test.setUp();
+	test.testPrint();
+	test.testAddSubtract();
+	test.testMultiplyDivide();
+	test.testDoubleHalf();
+	test.tearDown();
 }
 
