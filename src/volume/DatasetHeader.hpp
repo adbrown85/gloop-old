@@ -12,7 +12,7 @@
 #include <sstream>
 #include <vector>
 #include "Exception.hpp"
-#include "Vector.hpp"
+#include "Vec4.hpp"
 using namespace std;
 
 
@@ -62,7 +62,7 @@ public :
 	int getMax() const;
 	int getMin() const;
 	int getOffset() const;
-	Vector getPitch() const;
+	Vec4 getPitch() const;
 	string getType() const;
 	int getWidth() const;
 	void print() const;
@@ -82,7 +82,7 @@ protected:
 	void read();
 	void read(istream &stream);
 private:
-	Vector pitch;
+	Vec4 pitch;
 	int beginning, offset;
 	int high, low, max, min;
 	int width, height, depth;
@@ -128,7 +128,7 @@ inline int DatasetHeader::getMin() const {return min;}
 inline int DatasetHeader::getOffset() const {return offset;}
 
 /** @return Size of samples in each direction. */
-inline Vector DatasetHeader::getPitch() const {return pitch;}
+inline Vec4 DatasetHeader::getPitch() const {return pitch;}
 
 /** @return String representing the type of the data.
  * 

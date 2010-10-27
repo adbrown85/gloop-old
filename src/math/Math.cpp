@@ -14,21 +14,21 @@ double Math::PI=355.0/113;
  * @param number Number of points in the circle
  * @return List of points in circle.
  */
-list<Vector> Math::computeCircle(float radius, int number) {
+list<Vec4> Math::computeCircle(float radius, int number) {
 	
 	double delta, theta, x, y;
-	list<Vector> points;
+	list<Vec4> points;
 	
 	// Initialize
 	delta = 360.0 / number;
 	
 	// Calculate points
-	points.push_back(Vector(radius,0,0,1));
+	points.push_back(Vec4(radius,0,0,1));
 	theta = delta;
 	while (theta < 360) {
 		x = radius * cos(toRadians(theta));
 		y = radius * sin(toRadians(theta));
-		points.push_back(Vector(x,y,0,1));
+		points.push_back(Vec4(x,y,0,1));
 		theta += delta;
 	}
 	

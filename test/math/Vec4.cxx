@@ -1,20 +1,17 @@
 /*
- * Vector.cxx
+ * Vec4.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Vector.hpp"
+#include "Vec4.hpp"
 
 
-/**
- * Unit test for Vector.
- */
-int main(int argc,
-         char *argv[]) {
+/** Unit test for Vec4. */
+int main(int argc, char *argv[]) {
 	
-	Vector A(2, 2, 2);
-	Vector B(3, 4, 5);
+	Vec4 A(2, 2, 2);
+	Vec4 B(3, 4, 5);
 	
 	// Start
 	cout << endl;

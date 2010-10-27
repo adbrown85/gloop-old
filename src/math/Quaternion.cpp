@@ -14,7 +14,7 @@ Quaternion::Quaternion() {
 }
 
 
-Quaternion::Quaternion(float angle, const Vector &axis) {
+Quaternion::Quaternion(float angle, const Vec4 &axis) {
 	
 	set(angle, axis);
 }
@@ -79,7 +79,7 @@ void Quaternion::print() {
 }
 
 
-void Quaternion::rotate(float angle, const Vector &axis) {
+void Quaternion::rotate(float angle, const Vec4 &axis) {
 	
 	Quaternion B(angle, axis);
 	
@@ -88,7 +88,7 @@ void Quaternion::rotate(float angle, const Vector &axis) {
 }
 
 
-void Quaternion::set(float angle, const Vector &axis) {
+void Quaternion::set(float angle, const Vec4 &axis) {
 	
 	float cosAngleHalved,
 	      sinAngleHalved,

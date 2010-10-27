@@ -9,7 +9,7 @@
 #include "common.h"
 #include <cmath>
 #include <iomanip>
-#include "Vector.hpp"
+#include "Vec4.hpp"
 using namespace std;
 
 
@@ -32,7 +32,7 @@ public:
 	float& operator()(int i, int j);
 	float operator()(int i, int j) const;
 	friend Matrix operator*(const Matrix &A, const Matrix &B);
-	friend Vector operator*(const Matrix &A, const Vector &B);
+	friend Vec4 operator*(const Matrix &A, const Vec4 &B);
 	void print();
 	void set(float array[16]);
 	void toArray(float *array);

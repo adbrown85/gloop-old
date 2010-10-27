@@ -15,6 +15,6 @@ Preprocessor
 Quaternion
 Tag
 Text
-Vector
+Vec4
 VertexBufferObject
 *.t

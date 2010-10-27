@@ -8,7 +8,7 @@
 #define MATH_HPP
 #include "common.h"
 #include <cmath>                        // sin, cos
-#include "Vector.hpp"                   // Storing points
+#include "Vec4.hpp"                     // Storing points
 using namespace std;
 
 
@@ -17,7 +17,7 @@ using namespace std;
  */
 class Math {
 public:
-	static list<Vector> computeCircle(float radius, int number);
+	static list<Vec4> computeCircle(float radius, int number);
 	static double toRadians(double degrees);
 public:
 	static double PI;

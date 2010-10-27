@@ -174,9 +174,9 @@ Matrix operator*(const Matrix &A, const Matrix &B) {
 
 
 /** Multiplies a matrix with a vector.*/
-Vector operator*(const Matrix &A, const Vector &B) {
+Vec4 operator*(const Matrix &A, const Vec4 &B) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Multiply rows of A with columns in B
 	for (int i=0; i<C.size; ++i) {

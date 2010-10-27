@@ -119,7 +119,7 @@ void MatrixTest::testTranspose() {
 
 void MatrixTest::testVectorMultiply() {
 	
-	Vector v1(1.0, 1.0, 1.0, 1.0), v2;
+	Vec4 v1(1.0, 1.0, 1.0, 1.0), v2;
 	
 	cout << "\nTesting Vector multiply..." << endl;
 	v2 = m2 * v1;
@@ -129,7 +129,7 @@ void MatrixTest::testVectorMultiply() {
 void MatrixTest::testVectorMultiplyTime() {
 	
 	clock_t beg, end;
-	Vector v;
+	Vec4 v;
 	
 	cout << "\nTesting vector multiply time..." << endl;
 	beg = clock();

@@ -11,7 +11,7 @@
 #include <iomanip>
 #include "Math.hpp"
 #include "Matrix.hpp"
-#include "Vector.hpp"
+#include "Vec4.hpp"
 using namespace std;
 
 
@@ -21,18 +21,18 @@ using namespace std;
 class Quaternion {
 public:
 	Quaternion();
-	Quaternion(float angle, const Vector &axis);
+	Quaternion(float angle, const Vec4 &axis);
 	Matrix getMatrix() const;
 	Quaternion operator*(const Quaternion &B);
 	void print();
-	void set(float angle, const Vector &axis);
-	void rotate(float angle, const Vector &axis);
+	void set(float angle, const Vec4 &axis);
+	void rotate(float angle, const Vec4 &axis);
 	string toString() const;
 protected:
 	void normalize();
 private:
 	float s;
-	Vector v;
+	Vec4 v;
 };
 
 

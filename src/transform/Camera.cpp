@@ -60,7 +60,7 @@ void Camera::load(int width, int height) {
 
 
 /** Moves the camera. */
-void Camera::move(const Vector &amount) {
+void Camera::move(const Vec4 &amount) {
 	
 	position += amount;
 }
@@ -71,12 +71,12 @@ void Camera::reset() {
 	
 	// Reset transformations
 	position.set(0.0, 0.0, CAMERA_DEFAULT_ZOOM);
-	rotation.set(0.0, Vector(0.0,1.0,0.0));
+	rotation.set(0.0, Vec4(0.0,1.0,0.0));
 }
 
 
 /** Rotates by axis/angle. */
-void Camera::rotate(float angle, const Vector &axis) {
+void Camera::rotate(float angle, const Vec4 &axis) {
 	
 	rotation.rotate(angle, axis);
 }

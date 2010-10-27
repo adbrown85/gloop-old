@@ -4,11 +4,11 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Vector.hpp"
+#include "Vec4.hpp"
 
 
 /** Four-component vector initialized to all zeroes (except w=1.0). */
-Vector::Vector() {
+Vec4::Vec4() {
 	
 	x = 0.0;
 	y = 0.0;
@@ -19,7 +19,7 @@ Vector::Vector() {
 
 
 /** Four-component vector initialized to one value. */
-Vector::Vector(float value) {
+Vec4::Vec4(float value) {
 	
 	x = value;
 	y = value;
@@ -30,7 +30,7 @@ Vector::Vector(float value) {
 
 
 /** Two-component vector. */
-Vector::Vector(float x, float y) {
+Vec4::Vec4(float x, float y) {
 	
 	this->x = x;
 	this->y = y;
@@ -41,7 +41,7 @@ Vector::Vector(float x, float y) {
 
 
 /** Three-component vector. */
-Vector::Vector(float x, float y, float z) {
+Vec4::Vec4(float x, float y, float z) {
 	
 	this->x = x;
 	this->y = y;
@@ -52,7 +52,7 @@ Vector::Vector(float x, float y, float z) {
 
 
 /** Four-component vector. */
-Vector::Vector(float x, float y, float z, float w) {
+Vec4::Vec4(float x, float y, float z, float w) {
 	
 	this->x = x;
 	this->y = y;
@@ -62,7 +62,7 @@ Vector::Vector(float x, float y, float z, float w) {
 }
 
 
-Vector& Vector::operator=(const Vector &B) {
+Vec4& Vec4::operator=(const Vec4 &B) {
 	
 	// Check for self-assignment
 	if (this == &B)
@@ -78,7 +78,7 @@ Vector& Vector::operator=(const Vector &B) {
 }
 
 
-Vector& Vector::operator+=(const Vector &B) {
+Vec4& Vec4::operator+=(const Vec4 &B) {
 	
 	// Add components
 	x += B.x;
@@ -89,7 +89,7 @@ Vector& Vector::operator+=(const Vector &B) {
 }
 
 
-Vector& Vector::operator-=(const Vector &B) {
+Vec4& Vec4::operator-=(const Vec4 &B) {
 	
 	// Subtract components
 	x -= B.x;
@@ -100,7 +100,7 @@ Vector& Vector::operator-=(const Vector &B) {
 }
 
 
-Vector& Vector::operator*=(const Vector &B) {
+Vec4& Vec4::operator*=(const Vec4 &B) {
 	
 	// Multiply components
 	x *= B.x;
@@ -111,7 +111,7 @@ Vector& Vector::operator*=(const Vector &B) {
 }
 
 
-Vector& Vector::operator/=(const Vector &B) {
+Vec4& Vec4::operator/=(const Vec4 &B) {
 	
 	// Multiply components
 	x /= B.x;
@@ -122,7 +122,7 @@ Vector& Vector::operator/=(const Vector &B) {
 }
 
 
-Vector& Vector::operator+=(float b) {
+Vec4& Vec4::operator+=(float b) {
 	
 	// Add components
 	x += b;
@@ -133,7 +133,7 @@ Vector& Vector::operator+=(float b) {
 }
 
 
-Vector& Vector::operator-=(float b) {
+Vec4& Vec4::operator-=(float b) {
 	
 	// Subtract components
 	x += b;
@@ -144,7 +144,7 @@ Vector& Vector::operator-=(float b) {
 }
 
 
-Vector& Vector::operator*=(float b) {
+Vec4& Vec4::operator*=(float b) {
 	
 	// Multiple components
 	x *= b;
@@ -155,7 +155,7 @@ Vector& Vector::operator*=(float b) {
 }
 
 
-Vector& Vector::operator/=(float b) {
+Vec4& Vec4::operator/=(float b) {
 	
 	float bInv=1/b;
 	
@@ -168,15 +168,15 @@ Vector& Vector::operator/=(float b) {
 }
 
 
-bool operator==(const Vector &A, const Vector &B) {
+bool operator==(const Vec4 &A, const Vec4 &B) {
 	
 	return (A.x==B.x) && (A.y==B.y) && (A.z==B.z) && (A.w==B.w);
 }
 
 
-Vector operator+(const Vector &A, const Vector &B) {
+Vec4 operator+(const Vec4 &A, const Vec4 &B) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Add components
 	C.x = A.x + B.x;
@@ -188,9 +188,9 @@ Vector operator+(const Vector &A, const Vector &B) {
 }
 
 
-Vector operator-(const Vector &A, const Vector &B) {
+Vec4 operator-(const Vec4 &A, const Vec4 &B) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Subtract components
 	C.x = A.x - B.x;
@@ -202,9 +202,9 @@ Vector operator-(const Vector &A, const Vector &B) {
 }
 
 
-Vector operator*(const Vector &A, const Vector &B) {
+Vec4 operator*(const Vec4 &A, const Vec4 &B) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Multiply components
 	C.x = A.x * B.x;
@@ -216,9 +216,9 @@ Vector operator*(const Vector &A, const Vector &B) {
 }
 
 
-Vector operator/(const Vector &A, const Vector &B) {
+Vec4 operator/(const Vec4 &A, const Vec4 &B) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Divide components
 	if (B.x != 0)
@@ -234,21 +234,21 @@ Vector operator/(const Vector &A, const Vector &B) {
 }
 
 
-Vector operator+(const Vector &A, float b) {
+Vec4 operator+(const Vec4 &A, float b) {
 	
-	return Vector(A.x+b, A.y+b, A.z+b, A.w+b);
+	return Vec4(A.x+b, A.y+b, A.z+b, A.w+b);
 }
 
 
-Vector operator-(const Vector &A, float b) {
+Vec4 operator-(const Vec4 &A, float b) {
 	
-	return Vector(A.x-b, A.y-b, A.z-b, A.w-b);
+	return Vec4(A.x-b, A.y-b, A.z-b, A.w-b);
 }
 
 
-Vector operator*(const Vector &A, float b) {
+Vec4 operator*(const Vec4 &A, float b) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Multiply components
 	C.x = A.x * b;
@@ -260,9 +260,9 @@ Vector operator*(const Vector &A, float b) {
 }
 
 
-Vector operator/(const Vector &A, float b) {
+Vec4 operator/(const Vec4 &A, float b) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Divide components
 	if (b != 0) {
@@ -276,7 +276,7 @@ Vector operator/(const Vector &A, float b) {
 }
 
 
-ostream& operator<<(ostream &out, const Vector &A) {
+ostream& operator<<(ostream &out, const Vec4 &A) {
 	
 	float com[] = {A.x, A.y, A.z, A.w};
 	
@@ -295,7 +295,7 @@ ostream& operator<<(ostream &out, const Vector &A) {
 
 
 /** @throw Exception if the index is out of bounds. */
-float& Vector::operator[](int i) {
+float& Vec4::operator[](int i) {
 	
 	// Return correct component
 	switch (i) {
@@ -310,7 +310,7 @@ float& Vector::operator[](int i) {
 
 
 /** @throw Exception if the index is out of bounds. */
-float Vector::operator[](int i) const {
+float Vec4::operator[](int i) const {
 	
 	// Return correct component
 	switch (i) {
@@ -325,9 +325,9 @@ float Vector::operator[](int i) const {
 
 
 /** @return vector perpendicular to the plane formed by two vectors. */
-Vector cross(const Vector &A, const Vector &B) {
+Vec4 cross(const Vec4 &A, const Vec4 &B) {
 	
-	Vector C;
+	Vec4 C;
 	
 	// Calculate
 	C.x = (A.y * B.z) - (A.z * B.y);
@@ -339,7 +339,7 @@ Vector cross(const Vector &A, const Vector &B) {
 
 
 /** @return projection of one vector onto another. */
-float dot(const Vector &A, const Vector &B) {
+float dot(const Vec4 &A, const Vec4 &B) {
 	
 	// Calculate
 	if (A.size == 2)
@@ -350,7 +350,7 @@ float dot(const Vector &A, const Vector &B) {
 
 
 /** @throw Exception if index out of bounds. */
-float Vector::get(int i) const {
+float Vec4::get(int i) const {
 	
 	// Return correct component
 	switch (i) {
@@ -365,7 +365,7 @@ float Vector::get(int i) const {
 
 
 /** @return length of the vector. */
-float Vector::length() const {
+float Vec4::length() const {
 	
 	// Return root of sum of squares
 	if (size == 2)
@@ -376,28 +376,28 @@ float Vector::length() const {
 
 
 /** @return component-wise maximum of the two vectors */
-Vector max(const Vector &A, const Vector &B) {
+Vec4 max(const Vec4 &A, const Vec4 &B) {
 	
-	return Vector(max(A.x,B.x), max(A.y,B.y), max(A.z,B.z), max(A.w,B.w));
+	return Vec4(max(A.x,B.x), max(A.y,B.y), max(A.z,B.z), max(A.w,B.w));
 }
 
 
 /** @return component-wise minimum of the two vectors */
-Vector min(const Vector &A, const Vector &B) {
+Vec4 min(const Vec4 &A, const Vec4 &B) {
 	
-	return Vector(min(A.x,B.x), min(A.y,B.y), min(A.z,B.z), min(A.w,B.w));
+	return Vec4(min(A.x,B.x), min(A.y,B.y), min(A.z,B.z), min(A.w,B.w));
 }
 
 
 /** @return Unit length version of the vector. */
-Vector normalize(Vector vector) {
+Vec4 normalize(Vec4 vector) {
 	
 	float len;
 	
 	// Divide by length
 	len = vector.length();
 	if (len == 0.0) {
-		vector = Vector();
+		vector = Vec4();
 	} else {
 		vector /= len;
 		vector.w = 1.0;
@@ -406,7 +406,7 @@ Vector normalize(Vector vector) {
 }
 
 
-void Vector::set(float x, float y) {
+void Vec4::set(float x, float y) {
 	
 	// Set components
 	this->x = x;
@@ -415,7 +415,7 @@ void Vector::set(float x, float y) {
 }
 
 
-void Vector::set(float x, float y, float z) {
+void Vec4::set(float x, float y, float z) {
 	
 	// Set components
 	this->x = x;
@@ -425,7 +425,7 @@ void Vector::set(float x, float y, float z) {
 }
 
 
-void Vector::set(float x, float y, float z, float w) {
+void Vec4::set(float x, float y, float z, float w) {
 	
 	// Set components
 	this->x = x;
@@ -436,7 +436,7 @@ void Vector::set(float x, float y, float z, float w) {
 }
 
 
-void Vector::toArray(float array[4]) {
+void Vec4::toArray(float array[4]) {
 	
 	for (int i=0; i<4; ++i) {
 		array[i] = get(i);
