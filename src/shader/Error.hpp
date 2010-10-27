@@ -7,7 +7,6 @@
 #ifndef ERROR_HPP
 #define ERROR_HPP
 #include "common.h"
-#include "Exception.hpp"
 #include "Code.hpp"
 #include "Log.hpp"
 #include "Text.hpp"
