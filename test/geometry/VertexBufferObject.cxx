@@ -6,8 +6,7 @@
  */
 #include <gtkmm/main.h>
 #include <glawt/Toolkit.hpp>
-#include <glawt/WindowFactory.hpp>
-#include <glawt/CanvasFactory.hpp>
+#include <glawt/GLAWTFactory.hpp>
 #include "VertexBufferObject.hpp"
 #include "ErrorChecker.hpp"
 
@@ -15,27 +14,18 @@
 /* CanvasListener. */
 class FakeCanvasListener : public CanvasListener {
 public:
-	virtual void onCanvasEvent(const CanvasEvent &event);
-	void onCanvasEventDisplay();
-	void setCanvas(Canvas *canvas) {this->canvas = canvas;}
-private:
-	Canvas *canvas;
+	virtual void onCanvasInitEvent(Canvas &canvas) {}
+	virtual void onCanvasDisplayEvent(Canvas &canvas);
+	virtual void onCanvasKeyEvent(Canvas &canvas) {}
+	virtual void onCanvasButtonEvent(Canvas &canvas) {}
+	virtual void onCanvasDragEvent(Canvas &canvas) {}
 };
 
-/* Handles canvas events. */
-void FakeCanvasListener::onCanvasEvent(const CanvasEvent &event) {
-	
-	switch (event.type) {
-	case CanvasEvent::DISPLAY:
-		onCanvasEventDisplay();
-	}
-}
-
 /* Handles a canvas display event. */
-void FakeCanvasListener::onCanvasEventDisplay() {
+void FakeCanvasListener::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	glClearColor(0.0, 1.0, 1.0, 1.0);
-	canvas->flush();
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 /* Test for VertexBufferObject. */
@@ -53,11 +43,10 @@ private:
 /* Initializes the test. */
 void VertexBufferObjectTest::setUp() {
 	
-	window = WindowFactory::create();
-	canvas = CanvasFactory::create(512, 512);
+	window = GLAWTFactory::createWindow();
+	canvas = GLAWTFactory::createCanvas(512, 512);
 	listener = new FakeCanvasListener();
-	listener->setCanvas(canvas);
-	canvas->addListener(listener, CanvasEvent::DISPLAY);
+	canvas->addListener(listener);
 	window->setTitle("VertexBufferObject Test");
 	window->add(canvas);
 	window->show();

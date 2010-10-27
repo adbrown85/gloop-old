@@ -6,77 +6,70 @@
  */
 #include <cstring>
 #include <glawt/Toolkit.hpp>
-#include <glawt/CanvasFactory.hpp>
-#include <glawt/WindowFactory.hpp>
+#include <glawt/GLAWTFactory.hpp>
 #include "Dataset.hpp"
+#define DATASETTEST_FILENAME "textures/bunny128.vlb"
 
 
 /** @brief Utility for viewing a dataset. */
 class DatasetViewer : public CanvasListener {
 public:
-	void goToNext();
-	void goToPrevious();
+	DatasetViewer(Dataset *dataset);
+	void goToNext(Canvas &canvas);
+	void goToPrevious(Canvas &canvas);
 	void load();
-	void onCanvasEvent(const CanvasEvent &event);
-	void onCanvasEventButton(const CanvasEvent &event);
-	void onCanvasEventDisplay(const CanvasEvent &event);
-	void onCanvasEventKey(const CanvasEvent &event);
-	void setCanvas(Canvas *canvas);
+	virtual void onCanvasInitEvent(Canvas &canvas) {}
+	virtual void onCanvasDisplayEvent(Canvas &canvas);
+	virtual void onCanvasKeyEvent(Canvas &canvas);
+	virtual void onCanvasButtonEvent(Canvas &canvas);
+	virtual void onCanvasDragEvent(Canvas &canvas) {}
 	void setDataset(Dataset *dataset);
 private:
 	Dataset *dataset;
 	GLenum type;
 	int slice, width, height, depth;
-	Canvas *canvas;
 };
-inline void DatasetViewer::setCanvas(Canvas *c) {canvas = c;}
-inline void DatasetViewer::setDataset(Dataset *d) {dataset = d;}
+
+/** Creates a new %DatasetViewer. */
+DatasetViewer::DatasetViewer(Dataset *dataset) {
+	
+	this->dataset = dataset;
+	this->type = dataset->getType();
+	this->slice = 0;
+	this->width = dataset->getWidth();
+	this->height = dataset->getHeight();
+	this->depth = dataset->getDepth();
+}
 
 /** Shows the next slice in the dataset. */
-void DatasetViewer::goToNext() {
+void DatasetViewer::goToNext(Canvas &canvas) {
 	
 	if (slice == dataset->getDepth()-1)
 		slice = -1;
 	++slice;
-	canvas->refresh();
+	canvas.refresh();
 }
 
 /** Shows the previous slice in the dataset. */
-void DatasetViewer::goToPrevious() {
+void DatasetViewer::goToPrevious(Canvas &canvas) {
 	
 	if (slice == 0)
 		slice = dataset->getDepth();
 	--slice;
-	canvas->refresh();
-}
-
-/** Handles the incoming canvas event. */
-void DatasetViewer::onCanvasEvent(const CanvasEvent &event) {
-	
-	switch (event.type) {
-	case CanvasEvent::BUTTON :
-		onCanvasEventButton(event);
-		break;
-	case CanvasEvent::DISPLAY :
-		onCanvasEventDisplay(event);
-		break;
-	case CanvasEvent::KEY :
-		onCanvasEventKey(event);
-		break;
-	}
+	canvas.refresh();
 }
 
 /** Prints the value in the volume under the cursor. */
-void DatasetViewer::onCanvasEventButton(const CanvasEvent &event) {
+void DatasetViewer::onCanvasButtonEvent(Canvas &canvas) {
 	
 	// Ignore down state
-	if (event.state.combo.action == TOOLKIT_DOWN) {
+	if (canvas.getState().combo.action == TOOLKIT_DOWN) {
 		return;
 	}
 	
 	// Standard buttons
-	if (event.state.combo.trigger == TOOLKIT_LEFT_BUTTON) {
-		Index index((height-(event.state.y)), (event.state.x), slice);
+	if (canvas.getState().combo.trigger == TOOLKIT_LEFT_BUTTON) {
+		Index index((height-(canvas.getState().y)), (canvas.getState().x), slice);
 		switch (type) {
 		case GL_UNSIGNED_BYTE:
 			cout << (int)(dataset->getAsByte(index)) << endl;
@@ -94,25 +87,26 @@ void DatasetViewer::onCanvasEventButton(const CanvasEvent &event) {
 	}
 	
 	// Wheel
-	else if (event.state.combo.trigger == TOOLKIT_WHEEL_UP) {
-		goToNext();
-	} else if (event.state.combo.trigger == TOOLKIT_WHEEL_DOWN) {
-		goToPrevious();
+	else if (canvas.getState().combo.trigger == TOOLKIT_WHEEL_UP) {
+		goToNext(canvas);
+	} else if (canvas.getState().combo.trigger == TOOLKIT_WHEEL_DOWN) {
+		goToPrevious(canvas);
 	}
 }
 
 /** Draws a slice to the screen. */
-void DatasetViewer::onCanvasEventDisplay(const CanvasEvent &event) {
+void DatasetViewer::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	ostringstream stream;
 	char *data;
 	
 	// Clear
-	canvas->clear();
+	glClearColor(0, 0, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	// Slice index
 	stream << slice;
-	canvas->write(stream.str());
+	canvas.write(stream.str());
 	
 	// Reset raster position
 	glMatrixMode(GL_PROJECTION);
@@ -130,100 +124,81 @@ void DatasetViewer::onCanvasEventDisplay(const CanvasEvent &event) {
 	data = reinterpret_cast<char*>(dataset->getData());
 	data += slice * width * height * dataset->getBlock();
 	glDrawPixels(width, height, GL_LUMINANCE, dataset->getType(), data);
-	
-	// Flush
-	canvas->flush();
 }
 
 /** Changes the slice. */
-void DatasetViewer::onCanvasEventKey(const CanvasEvent &event) {
+void DatasetViewer::onCanvasKeyEvent(Canvas &canvas) {
 	
-	switch(event.state.combo.trigger) {
+	switch (canvas.getState().combo.trigger) {
 	case TOOLKIT_KEY_UP:
 	case TOOLKIT_KEY_RIGHT:
-		goToNext();
+		goToNext(canvas);
 		break;
 	case TOOLKIT_KEY_DOWN:
 	case TOOLKIT_KEY_LEFT:
-		goToPrevious();
+		goToPrevious(canvas);
 		break;
 	}
 }
 
-/** Copies attributes from the dataset and adds listeners to the canvas. */
-void DatasetViewer::load() {
+/** Test for Dataset. */
+class DatasetTest {
+public:
+	void setUp();
+	void tearDown();
+	void testDisplay();
+private:
+	Dataset *dataset;
+};
+
+/** Initialize the fixture. */
+void DatasetTest::setUp() {
+
+	dataset = new Dataset(DATASETTEST_FILENAME);
+	dataset->load();
+	dataset->print();
+}
+
+/** Cleans up the test fixture. */
+void DatasetTest::tearDown() {
 	
-	// Set fields
-	this->width = dataset->getWidth();
-	this->height = dataset->getHeight();
-	this->depth = dataset->getDepth();
-	this->type = dataset->getType();
-	this->slice = 0;
+	delete dataset;
+}
+
+/** Tests the dataset can be viewed. */
+void DatasetTest::testDisplay() {
 	
-	// Create the canvas
-	canvas->addListener(this, CanvasEvent::DISPLAY);
-	canvas->addListener(this, CanvasEvent::BUTTON);
-	canvas->addListener(this, CanvasEvent::KEY);
+	Window *window;
+	Canvas *canvas;
+	DatasetViewer *viewer;
+	
+	// Initialize
+	window = GLAWTFactory::createWindow();
+	canvas = GLAWTFactory::createCanvas(
+			dataset->getWidth(),
+			dataset->getHeight());
+	viewer = new DatasetViewer(dataset);
+	
+	// Pack window
+	canvas->addListener(viewer);
+	window->setTitle(dataset->getFilename());
+	window->add(canvas);
+	window->show();
+	
+	// Run
+	window->run();
+	delete window;
+	delete canvas;
 }
 
 /** Runs the test. */
 int main(int argc, char *argv[]) {
 	
-	string filename;
+	Toolkit kit(argc, argv);
+	DatasetTest test;
 	
-	// Handle arguments
-	if (argc == 1) {
-		filename = "textures/bunny128.vlb";
-	} else if (argc == 2) {
-		filename = argv[1];
-	} else {
-		cerr << "Usage: " << argv[0] << " [<filename>]" << endl;
-		exit(1);
-	}
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Dataset" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	Window *window;
-	Canvas *canvas;
-	
-	try {
-		
-		// Set up the dataset
-		Dataset dataset(filename);
-		dataset.load();
-		dataset.print();
-		
-		// Initialize
-		Toolkit kit(argc, argv);
-		
-		// Window and canvas
-		window = WindowFactory::create();
-		canvas = CanvasFactory::create(dataset.getWidth(), dataset.getHeight());
-		
-		// Create the viewer
-		DatasetViewer viewer;
-		viewer.setCanvas(canvas);
-		viewer.setDataset(&dataset);
-		viewer.load();
-		
-		// Pack window
-		window->setTitle(dataset.getFilename());
-		window->add(canvas);
-		window->show();
-		
-		// Run
-		window->run();
-		delete window;
-		delete canvas;
-	}
-	catch (Exception &e) {
-		cerr << e << endl;
-		exit(1);
-	}
+	test.setUp();
+	test.testDisplay();
+	test.tearDown();
 }
 

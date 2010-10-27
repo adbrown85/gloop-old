@@ -24,14 +24,16 @@ public:
 	void setUp();
 	void testFormat();
 	void testGetData();
-	void onCanvasEvent(const CanvasEvent &event);
-	void onCanvasEventDisplay(const CanvasEvent &event);
+	void onCanvasInitEvent(Canvas &canvas) {}
+	void onCanvasDisplayEvent(Canvas &canvas);
+	void onCanvasKeyEvent(Canvas &canvas) {}
+	void onCanvasButtonEvent(Canvas &canvas) {}
+	void onCanvasDragEvent(Canvas &canvas) {}
 private:
 	Image *image;
 	CanvasGTK *canvas;
 	Gtk::Window *window;
 };
-
 
 /* Load the image. */
 void ImageTest::setUp() {
@@ -41,7 +43,6 @@ void ImageTest::setUp() {
 	// Create image
 	image = new FakeImage("../../textures/crate.jpg");
 }
-
 
 /* Makes sure the image determined if it uses alpha or not. */
 void ImageTest::testFormat() {
@@ -60,7 +61,6 @@ void ImageTest::testFormat() {
 	assert(image->getFormat() == GL_RGB);
 }
 
-
 /* Displays the image in OpenGL. */
 void ImageTest::testGetData() {
 	
@@ -68,7 +68,7 @@ void ImageTest::testGetData() {
 	
 	// Create canvas
 	canvas = new CanvasGTK();
-	canvas->addListener(this, CanvasEvent::DISPLAY);
+	canvas->addListener(this);
 	
 	// Pack
 	window = new Gtk::Window();
@@ -80,35 +80,18 @@ void ImageTest::testGetData() {
 	Gtk::Main::run(*window);
 }
 
-
-/* Handles incoming canvas events. */
-void ImageTest::onCanvasEvent(const CanvasEvent &event) {
-	
-	switch (event.type) {
-	case CanvasEvent::DISPLAY:
-		onCanvasEventDisplay(event);
-		break;
-	}
-}
-
-
 /* Handles an incoming canvas display event. */
-void ImageTest::onCanvasEventDisplay(const CanvasEvent &event) {
+void ImageTest::onCanvasDisplayEvent(Canvas &canvas) {
 	
-	// Clear
-	canvas->clear();
+	glClearColor(0, 1, 0, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
 	
-	// Draw pixels
-	glDrawPixels(image->getWidth(),                         // width
-	             image->getHeight(),                        // height
-	             image->getFormat(),                        // format
-	             GL_UNSIGNED_BYTE,                          // type
-	             image->getData());                         // data
-	
-	// Flush
-	canvas->flush();
+	glDrawPixels(image->getWidth(),
+	             image->getHeight(),
+	             image->getFormat(),
+	             GL_UNSIGNED_BYTE,
+	             image->getData());
 }
-
 
 /* Run the test */
 int main(int argc, char *argv[]) {
@@ -117,24 +100,9 @@ int main(int argc, char *argv[]) {
 	Gtk::GL::init(argc, argv);
 	ImageTest test;
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Image" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
 	test.setUp();
 	test.testFormat();
 	test.testGetData();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Image" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
 	return 0;
 }
 
