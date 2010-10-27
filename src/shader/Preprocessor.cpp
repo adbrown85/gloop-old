@@ -16,7 +16,7 @@ bool Preprocessor::isInclude(const string &line) {
 
 /** Loads a file into the code.
  * 
- * @throw Exception if the file cannot be opened.
+ * @throw BasicException if the file cannot be opened.
  */
 void Preprocessor::load(const string &filename) {
 	
@@ -28,7 +28,7 @@ void Preprocessor::load(const string &filename) {
 	// Open file
 	file.open(filename.c_str());
 	if (!file) {
-		Exception e;
+		BasicException e;
 		e << "[Preprocessor] Could not open '" << filename << "'.";
 		throw e;
 	}

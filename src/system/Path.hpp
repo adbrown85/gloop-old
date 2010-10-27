@@ -10,7 +10,7 @@
 #include <cctype>
 #include <cstring>
 #include <vector>
-#include "Exception.hpp"
+#include "BasicException.hpp"
 using namespace std;
 
 

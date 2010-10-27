@@ -47,7 +47,7 @@ TextureInvoice TextureFactory::create(const TextureOrder &order) {
 	case GL_TEXTURE_1D:
 	case GL_TEXTURE_3D:
 	default:
-		throw Exception("[TextureFactory] Order type not supported.");
+		throw BasicException("[TextureFactory] Order type not supported.");
 	}
 }
 

@@ -23,7 +23,7 @@ void ShaderBuilder::build(const string &type, const string &filename) {
 
 /** Requests a handle to a new GLSL shader of the correct type.
  * 
- * @throw Exception if <i>type</i> is not supported.
+ * @throw BasicException if <i>type</i> is not supported.
  */
 void ShaderBuilder::create() {
 	
@@ -33,17 +33,14 @@ void ShaderBuilder::create() {
 	} else if (type == "vertex") {
 		handle = glCreateShader(GL_VERTEX_SHADER);
 	} else {
-		Exception e;
+		BasicException e;
 		e << "[Shader] Type not supported.";
 		throw e;
 	}
 }
 
 
-/** Loads a file into the Shader's source array and passes it to OpenGL.
- * 
- * @throw Exception from CodeLoader.
- */
+/** Loads a file into the Shader's source array and passes it to OpenGL. */
 void ShaderBuilder::load() {
 	
 	Code::iterator it;
@@ -70,7 +67,7 @@ void ShaderBuilder::load() {
 
 /** Compiles the shader and prints the log.
  * 
- * @throw Exception if the shader doesn't compile.
+ * @throw BasicException if the shader doesn't compile.
  */
 void ShaderBuilder::compile() {
 	
@@ -91,7 +88,7 @@ void ShaderBuilder::compile() {
 	// Check
 	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
 	if (!compiled) {
-		Exception e;
+		BasicException e;
 		e << "[ShaderBuilder] '" << filename << "' did not compile." << endl;
 		throw e;
 	}

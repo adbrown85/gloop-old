@@ -29,7 +29,7 @@ Dataset::~Dataset() {
 /** Makes sure that an index is in bounds.
  * 
  * @param [in] index Integer coordinates specifying the location in dataset.
- * @throw Exception if index is out of bounds
+ * @throw BasicException if index is out of bounds
  */
 void Dataset::checkIndex(const Index &index) const {
 	
@@ -37,7 +37,7 @@ void Dataset::checkIndex(const Index &index) const {
 	if (index.i < 0 || index.i > height
 	      || index.j < 0 || index.j > width
 	      || index.k < 0 || index.k > depth) {
-		throw Exception("[Dataset] Index is out of bounds.");
+		throw BasicException("[Dataset] Index is out of bounds.");
 	}
 }
 
@@ -72,7 +72,7 @@ void Dataset::get(const Index &index,
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throw Exception if the dataset's type is not GL_UNSIGNED_BYTE.
+ * @throw BasicException if the dataset's type is not GL_UNSIGNED_BYTE.
  * @return Copy of the value as an unsigned byte.
  * @note Remember if you want to print the value, cast it to an @c int first.
  */
@@ -82,7 +82,7 @@ unsigned char Dataset::getAsByte(const Index &I) const {
 	
 	// Check type
 	if (type != GL_UNSIGNED_BYTE) {
-		throw Exception("[Dataset] Data is not made up of unsigned bytes.");
+		throw BasicException("[Dataset] Data not made up of unsigned bytes.");
 	}
 	
 	// Return the value
@@ -94,7 +94,7 @@ unsigned char Dataset::getAsByte(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throw Exception if the dataset's type is not GL_FLOAT.
+ * @throw BasicException if the dataset's type is not GL_FLOAT.
  * @return Copy of the value as a float.
  */
 float Dataset::getAsFloat(const Index &I) const {
@@ -103,7 +103,7 @@ float Dataset::getAsFloat(const Index &I) const {
 	
 	// Check type
 	if (type != GL_FLOAT) {
-		throw Exception("[Dataset] Data is not made up of floats.");
+		throw BasicException("[Dataset] Data not made up of floats.");
 	}
 	
 	// Return the value
@@ -115,7 +115,7 @@ float Dataset::getAsFloat(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throw Exception if the dataset's type is not GL_SHORT.
+ * @throw BasicException if the dataset's type is not GL_SHORT.
  * @return Copy of the value as a short.
  */
 short Dataset::getAsShort(const Index &I) const {
@@ -124,7 +124,7 @@ short Dataset::getAsShort(const Index &I) const {
 	
 	// Check type
 	if (type != GL_SHORT) {
-		throw Exception("[Dataset] Data is not made up of shorts.");
+		throw BasicException("[Dataset] Data not made up of shorts.");
 	}
 	
 	// Return the value
@@ -136,7 +136,7 @@ short Dataset::getAsShort(const Index &I) const {
 /** Gets the value of an element in the data.
  * 
  * @param [in] I Integer coordinates specifying the location in dataset.
- * @throw Exception if the dataset's type is not GL_SHORT.
+ * @throw BasicException if the dataset's type is not GL_SHORT.
  * @return Copy of the value as a short.
  */
 unsigned short Dataset::getAsUnsignedShort(const Index &I) const {
@@ -145,7 +145,7 @@ unsigned short Dataset::getAsUnsignedShort(const Index &I) const {
 	
 	// Check type
 	if (type != GL_UNSIGNED_SHORT) {
-		throw Exception("[Dataset] Data is not made up of unsigned shorts.");
+		throw BasicException("[Dataset] Data not made up of unsigned shorts.");
 	}
 	
 	// Return the value
@@ -216,7 +216,7 @@ void Dataset::initTypeBlock() {
 		this->type = GL_FLOAT;
 		block = 4;
 	} else {
-		throw Exception("[Dataset] Data type not currently supported.");
+		throw BasicException("[Dataset] Data type not currently supported.");
 	}
 }
 
@@ -307,7 +307,7 @@ void Dataset::readData() {
 	// Open the file
 	file.open(header.getFilename().c_str(), ios_base::binary);
 	if (!file) {
-		throw Exception("[Dataset] Could not open file in binary mode.");
+		throw BasicException("[Dataset] Could not open file in binary mode.");
 	}
 	
 	// Skip everything up to the data
@@ -317,7 +317,7 @@ void Dataset::readData() {
 	// Read the data by type
 	file.read(reinterpret_cast<char*>(data), length * block);
 	if (file.gcount() != length * block) {
-		throw Exception("[Dataset] Did not read correct number of bytes.");
+		throw BasicException("[Dataset] Did not read right number of bytes.");
 	}
 }
 
@@ -338,7 +338,7 @@ void Dataset::set(const Index &index,
 	
 	// Check type
 	if (type != this->type) {
-		throw Exception("[Dataset] Types do not match!");
+		throw BasicException("[Dataset] Types do not match!");
 	}
 	
 	// Copy the value

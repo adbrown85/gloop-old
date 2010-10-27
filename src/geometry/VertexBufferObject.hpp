@@ -8,7 +8,7 @@
 #define VERTEXBUFFEROBJECT_HPP
 #include "BufferObject.hpp"
 #include "VertexAttribute.hpp"
-#include "Exception.hpp"
+#include "BasicException.hpp"
 using namespace std;
 
 

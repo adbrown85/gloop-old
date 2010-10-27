@@ -54,7 +54,7 @@ void ErrorChecker::report(GLenum error, const string &location) {
 		glog << "Out of memory." << endl;
 		break;
 	default:
-		throw new Exception("[ErrorChecker] Unexpected error flag.");
+		throw BasicException("[ErrorChecker] Unexpected error flag.");
 	}
 }
 

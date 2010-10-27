@@ -294,7 +294,7 @@ ostream& operator<<(ostream &out, const Vec4 &A) {
 }
 
 
-/** @throw Exception if the index is out of bounds. */
+/** @throw BasicException if the index is out of bounds. */
 float& Vec4::operator[](int i) {
 	
 	// Return correct component
@@ -304,12 +304,12 @@ float& Vec4::operator[](int i) {
 		case 2: return z;
 		case 3: return w;
 		default:
-			throw Exception("[Vector] Index out of bounds.");
+			throw BasicException("[Vector] Index out of bounds.");
 	}
 }
 
 
-/** @throw Exception if the index is out of bounds. */
+/** @throw BasicException if the index is out of bounds. */
 float Vec4::operator[](int i) const {
 	
 	// Return correct component
@@ -319,7 +319,7 @@ float Vec4::operator[](int i) const {
 		case 2: return z;
 		case 3: return w;
 		default:
-			throw Exception("[Vector] Index out of bounds.");
+			throw BasicException("[Vector] Index out of bounds.");
 	}
 }
 
@@ -349,7 +349,7 @@ float dot(const Vec4 &A, const Vec4 &B) {
 }
 
 
-/** @throw Exception if index out of bounds. */
+/** @throw BasicException if index out of bounds. */
 float Vec4::get(int i) const {
 	
 	// Return correct component
@@ -359,7 +359,7 @@ float Vec4::get(int i) const {
 		case 2: return z;
 		case 3: return w;
 		default:
-			throw Exception("[Vector] Index out of bounds.");
+			throw BasicException("[Vector] Index out of bounds.");
 	}
 }
 

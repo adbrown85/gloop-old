@@ -138,9 +138,9 @@ Matrix Matrix::getTranspose() const {
 float& Matrix::operator()(int i, int j) {
 	
 	if (i < 0 || i >= size)
-		throw Exception("[Matrix] Index out of bounds.");
+		throw BasicException("[Matrix] Index out of bounds.");
 	if (j < 0 || j >= size)
-		throw Exception("[Matrix] Index out of bounds.");
+		throw BasicException("[Matrix] Index out of bounds.");
 	return arr[i][j];
 }
 
@@ -149,9 +149,9 @@ float& Matrix::operator()(int i, int j) {
 float Matrix::operator()(int i, int j) const {
 	
 	if (i < 0 || i >= size)
-		throw Exception("[Matrix] Index out of bounds.");
+		throw BasicException("[Matrix] Index out of bounds.");
 	if (j < 0 || j >= size)
-		throw Exception("[Matrix] Index out of bounds.");
+		throw BasicException("[Matrix] Index out of bounds.");
 	return arr[i][j];
 }
 

@@ -9,7 +9,7 @@
 #include "common.h"
 #include <fstream>
 #include <iomanip>
-#include "Exception.hpp"
+#include "BasicException.hpp"
 #include "Path.hpp"
 #include "Text.hpp"
 #include "Code.hpp"

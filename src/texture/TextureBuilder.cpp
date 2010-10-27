@@ -40,7 +40,7 @@ void TextureBuilder::check(const string &filename) {
 	opened = file;
 	file.close();
 	if (!opened) {
-		Exception e;
+		BasicException e;
 		e << "[TextureBuilder] Could not open '" << filename << "'.";
 		throw e;
 	}

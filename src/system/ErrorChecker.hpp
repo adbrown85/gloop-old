@@ -8,7 +8,7 @@
 #define ERRORCHECKER_HPP
 #include "common.h"
 #include "Log.hpp"
-#include "Exception.hpp"
+#include "BasicException.hpp"
 using namespace std;
 
 

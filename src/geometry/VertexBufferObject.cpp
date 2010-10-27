@@ -70,18 +70,18 @@ void VertexBufferObject::allocate(GLenum usage,
 
 /** Move to the next vertex of the same attribute after a put.
  * 
- * @throw Exception if not an interleaved vertex buffer object. 
+ * @throw BasicException if not an interleaved vertex buffer object. 
  */
 void VertexBufferObject::enableStriding() {
 	
 	if (!isInterleaved()) {
-		Exception e;
+		BasicException e;
 		e << "[VertexBufferObject] Cannot use striding when not interleaved.";
 		throw e;
 	}
 	
 	if (!isAllocated()) {
-		Exception e;
+		BasicException e;
 		e << "[VertexBufferObject] Cannot set striding before allocated.";
 	}
 
@@ -100,9 +100,9 @@ void VertexBufferObject::flush() {
 	if (isAllocated()) {
 		BufferObject::update(size, data, 0);
 	} else {
-		Exception e;
+		BasicException e;
 		e << "[VertexBufferObject] Cannot flush before being allocated.";
-		throw Exception(e);
+		throw e;
 	}
 }
 
@@ -110,7 +110,7 @@ void VertexBufferObject::flush() {
 void VertexBufferObject::put(float x, float y) {
 	
 	if ((current + SIZEOF_VEC2) > end) {
-		throw Exception("Put would exceed buffer.");
+		throw BasicException("Put would exceed buffer.");
 	}
 	
 	((GLfloat*)current)[0] = x;
@@ -122,7 +122,7 @@ void VertexBufferObject::put(float x, float y) {
 void VertexBufferObject::put(float x, float y, float z) {
 
 	if ((current + SIZEOF_VEC3) > end) {
-		throw Exception("Put would exceed buffer.");
+		throw BasicException("Put would exceed buffer.");
 	}
 	
 	((GLfloat*)current)[0] = x;
@@ -135,7 +135,7 @@ void VertexBufferObject::put(float x, float y, float z) {
 void VertexBufferObject::put(float x, float y, float z, float w) {
 	
 	if ((current + SIZEOF_VEC4) > end) {
-		throw Exception("Put would exceed buffer.");
+		throw BasicException("Put would exceed buffer.");
 	}
 	
 	((GLfloat*)current)[0] = x;
@@ -157,7 +157,7 @@ void VertexBufferObject::setInterleaved(bool interleaved) {
 	if (!isAllocated()) {
 		this->interleaved = interleaved;
 	} else {
-		Exception e;
+		BasicException e;
 		e << "[VertexBufferObject] Cannot change interleave after allocated.";
 		throw e;
 	}
@@ -173,7 +173,7 @@ void VertexBufferObject::seek(const string &name) {
 	if (it != positions.end()) {
 		current = data + it->second;
 	} else {
-		Exception e;
+		BasicException e;
 		e << "[VertexBufferObject] Attribute '" + name + "' not stored.";
 		throw e;
 	}

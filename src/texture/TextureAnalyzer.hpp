@@ -7,7 +7,7 @@
 #ifndef TEXTUREANALYZER_HPP
 #define TEXTUREANALYZER_HPP
 #include "common.h"
-#include "Exception.hpp"
+#include "BasicException.hpp"
 #include "Log.hpp"
 #include "PixelFormat.hpp"
 using namespace std;

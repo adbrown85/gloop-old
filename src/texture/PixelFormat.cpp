@@ -32,7 +32,7 @@ GLenum PixelFormat::getFormat(const string &name) {
 	if (it != namesToCodes.end()) {
 		return it->second;
 	} else {
-		Exception e;
+		BasicException e;
 		e << "[PixelFormat] Format '" << name << "' not loaded.";
 		throw e;
 	}
@@ -52,7 +52,7 @@ string PixelFormat::getFormat(GLenum code) {
 	if (it != codesToNames.end()) {
 		return it->second;
 	} else {
-		Exception e;
+		BasicException e;
 		e << "[PixelFormat] Format '" << code << "' not loaded.";
 		throw e;
 	}
@@ -72,7 +72,7 @@ GLenum PixelFormat::getCompressedFormat(GLenum code) {
 	if (it != codesToCompressCodes.end()) {
 		return it->second;
 	} else {
-		Exception e;
+		BasicException e;
 		e << "[PixelFormat] Equivalent compressed format not loaded.";
 		throw e;
 	}

@@ -58,7 +58,7 @@ map<float,size_t> DatasetAnalyzer::findHistogram() {
 		findHistogramAsUShort(histogram);
 		break;
 	default:
-		throw Exception("[DatasetAnalyzer] Dataset type not supported.");
+		throw BasicException("[DatasetAnalyzer] Dataset type not supported.");
 	}
 	return histogram;
 }
@@ -112,7 +112,7 @@ pair<float,float> DatasetAnalyzer::findRange() {
 		findRangeAsUShort(range);
 		break;
 	default:
-		throw Exception("[DatasetAnalyzer] Dataset type not supported.");
+		throw BasicException("[DatasetAnalyzer] Dataset type not supported.");
 	}
 	return range;
 }

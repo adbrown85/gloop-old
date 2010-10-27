@@ -30,7 +30,7 @@ GLint TextureAnalyzer::getBitsPerPixel() {
 	case GL_LUMINANCE:
 		return getLuminanceSize();
 	default:
-		throw Exception("[TextureAnalyzer] Format not supported.");
+		throw BasicException("[TextureAnalyzer] Format not supported.");
 	}
 }
 
