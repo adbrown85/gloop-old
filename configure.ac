@@ -45,6 +45,16 @@ AC_FUNC_MALLOC
 AC_HEADER_STDBOOL
 AC_TYPE_SIZE_T
 
+# Check for EDO
+error_no_edo() {
+	echo "-------------------------------------------------------"
+	echo " EDO is needed to build GLoop                          "
+	echo " Visit 'http://gander.sourceforge.net'                 "
+	echo "-------------------------------------------------------"
+	(exit 1); exit 1;
+}
+AC_CHECK_HEADER([edo/common.h], , [error_no_edo])
+
 # Check for GLawt
 warning_no_glawt() {
 	echo "-------------------------------------------------------"
