@@ -9,7 +9,7 @@
 #include "common.h"
 #include <cmath>
 #include <iomanip>
-#include "BasicException.hpp"
+#include <edo/BasicException.hpp>
 using namespace std;
 
 

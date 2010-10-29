@@ -7,9 +7,9 @@
 #ifndef ERROR_HPP
 #define ERROR_HPP
 #include "common.h"
+#include <edo/Log.hpp>
+#include <edo/Text.hpp>
 #include "Code.hpp"
-#include "Log.hpp"
-#include "Text.hpp"
 using namespace std;
 
 

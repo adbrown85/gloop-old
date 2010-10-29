@@ -6,9 +6,9 @@
  */
 #ifndef VERTEXBUFFEROBJECT_HPP
 #define VERTEXBUFFEROBJECT_HPP
+#include <edo/BasicException.hpp>
 #include "BufferObject.hpp"
 #include "VertexAttribute.hpp"
-#include "BasicException.hpp"
 using namespace std;
 
 

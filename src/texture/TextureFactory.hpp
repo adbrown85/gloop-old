@@ -7,8 +7,8 @@
 #ifndef TEXTUREFACTORY_HPP
 #define TEXTUREFACTORY_HPP
 #include "common.h"
-#include "Path.hpp"
-#include "Text.hpp"
+#include <edo/Path.hpp>
+#include <edo/Text.hpp>
 #include "TextureBuilder2D.hpp"
 #include "TextureBuilder3D.hpp"
 using namespace std;

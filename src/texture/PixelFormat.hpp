@@ -7,7 +7,7 @@
 #ifndef PIXELFORMAT_HPP
 #define PIXELFORMAT_HPP
 #include "common.h"
-#include "BasicException.hpp"
+#include <edo/BasicException.hpp>
 using namespace std;
 
 

@@ -13,9 +13,9 @@
 #include <ctime>
 #include <fstream>
 #include <iomanip>
+#include <edo/Log.hpp>
 #include "DatasetHeader.hpp"
 #include "Index.hpp"
-#include "Log.hpp"
 using namespace std;
 
 

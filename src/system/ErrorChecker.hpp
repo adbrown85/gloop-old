@@ -7,8 +7,8 @@
 #ifndef ERRORCHECKER_HPP
 #define ERRORCHECKER_HPP
 #include "common.h"
-#include "Log.hpp"
-#include "BasicException.hpp"
+#include <edo/Log.hpp>
+#include <edo/BasicException.hpp>
 using namespace std;
 
 

@@ -9,9 +9,9 @@
 #include "common.h"
 #include <fstream>
 #include <iomanip>
-#include "BasicException.hpp"
-#include "Path.hpp"
-#include "Text.hpp"
+#include <edo/BasicException.hpp>
+#include <edo/Path.hpp>
+#include <edo/Text.hpp>
 #include "Code.hpp"
 using namespace std;
 

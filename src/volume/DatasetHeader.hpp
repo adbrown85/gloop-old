@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <sstream>
 #include <vector>
-#include "BasicException.hpp"
+#include <edo/BasicException.hpp>
 #include "Vec4.hpp"
 using namespace std;
 

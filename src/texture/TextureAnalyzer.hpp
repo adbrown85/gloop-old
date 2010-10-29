@@ -7,8 +7,8 @@
 #ifndef TEXTUREANALYZER_HPP
 #define TEXTUREANALYZER_HPP
 #include "common.h"
-#include "BasicException.hpp"
-#include "Log.hpp"
+#include <edo/BasicException.hpp>
+#include <edo/Log.hpp>
 #include "PixelFormat.hpp"
 using namespace std;
 
