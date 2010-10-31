@@ -7,6 +7,7 @@
 #ifndef GLOOP_BUFFEROBJECT_HPP
 #define GLOOP_BUFFEROBJECT_HPP
 #include "gloop_common.h"
+#include "edo/BasicException.hpp"
 using namespace std;
 
 /** @brief OpenGL buffer object.

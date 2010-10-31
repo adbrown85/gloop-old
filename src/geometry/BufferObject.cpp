@@ -40,6 +40,12 @@ void BufferObject::unbind() {
 /** Allocates enough room for the VBO. */
 void BufferObject::allocate(GLenum usage, GLsizei size) {
 	
+	if (!isBound()) {
+		BasicException e;
+		e << "[BufferObject] Buffer must be bound to allocate";
+		throw e;
+	}
+	
 	glBufferData(type,                // target
 				 size,                // size
 				 NULL,                // data
