@@ -6,6 +6,19 @@
  */
 #include "ErrorChecker.hpp"
 
+/** Clears error state and throws an exception if there is an error. */
+void ErrorChecker::assertNoError(const string &location) {
+	
+	GLenum error;
+	
+	error = glGetError();
+	if (error != GL_NO_ERROR) {
+		BasicException e;
+		e << "At '" << location << "': " << toString(error);
+		clear();
+		throw e;
+	}
+}
 
 /** Checks for an OpenGL error. */
 void ErrorChecker::check(const string &location) {
@@ -19,7 +32,6 @@ void ErrorChecker::check(const string &location) {
 	}
 }
 
-
 /** Clears all the error flags. */
 void ErrorChecker::clear() {
 	
@@ -31,28 +43,27 @@ void ErrorChecker::clear() {
 	}
 }
 
-
 /** Print information about an error. */
 void ErrorChecker::report(GLenum error, const string &location) {
 	
 	glog << "At '" << location << "':" << endl;
-	
+	glog << toString(error) << endl;
+}
+
+/** @return Human-readable description for an error. */
+string ErrorChecker::toString(GLenum error) {
+
 	switch (error) {
 	case GL_INVALID_ENUM:
-		glog << "Invalid enumeration." << endl;
-		break;
+		return "Invalid enumeration.";
 	case GL_INVALID_VALUE:
-		glog << "Invalid value." << endl;
-		break;
+		return "Invalid value.";
 	case GL_INVALID_OPERATION:
-		glog << "Invalid operation." << endl;
-		break;
+		return "Invalid operation.";
 	case GL_INVALID_FRAMEBUFFER_OPERATION:
-		glog << "Invalid framebuffer operation." << endl;
-		break;
+		return "Invalid framebuffer operation.";
 	case GL_OUT_OF_MEMORY:
-		glog << "Out of memory." << endl;
-		break;
+		return "Out of memory.";
 	default:
 		throw BasicException("[ErrorChecker] Unexpected error flag.");
 	}

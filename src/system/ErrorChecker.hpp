@@ -15,10 +15,12 @@ using namespace std;
 /** Utility for checking for OpenGL errors. */
 class ErrorChecker {
 public:
+	static void assertNoError(const string &location);
 	static void check(const string &location);
 	static void clear();
 private:
 	static void report(GLenum error, const string &location);
+	static string toString(GLenum error);
 };
 
 
