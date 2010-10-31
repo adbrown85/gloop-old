@@ -18,6 +18,7 @@ class VertexBufferObjectTest {
 public:
 	void setUp();
 	void tearDown();
+	void testAllocate();
 	void testPut();
 private:
 	Window *window;
@@ -39,6 +40,27 @@ void VertexBufferObjectTest::tearDown() {
 
 	delete window;
 	delete canvas;
+}
+
+/** Ensures the VBO creates the correct size. */
+void VertexBufferObjectTest::testAllocate() {
+	
+	VertexBufferObject *vbo;
+	int param;
+	
+	cout << "VertexBufferObjectTest::testAllocate" << endl;
+	
+	vbo = new VertexBufferObject();
+	vbo->bind();
+	vbo->addAttribute("MCVertex", 3);
+	vbo->addAttribute("TexCoord0", 3);
+	vbo->allocate(GL_STATIC_DRAW, 3);
+	
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &param);
+	assert(param == sizeof(float) * (3 + 3) * 3);
+	
+	ErrorChecker::assertNoError("testAllocate");
+	cout << "PASSED" << endl;
 }
 
 /** Ensures an exception will be thrown when put is exceeded. */
@@ -79,6 +101,7 @@ int main(int argc, char *argv[]) {
 	
 	test.setUp();
 	try {
+		test.testAllocate();
 		test.testPut();
 	} catch (exception &e) {
 		cerr << e.what() << endl;
