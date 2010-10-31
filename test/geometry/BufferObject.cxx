@@ -10,17 +10,32 @@
 #include <cassert>
 #include "BufferObject.hpp"
 
+/* Fake BufferObject for exposing some methods. */
+class FakeBufferObject : public BufferObject {
+public:
+	FakeBufferObject(GLenum type) : BufferObject(type) { }
+	virtual void allocate(GLenum usage, GLsizei size);
+};
+
+/* Expose allocate method. */
+inline void FakeBufferObject::allocate(GLenum usage, GLsizei size) {
+	BufferObject::allocate(usage, size);
+}
+
+/** Unit test for BufferObject. */
 class BufferObjectTest {
 public:
 	void setUp();
 	void tearDown();
 	void testConstructor();
 	void testBind();
+	void testAllocate();
 private:
 	Window *window;
 	Canvas *canvas;
 };
 
+/** Create a window/canvas so we can call GL functions. */
 void BufferObjectTest::setUp() {
 	
 	window = GLAWTFactory::createWindow();
@@ -31,12 +46,14 @@ void BufferObjectTest::setUp() {
 	window->show();
 }
 
+/** Destroy the window/canvas. */
 void BufferObjectTest::tearDown() {
 	
 	delete window;
 	delete canvas;
 }
 
+/** Ensure a BufferObject can be created. */
 void BufferObjectTest::testConstructor() {
 	
 	BufferObject *bo;
@@ -48,6 +65,7 @@ void BufferObjectTest::testConstructor() {
 	cout << "PASSED" << endl;
 }
 
+/** Ensure BufferObject will be bound and unbound correctly. */
 void BufferObjectTest::testBind() {
 	
 	BufferObject *bo;
@@ -66,6 +84,25 @@ void BufferObjectTest::testBind() {
 	cout << "PASSED" << endl;
 }
 
+/** Ensure memory gets allocated correctly. */
+void BufferObjectTest::testAllocate() {
+	
+	FakeBufferObject *bo;
+	int param;
+	
+	cout << "BufferObjectTest::testAllocate" << endl;
+	bo = new FakeBufferObject(GL_ARRAY_BUFFER);
+	bo->bind();
+	bo->allocate(GL_STATIC_DRAW, 128);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_USAGE, &param);
+	assert(param == GL_STATIC_DRAW);
+	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &param);
+	assert(param == 128);
+	bo->unbind();
+	cout << "PASSED" << endl;
+}
+
+/* Run the test. */
 int main(int argc, char *argv[]) {
 	
 	Toolkit toolkit(argc, argv);
@@ -74,6 +111,7 @@ int main(int argc, char *argv[]) {
 	test.setUp();
 	test.testConstructor();
 	test.testBind();
+	test.testAllocate();
 	test.tearDown();
 	cout << "ALL TESTS PASSED" << endl;
 }
