@@ -14,6 +14,7 @@ BufferObject::BufferObject(GLenum type) {
 	
 	// Generate
 	glGenBuffers(1, &handle);
+	bound = false;
 }
 
 /** Destroys the buffer object. */
@@ -26,12 +27,14 @@ BufferObject::~BufferObject() {
 void BufferObject::bind() {
 	
 	glBindBuffer(type, handle);
+	bound = true;
 }
 
 /** Stop using the buffer object. */
 void BufferObject::unbind() {
 	
 	glBindBuffer(type, 0);
+	bound = false;
 }
 
 /** Allocates enough room for the VBO. */

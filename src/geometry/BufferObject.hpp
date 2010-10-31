@@ -19,13 +19,15 @@ public:
 	virtual ~BufferObject();
 	virtual void bind();
 	virtual void unbind();
+// Getters and setters
+	virtual bool isBound() const;
+	virtual GLuint getHandle() const;
+	virtual GLenum getType() const;
 protected:
 	virtual void allocate(GLenum usage, GLsizei size);
 	virtual void update(GLsizei size, GLvoid *data, int offset=0);
-public:
-	virtual GLuint getHandle() const;
-	virtual GLenum getType() const;
 private:
+	bool bound;
 	GLuint handle;
 	GLenum type;
 };
@@ -35,5 +37,8 @@ inline GLuint BufferObject::getHandle() const {return handle;}
 
 /** @return Type of the buffer. */
 inline GLenum BufferObject::getType() const {return type;}
+
+/** @return True if buffer is currently active. */
+inline bool BufferObject::isBound() const {return bound;}
 
 #endif
