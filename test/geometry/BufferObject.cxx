@@ -9,6 +9,7 @@
 #include <glawt/GLAWTFactory.hpp>
 #include <cassert>
 #include "BufferObject.hpp"
+#include "ErrorChecker.hpp"
 
 /* Fake BufferObject for exposing some methods. */
 class FakeBufferObject : public BufferObject {
@@ -62,6 +63,7 @@ void BufferObjectTest::testConstructor() {
 	bo = new BufferObject(GL_ARRAY_BUFFER);
 	assert(bo->getType() == GL_ARRAY_BUFFER);
 	assert(bo->getHandle() != 0);
+	ErrorChecker::assertNoError("testConstructor");
 	cout << "PASSED" << endl;
 }
 
@@ -81,6 +83,7 @@ void BufferObjectTest::testBind() {
 	assert(!bo->isBound());
 	glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &handle);
 	assert(handle == 0);
+	ErrorChecker::assertNoError("testBind");
 	cout << "PASSED" << endl;
 }
 
@@ -99,6 +102,7 @@ void BufferObjectTest::testAllocate() {
 	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &param);
 	assert(param == 128);
 	bo->unbind();
+	ErrorChecker::assertNoError("testAllocate");
 	cout << "PASSED" << endl;
 }
 
