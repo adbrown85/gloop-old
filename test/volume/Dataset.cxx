@@ -4,6 +4,7 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
+#include "gloop_common.h"
 #include <cstring>
 #include <glawt/Toolkit.hpp>
 #include <glawt/GLAWTFactory.hpp>

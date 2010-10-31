@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef VEC4_HPP
-#define VEC4_HPP
-#include "common.h"
+#ifndef GLOOP_VEC4_HPP
+#define GLOOP_VEC4_HPP
+#include "gloop_common.h"
 #include <cmath>
 #include <iomanip>
 #include <edo/BasicException.hpp>

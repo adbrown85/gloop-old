@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef STATE_HPP
-#define STATE_HPP
-#include "common.h"
+#ifndef GLOOP_STATE_HPP
+#define GLOOP_STATE_HPP
+#include "gloop_common.h"
 #include "MatrixStack.hpp"
 using namespace std;
 

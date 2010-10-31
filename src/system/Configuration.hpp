@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CONFIGURATION_HPP
-#define CONFIGURATION_HPP
-#include "common.h"
+#ifndef GLOOP_CONFIGURATION_HPP
+#define GLOOP_CONFIGURATION_HPP
+#include "gloop_common.h"
 using namespace std;
 
 

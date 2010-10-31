@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef DATASETWRITER_HPP
-#define DATASETWRITER_HPP
-#include "common.h"
+#ifndef GLOOP_DATASETWRITER_HPP
+#define GLOOP_DATASETWRITER_HPP
+#include "gloop_common.h"
 #include "Dataset.hpp"
 using namespace std;
 

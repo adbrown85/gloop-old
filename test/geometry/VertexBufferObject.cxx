@@ -4,6 +4,7 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
+#include "gloop_common.h"
 #include <gtkmm/main.h>
 #include <glawt/Toolkit.hpp>
 #include <glawt/GLAWTFactory.hpp>
@@ -11,75 +12,74 @@
 #include "ErrorChecker.hpp"
 
 
-/* CanvasListener. */
-class FakeCanvasListener : public CanvasListener {
+/** Unit test for VertexBufferObject. */
+class VertexBufferObjectTest {
 public:
-	virtual void onCanvasInitEvent(Canvas &canvas) {}
-	virtual void onCanvasDisplayEvent(Canvas &canvas);
+	void testPut();
+};
+
+class TestPutListener : public CanvasListener {
+public:
+	virtual void onCanvasInitEvent(Canvas &canvas);
+	virtual void onCanvasDisplayEvent(Canvas &canvas) {}
 	virtual void onCanvasKeyEvent(Canvas &canvas) {}
 	virtual void onCanvasButtonEvent(Canvas &canvas) {}
 	virtual void onCanvasDragEvent(Canvas &canvas) {}
-};
-
-/* Handles a canvas display event. */
-void FakeCanvasListener::onCanvasDisplayEvent(Canvas &canvas) {
-	
-	glClearColor(0.0, 1.0, 1.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-}
-
-/* Test for VertexBufferObject. */
-class VertexBufferObjectTest {
-public:
-	void setUp();
-//	void testAllocate();
 private:
 	VertexBufferObject *vbo;
-	Window *window;
-	Canvas *canvas;
-	FakeCanvasListener *listener;
 };
 
-/* Initializes the test. */
-void VertexBufferObjectTest::setUp() {
+void TestPutListener::onCanvasInitEvent(Canvas &canvas) {
+	
+	vbo = new VertexBufferObject();
+	ErrorChecker::check("After VertexBufferObject.");
+	vbo->addAttribute("MCVertex", 3);
+	vbo->addAttribute("TexCoord0", 3);
+	vbo->bind();
+	vbo->allocate(GL_STATIC_DRAW, 3);
+	ErrorChecker::check("After allocate.");
+	cerr << "Size: " << vbo->getSize() << endl;
+	
+	try {
+		vbo->put(-0.5, +0.5, 0); // 1
+		vbo->put( 0.0,  0.1, 0);
+		vbo->put(-0.5, -0.5, 0); // 2
+		vbo->put( 0.0,  0.0, 0);
+		vbo->put(+0.5, +0.5, 0); // 3
+		vbo->put( 1.0,  1.0, 0);
+		vbo->put(0.0, 0.0, 0.0); // Should throw exception!!
+	} catch (exception &e) {
+		cerr << e.what() << endl;
+		exit(1);
+	}
+}
+
+/** Ensures an exception will be thrown when put is exceeded. */
+void VertexBufferObjectTest::testPut() {
+	
+	Window *window;
+	Canvas *canvas;
 	
 	window = GLAWTFactory::createWindow();
 	canvas = GLAWTFactory::createCanvas(512, 512);
-	listener = new FakeCanvasListener();
-	canvas->addListener(listener);
+	canvas->addListener(new TestPutListener());
 	window->setTitle("VertexBufferObject Test");
 	window->add(canvas);
 	window->show();
-	
-	// Initialize
-	vbo = new VertexBufferObject();
-	ErrorChecker::check("After vertex buffer object.");
-	list<VertexAttribute> attribs;
-	attribs.push_back(VertexAttribute("MCVertex", 3));
-	attribs.push_back(VertexAttribute("TexCoord0", 3));
-	vbo->allocate(GL_STATIC_DRAW, 3, attribs);
-	cerr << "Size: " << vbo->getSize() << endl;
-	vbo->put(-0.5, +0.5, 0); // 1
-	vbo->put( 0.0,  0.1, 0);
-	vbo->put(-0.5, -0.5, 0); // 2
-	vbo->put( 0.0,  0.0, 0);
-	vbo->put(+0.5, +0.5, 0); // 3
-	vbo->put( 1.0,  1.0, 0);
-	vbo->put(0.0, 0.0, 0.0); // Should throw exception!!
-	
 	window->run();
+	delete window;
+	delete canvas;
 }
 
 /* Runs the test. */
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
 	
 	Toolkit kit(argc, argv);
 	VertexBufferObjectTest test;
 	
 	try {
-		test.setUp();
-	} catch (BasicException &e) {
-		cerr << e.getMessage() << endl;
+		test.testPut();
+	} catch (exception &e) {
+		cerr << e.what() << endl;
 	}
-	
 }

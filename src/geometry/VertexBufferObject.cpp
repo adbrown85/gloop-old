@@ -30,13 +30,17 @@ VertexBufferObject::~VertexBufferObject() {
 	}
 }
 
+/** Adds a vertex attribute to the VBO. */
+void VertexBufferObject::addAttribute(const string &name, int components) {
+	
+	attributes.push_back(VertexAttribute(name, components));
+}
+
 /** Allocates space for the VBO.
  * 
  * @note Disables striding. 
  */
-void VertexBufferObject::allocate(GLenum usage,
-                                  GLuint count,
-                                  list<VertexAttribute> &attribs) {
+void VertexBufferObject::allocate(GLenum usage, GLuint count) {
 	
 	list<VertexAttribute>::iterator it;
 	GLuint position;
@@ -48,7 +52,7 @@ void VertexBufferObject::allocate(GLenum usage,
 	
 	// Compute size and positions
 	position = 0;
-	for (it=attribs.begin(); it!=attribs.end(); ++it) {
+	for (it=attributes.begin(); it!=attributes.end(); ++it) {
 		positions[it->getName()] = position;
 		position += sizeof(GLfloat) * it->getComponents();
 	}
@@ -56,7 +60,7 @@ void VertexBufferObject::allocate(GLenum usage,
 	
 	// Recompute positions if not interleaved
 	if (!isInterleaved()) {
-		for (it=attribs.begin(); it!=attribs.end(); ++it) {
+		for (it=attributes.begin(); it!=attributes.end(); ++it) {
 			positions[it->getName()] *= count;
 		}
 	}

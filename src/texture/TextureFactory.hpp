@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TEXTUREFACTORY_HPP
-#define TEXTUREFACTORY_HPP
-#include "common.h"
+#ifndef GLOOP_TEXTUREFACTORY_HPP
+#define GLOOP_TEXTUREFACTORY_HPP
+#include "gloop_common.h"
 #include <edo/Path.hpp>
 #include <edo/Text.hpp>
 #include "TextureBuilder2D.hpp"

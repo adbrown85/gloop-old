@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef ERROR_HPP
-#define ERROR_HPP
-#include "common.h"
+#ifndef GLOOP_ERROR_HPP
+#define GLOOP_ERROR_HPP
+#include "gloop_common.h"
 #include <edo/Log.hpp>
 #include <edo/Text.hpp>
 #include "Code.hpp"

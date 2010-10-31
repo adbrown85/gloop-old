@@ -1,7 +1,7 @@
 # Initialize
 AC_PREREQ([2.65])
 AC_INIT([GLoop], [0.96], [adb1413@rit.edu], , [http://gander.sourceforge.net])
-AC_CONFIG_SRCDIR([src/common.h])
+AC_CONFIG_SRCDIR([src/gloop_common.h])
 AC_CONFIG_HEADERS([config.h:config.in])
 AC_CANONICAL_SYSTEM
 AC_PROG_CXX
@@ -53,7 +53,7 @@ error_no_edo() {
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
-AC_CHECK_HEADER([edo/common.h], , [error_no_edo])
+AC_CHECK_HEADER([edo/edo_common.h], , [error_no_edo])
 
 # Check for GLawt
 warning_no_glawt() {

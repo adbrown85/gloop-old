@@ -4,6 +4,7 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
+#include "gloop_common.h"
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 #include <gtkmm/gl/init.h>

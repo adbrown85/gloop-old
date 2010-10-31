@@ -29,7 +29,7 @@ DEFS_EXTRA   :=
 DEPS_CFLAGS  := @DEPS_CFLAGS@
 CXXFLAGS     := @CXXFLAGS@ $(DEFS) $(DEFS_EXTRA) $(DEPS_CFLAGS) $(INCLUDES)
 LIBS         := @LIBS@
-LIBS_EXTRA   := -lglawt
+LIBS_EXTRA   := -ledo -lglawt
 DEPS_LIBS    := @DEPS_LIBS@
 LDFLAGS      := @LDFLAGS@ $(LIBS) $(LIBS_EXTRA) $(DEPS_LIBS)
 ARFLAGS      := -cr
@@ -128,7 +128,7 @@ install:
 	@echo "  Installing headers in $(includedir)/$(tarname)..."
 	@$(INSTALL) -d $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 config.h $(includedir)/$(tarname)
-	@$(INSTALL) -m 0644 src/common.h $(includedir)/$(tarname)
+	@$(INSTALL) -m 0644 src/gloop_common.h $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 src/*/*.hpp $(includedir)/$(tarname)
 uninstall:
 	@echo "  Uninstalling archive from $(libdir)..."

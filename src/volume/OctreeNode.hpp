@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef OCTREENODE_HPP
-#define OCTREENODE_HPP
-#include "common.h"
+#ifndef GLOOP_OCTREENODE_HPP
+#define GLOOP_OCTREENODE_HPP
+#include "gloop_common.h"
 #include <vector>
 using namespace std;
 

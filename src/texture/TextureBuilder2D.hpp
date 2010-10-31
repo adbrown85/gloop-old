@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TEXTUREBUILDER2D_HPP
-#define TEXTUREBUILDER2D_HPP
-#include "common.h"
+#ifndef GLOOP_TEXTUREBUILDER2D_HPP
+#define GLOOP_TEXTUREBUILDER2D_HPP
+#include "gloop_common.h"
 #include "TextureBuilder.hpp"
 #include "ImageFactory.hpp"
 using namespace std;

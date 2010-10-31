@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TEXTUREBUILDER3D_HPP
-#define TEXTUREBUILDER3D_HPP
-#include "common.h"
+#ifndef GLOOP_TEXTUREBUILDER3D_HPP
+#define GLOOP_TEXTUREBUILDER3D_HPP
+#include "gloop_common.h"
 #include "TextureBuilder.hpp"
 #include "Dataset.hpp"
 using namespace std;

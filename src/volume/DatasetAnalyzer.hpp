@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef DATASETANALYZER_HPP
-#define DATASETANALYZER_HPP
-#include "common.h"
+#ifndef GLOOP_DATASETANALYZER_HPP
+#define GLOOP_DATASETANALYZER_HPP
+#include "gloop_common.h"
 #include <iomanip>
 #include "Dataset.hpp"
 using namespace std;

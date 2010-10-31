@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef IMAGEPIXBUF_HPP
-#define IMAGEPIXBUF_HPP
-#include "common.h"
+#ifndef GLOOP_IMAGEPIXBUF_HPP
+#define GLOOP_IMAGEPIXBUF_HPP
+#include "gloop_common.h"
 #ifdef HAVE_PIXBUFS
 #include <gdkmm/pixbuf.h>
 #include "Image.hpp"

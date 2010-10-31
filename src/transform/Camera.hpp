@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CAMERA_HPP
-#define CAMERA_HPP
-#include "common.h"
+#ifndef GLOOP_CAMERA_HPP
+#define GLOOP_CAMERA_HPP
+#include "gloop_common.h"
 #include <GL/glu.h>
 #include "Matrix.hpp"
 #include "Quaternion.hpp"

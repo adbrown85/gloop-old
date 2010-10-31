@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef IMAGE_HPP
-#define IMAGE_HPP
-#include "common.h"
+#ifndef GLOOP_IMAGE_HPP
+#define GLOOP_IMAGE_HPP
+#include "gloop_common.h"
 using namespace std;
 
 

@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef PIXELFORMAT_HPP
-#define PIXELFORMAT_HPP
-#include "common.h"
+#ifndef GLOOP_PIXELFORMAT_HPP
+#define GLOOP_PIXELFORMAT_HPP
+#include "gloop_common.h"
 #include <edo/BasicException.hpp>
 using namespace std;
 

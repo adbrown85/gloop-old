@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef VERTEXATTRIBUTE_HPP
-#define VERTEXATTRIBUTE_HPP
-#include "common.h"
+#ifndef GLOOP_VERTEXATTRIBUTE_HPP
+#define GLOOP_VERTEXATTRIBUTE_HPP
+#include "gloop_common.h"
 using namespace std;
 
 

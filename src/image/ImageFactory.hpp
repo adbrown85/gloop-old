@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef IMAGEFACTORY_HPP
-#define IMAGEFACTORY_HPP
-#include "common.h"
+#ifndef GLOOP_IMAGEFACTORY_HPP
+#define GLOOP_IMAGEFACTORY_HPP
+#include "gloop_common.h"
 #include "Image.hpp"
 #include "ImagePixbuf.hpp"
 using namespace std;

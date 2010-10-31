@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef OCTREEBUILDER_HPP
-#define OCTREEBUILDER_HPP
-#include "common.h"
+#ifndef GLOOP_OCTREEBUILDER_HPP
+#define GLOOP_OCTREEBUILDER_HPP
+#include "gloop_common.h"
 #include <cmath>
 #include "Dataset.hpp"
 #include "OctreeNode.hpp"

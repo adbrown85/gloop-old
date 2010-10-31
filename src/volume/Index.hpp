@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef INDEX_HPP
-#define INDEX_HPP
-#include "common.h"
+#ifndef GLOOP_INDEX_HPP
+#define GLOOP_INDEX_HPP
+#include "gloop_common.h"
 using namespace std;
 
 

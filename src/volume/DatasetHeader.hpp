@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef DATASETHEADER_HPP
-#define DATASETHEADER_HPP
-#include "common.h"
+#ifndef GLOOP_DATASETHEADER_HPP
+#define GLOOP_DATASETHEADER_HPP
+#include "gloop_common.h"
 #include <fstream>
 #include <iomanip>
 #include <sstream>

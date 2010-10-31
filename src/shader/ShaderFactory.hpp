@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef SHADERFACTORY_HPP
-#define SHADERFACTORY_HPP
-#include "common.h"
+#ifndef GLOOP_SHADERFACTORY_HPP
+#define GLOOP_SHADERFACTORY_HPP
+#include "gloop_common.h"
 #include "ShaderBuilder.hpp"
 using namespace std;
 

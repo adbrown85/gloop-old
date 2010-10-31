@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef BUFFEROBJECT_HPP
-#define BUFFEROBJECT_HPP
-#include "common.h"
+#ifndef GLOOP_BUFFEROBJECT_HPP
+#define GLOOP_BUFFEROBJECT_HPP
+#include "gloop_common.h"
 using namespace std;
 
 /** @brief OpenGL buffer object.

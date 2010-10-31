@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef MATH_HPP
-#define MATH_HPP
-#include "common.h"
+#ifndef GLOOP_MATH_HPP
+#define GLOOP_MATH_HPP
+#include "gloop_common.h"
 #include <cmath>                        // sin, cos
 #include "Vec4.hpp"                     // Storing points
 using namespace std;

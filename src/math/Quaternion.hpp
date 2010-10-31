@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef QUATERNION_HPP
-#define QUATERNION_HPP
-#include "common.h"
+#ifndef GLOOP_QUATERNION_HPP
+#define GLOOP_QUATERNION_HPP
+#include "gloop_common.h"
 #include <cmath>
 #include <iomanip>
 #include "Math.hpp"

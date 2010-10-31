@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CODE_HPP
-#define CODE_HPP
-#include "common.h"
+#ifndef GLOOP_CODE_HPP
+#define GLOOP_CODE_HPP
+#include "gloop_common.h"
 using namespace std;
 
 

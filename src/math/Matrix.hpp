@@ -4,9 +4,9 @@
  * Author
  *    Andrew Brown <adb1413@rit.edu>
  */
-#ifndef MATRIX_HPP
-#define MATRIX_HPP
-#include "common.h"
+#ifndef GLOOP_MATRIX_HPP
+#define GLOOP_MATRIX_HPP
+#include "gloop_common.h"
 #include <cmath>
 #include <iomanip>
 #include "Vec4.hpp"

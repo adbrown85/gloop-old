@@ -4,8 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef VERTEXBUFFEROBJECT_HPP
-#define VERTEXBUFFEROBJECT_HPP
+#ifndef GLOOP_VERTEXBUFFEROBJECT_HPP
+#define GLOOP_VERTEXBUFFEROBJECT_HPP
+#include "gloop_common.h"
 #include <edo/BasicException.hpp>
 #include "BufferObject.hpp"
 #include "VertexAttribute.hpp"
@@ -31,8 +32,8 @@ class VertexBufferObject: public BufferObject {
 public:
 	VertexBufferObject();
 	virtual ~VertexBufferObject();
-// Primary interface
-	void allocate(GLenum usage, GLuint count, list<VertexAttribute> &attribs);
+	void addAttribute(const string &name, int components);
+	void allocate(GLenum usage, GLuint count);
 	void put(float x, float y);
 	void put(float x, float y, float z);
 	void put(float x, float y, float z, float w);
@@ -54,6 +55,7 @@ private:
 	GLuint count, stride;
 	GLsizei size;
 	map<string,GLuint> positions;
+	list<VertexAttribute> attributes;
 };
 
 /** @return Size in bytes of the VBO. */

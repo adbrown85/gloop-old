@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TEXTUREBUILDER_HPP
-#define TEXTUREBUILDER_HPP
-#include "common.h"
+#ifndef GLOOP_TEXTUREBUILDER_HPP
+#define GLOOP_TEXTUREBUILDER_HPP
+#include "gloop_common.h"
 #include <fstream>
 #include "PixelFormat.hpp"
 #include "TextureAnalyzer.hpp"

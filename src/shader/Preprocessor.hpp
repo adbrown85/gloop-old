@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef CODELOADER_HPP
-#define CODELOADER_HPP
-#include "common.h"
+#ifndef GLOOP_CODELOADER_HPP
+#define GLOOP_CODELOADER_HPP
+#include "gloop_common.h"
 #include <fstream>
 #include <iomanip>
 #include <edo/BasicException.hpp>

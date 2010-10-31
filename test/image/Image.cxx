@@ -4,6 +4,7 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
+#include "gloop_common.h"
 #include <cassert>
 #include <glawt/CanvasGTK.hpp>
 #include <gtkmm/main.h>

@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef TEXTUREANALYZER_HPP
-#define TEXTUREANALYZER_HPP
-#include "common.h"
+#ifndef GLOOP_TEXTUREANALYZER_HPP
+#define GLOOP_TEXTUREANALYZER_HPP
+#include "gloop_common.h"
 #include <edo/BasicException.hpp>
 #include <edo/Log.hpp>
 #include "PixelFormat.hpp"

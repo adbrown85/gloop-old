@@ -4,9 +4,9 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef ERRORCHECKER_HPP
-#define ERRORCHECKER_HPP
-#include "common.h"
+#ifndef GLOOP_ERRORCHECKER_HPP
+#define GLOOP_ERRORCHECKER_HPP
+#include "gloop_common.h"
 #include <edo/Log.hpp>
 #include <edo/BasicException.hpp>
 using namespace std;
