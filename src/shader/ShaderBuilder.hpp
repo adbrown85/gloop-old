@@ -17,20 +17,12 @@ using namespace std;
  */
 class ShaderBuilder {
 public:
-	void build(const string &type, const string &filename);
-public:    // Accessors
-	GLuint getHandle() const;
-protected: // Helpers
-	void compile();
-	void create();
-	void load();
-private:   // Data
-	string filename, type;
-	GLuint handle;
-	Code code;
+	static int build(GLenum type, const string &filename);
+protected:
+	static int create(GLenum type);
+	static void compile(int handle, const string &filename, Code &code);
+	static void load(int handle, const string &filename, Code &code);
 };
-
-inline GLuint ShaderBuilder::getHandle() const {return handle;}
 
 
 #endif

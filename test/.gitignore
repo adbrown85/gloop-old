@@ -14,6 +14,7 @@ Parser
 Path
 Preprocessor
 Quaternion
+ShaderBuilder
 Tag
 Text
 Vec4
