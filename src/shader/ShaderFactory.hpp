@@ -13,10 +13,9 @@ using namespace std;
 
 class ShaderFactory {
 public:
-	static GLuint create(const string &type, const string &filename);
+	static GLuint create(GLenum type, const string &filename);
 private:
 	static map<string,GLuint> shaders;
-	static ShaderBuilder builder;
 };
 
 

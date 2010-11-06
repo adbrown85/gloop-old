@@ -6,12 +6,12 @@
  */
 #include "ShaderFactory.hpp"
 map<string,GLuint> ShaderFactory::shaders;
-ShaderBuilder ShaderFactory::builder;
 
 
-GLuint ShaderFactory::create(const string &type, const string &filename) {
+GLuint ShaderFactory::create(GLenum type, const string &filename) {
 	
 	map<string,GLuint>::iterator it;
+	GLuint handle;
 	
 	// Check if already made
 	it = shaders.find(filename);
@@ -20,8 +20,8 @@ GLuint ShaderFactory::create(const string &type, const string &filename) {
 	}
 	
 	// Build it
-	builder.build(type, filename);
-	shaders[filename] = builder.getHandle();
-	return builder.getHandle();
+	handle = ShaderBuilder::build(type, filename);
+	shaders[filename] = handle;
+	return handle;
 }
 
