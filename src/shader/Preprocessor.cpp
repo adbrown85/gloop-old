@@ -6,13 +6,11 @@
  */
 #include "Preprocessor.hpp"
 
-
 /** @return True if the line is an include pragma. */
 bool Preprocessor::isInclude(const string &line) {
 	
 	return line.substr(0,8) == "#include";
 }
-
 
 /** Loads a file into the code.
  * 
@@ -42,7 +40,6 @@ void Preprocessor::load(const string &filename) {
 	}
 }
 
-
 /** Loads an included file if it wasn't already. */
 void Preprocessor::onInclude(const string &line) {
 	
@@ -65,7 +62,6 @@ void Preprocessor::onInclude(const string &line) {
 	filename = Path::getRelativePath(this->filename, filename);
 	load(filename);
 }
-
 
 /** Adds a line after filtering it. */
 void Preprocessor::onLine(const string &filename,
@@ -92,7 +88,6 @@ void Preprocessor::onLine(const string &filename,
 	}
 }
 
-
 /** Loads the file. */
 void Preprocessor::parse(const string &filename) {
 	
@@ -101,7 +96,6 @@ void Preprocessor::parse(const string &filename) {
 	includes.clear();
 	load(filename);
 }
-
 
 string Preprocessor::stripComments(const string &line, bool &inComment) {
 	
