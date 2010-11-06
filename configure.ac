@@ -62,7 +62,7 @@ warning_no_glawt() {
 	echo " Visit 'http://gander.sourceforge.net'                 "
 	echo "-------------------------------------------------------"
 }
-AC_CHECK_HEADER([glawt/common.h], , [warning_no_glawt])
+AC_CHECK_HEADER([glawt/glawt_common.h], , [warning_no_glawt])
 
 # Check for images
 images_help='No support for loading 2D images as textures.'
