@@ -5,8 +5,7 @@ configure
 config.log
 config.status
 autom4te.cache/
-gander-*.*.tar.gz
-gander-*.zip
+gloop.pc
 config.h
 config.in~
 aclocal.m4
