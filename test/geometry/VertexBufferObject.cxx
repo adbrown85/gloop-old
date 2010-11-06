@@ -11,6 +11,8 @@
 #include <glawt/GLAWTFactory.hpp>
 #include "VertexBufferObject.hpp"
 #include "ErrorChecker.hpp"
+#include "ShaderBuilder.hpp"
+#include "ProgramBuilder.hpp"
 
 
 /** Unit test for VertexBufferObject. */
@@ -109,34 +111,71 @@ void VertexBufferObjectTest::testFlush() {
 
 class TestDrawListener : public CanvasListener {
 public:
+	TestDrawListener();
 	virtual void onCanvasInitEvent(Canvas &canvas) {}
 	virtual void onCanvasDisplayEvent(Canvas &canvas);
 	virtual void onCanvasKeyEvent(Canvas &canvas) {}
 	virtual void onCanvasButtonEvent(Canvas &canvas) {}
 	virtual void onCanvasDragEvent(Canvas &canvas) {}
+private:
+	VertexBufferObject *vbo;
+	GLuint program;
+	GLint pointLoc;
 };
+
+TestDrawListener::TestDrawListener() {
+	
+	GLuint vs, fs;
+	
+	vbo = new VertexBufferObject();
+	vbo->bind();
+	vbo->addAttribute("MCVertex", 3);
+	vbo->allocate(GL_STATIC_DRAW, 3);
+	vbo->put(-0.5, +0.5, 0);
+	vbo->put(-0.5, -0.5, 0);
+	vbo->put(+0.5, +0.5, 0);
+	vbo->flush();
+	vbo->unbind();
+	
+	vs = ShaderBuilder::build(GL_VERTEX_SHADER, "test/shader/basic.vert");
+	fs = ShaderBuilder::build(GL_FRAGMENT_SHADER, "test/shader/basic.frag");
+	program = ProgramBuilder::build(vs, fs);
+	
+	pointLoc = glGetAttribLocation(program, "MCVertex");
+	if (pointLoc < 0) {
+		throw BasicException("Location of MCVertex not found!");
+	}
+}
 
 void TestDrawListener::onCanvasDisplayEvent(Canvas &canvas) {
 	
 //	glViewport(0, 512, 0, 512);
 	glClearColor(0, 1, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
+	
+	glUseProgram(program);
+	vbo->bind();
+	
+	glEnableVertexAttribArray(pointLoc);
+	glVertexAttribPointer(
+			pointLoc, // index
+			3,        // size
+			GL_FLOAT, // type
+			false,    // normalized
+			0,        // stride
+			0);       // offset
+	
+	ErrorChecker::assertNoError("After glVertexAttribPointer");
+	
+	glDrawArrays(
+			GL_TRIANGLES, // mode
+			0,            // first
+			3);           // count
+	
+	vbo->unbind();
 }
 
 void VertexBufferObjectTest::testDraw() {
-
-	VertexBufferObject *vbo;
-	
-	vbo = new VertexBufferObject();
-	vbo->bind();
-	vbo->addAttribute("MCVertex", 3);
-	vbo->allocate(GL_STATIC_DRAW, 3);
-	
-	vbo->put(-0.5, +0.5, 0);
-	vbo->put(-0.5, -0.5, 0);
-	vbo->put(+0.5, +0.5, 0);
-	
-	vbo->flush();
 	
 	canvas->addListener(new TestDrawListener());
 	window->run();
