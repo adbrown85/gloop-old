@@ -114,7 +114,7 @@ endif
 %.t: %.cxx
 	@echo "  Generating dependencies for $<..."
 	@$(CXX) $(CXXFLAGS) -MM $< -MT ${notdir ${subst .cxx,,$<}} \
-        | sed 's/.hpp/.o/g' >> $@;
+        | sed 's/.hpp/.o/g' > $@;
 ifeq ($(findstring tests,$(MAKECMDGOALS)),tests)
   -include $(tdepends)
 endif
