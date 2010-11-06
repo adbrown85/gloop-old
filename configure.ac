@@ -53,16 +53,19 @@ error_no_edo() {
 	echo "-------------------------------------------------------"
 	(exit 1); exit 1;
 }
-AC_CHECK_HEADER([edo/edo_common.h], , [error_no_edo])
+echo -n "checking for edo... "
+PKG_CHECK_EXISTS([edo], [echo "yes"], [error_no_edo])
 
 # Check for GLawt
-warning_no_glawt() {
+error_no_glawt() {
 	echo "-------------------------------------------------------"
 	echo " GLawt is needed to build GLoop tests.                 "
 	echo " Visit 'http://gander.sourceforge.net'                 "
 	echo "-------------------------------------------------------"
+	(exit 1); exit 1;
 }
-AC_CHECK_HEADER([glawt/glawt_common.h], , [warning_no_glawt])
+echo -n "checking for glawt... "
+PKG_CHECK_EXISTS([glawt], [echo "yes"], [error_no_glawt])
 
 # Check for images
 images_help='No support for loading 2D images as textures.'
@@ -111,7 +114,7 @@ htmldir='${docdir}'/html
 
 # Finish
 AC_CONFIG_FILES([gloop.pc Makefile doc/Makefile])
-PKG_CHECK_MODULES([DEPS], [gtkmm-2.4 gtkglextmm-1.2])
+PKG_CHECK_MODULES([DEPS], [edo glawt gdkmm-2.4])
 AC_OUTPUT
 
 echo \
