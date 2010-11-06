@@ -32,6 +32,7 @@ void Preprocessor::load(const string &filename) {
 	}
 	
 	// Load into vector
+	inComment = false;
 	number = 0;
 	getline(file, text);
 	while (file) {
