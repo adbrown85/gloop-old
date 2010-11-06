@@ -50,8 +50,6 @@ void VertexBufferObjectTest::testAllocate() {
 	VertexBufferObject *vbo;
 	int param;
 	
-	cout << "VertexBufferObjectTest::testAllocate" << endl;
-	
 	vbo = new VertexBufferObject();
 	vbo->bind();
 	vbo->addAttribute("MCVertex", 3);
@@ -62,15 +60,12 @@ void VertexBufferObjectTest::testAllocate() {
 	assert(param == sizeof(float) * (3 + 3) * 3);
 	
 	ErrorChecker::assertNoError("testAllocate");
-	cout << "PASSED" << endl;
 }
 
 /** Ensures an exception will be thrown when put is exceeded. */
 void VertexBufferObjectTest::testPut() {
 	
 	VertexBufferObject *vbo;
-	
-	cout << "VertexBufferObjectTest::testPut" << endl;
 	
 	vbo = new VertexBufferObject();
 	vbo->bind();
@@ -89,7 +84,6 @@ void VertexBufferObjectTest::testPut() {
 		vbo->put(0.0, 0.0, 0.0);
 	} catch (exception &e) {
 		ErrorChecker::assertNoError("testPut");
-		cout << "PASSED" << endl;
 		return;
 	}
 	assert(false);
@@ -99,8 +93,6 @@ void VertexBufferObjectTest::testPut() {
 void VertexBufferObjectTest::testFlush() {
 	
 	VertexBufferObject *vbo;
-	
-	cout << "VertexBufferObjectTest::testFlush" << endl;
 	
 	vbo = new VertexBufferObject();
 	vbo->bind();
@@ -113,7 +105,6 @@ void VertexBufferObjectTest::testFlush() {
 	
 	vbo->flush();
 	ErrorChecker::assertNoError("testFlush");
-	cout << "PASSED" << endl;
 }
 
 class TestDrawListener : public CanvasListener {
@@ -136,8 +127,6 @@ void VertexBufferObjectTest::testDraw() {
 
 	VertexBufferObject *vbo;
 	
-	cout << "VertexBufferObjectTest::testDraw" << endl;
-	
 	vbo = new VertexBufferObject();
 	vbo->bind();
 	vbo->addAttribute("MCVertex", 3);
@@ -151,8 +140,6 @@ void VertexBufferObjectTest::testDraw() {
 	
 	canvas->addListener(new TestDrawListener());
 	window->run();
-	
-	cout << "PASSED" << endl;
 }
 
 /* Runs the test. */
@@ -163,10 +150,18 @@ int main(int argc, char *argv[]) {
 	
 	test.setUp();
 	try {
+		cout << "VertexBufferObjectTest::testAllocate" << endl;
 		test.testAllocate();
+		cout << "PASSED" << endl;
+		cout << "VertexBufferObjectTest::testPut" << endl;
 		test.testPut();
+		cout << "PASSED" << endl;
+		cout << "VertexBufferObjectTest::testFlush" << endl;
 		test.testFlush();
+		cout << "PASSED" << endl;
+		cout << "VertexBufferObjectTest::testDraw" << endl;
 		test.testDraw();
+		cout << "PASSED" << endl;
 	} catch (exception &e) {
 		cerr << e.what() << endl;
 		cout << "FAILED!" << endl;
