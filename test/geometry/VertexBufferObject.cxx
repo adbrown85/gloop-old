@@ -110,21 +110,24 @@ void VertexBufferObjectTest::testFlush() {
 
 class TestDrawListener : public CanvasListener {
 public:
-	TestDrawListener();
+	TestDrawListener(Window *window);
 	virtual void onCanvasInitEvent(Canvas &canvas) {}
 	virtual void onCanvasDisplayEvent(Canvas &canvas);
-	virtual void onCanvasKeyEvent(Canvas &canvas) {}
+	virtual void onCanvasKeyEvent(Canvas &canvas);
 	virtual void onCanvasButtonEvent(Canvas &canvas) {}
 	virtual void onCanvasDragEvent(Canvas &canvas) {}
 private:
 	VertexBufferObject *vbo;
 	GLuint program;
 	GLint pointLoc;
+	Window *window;
 };
 
-TestDrawListener::TestDrawListener() {
+TestDrawListener::TestDrawListener(Window *window) {
 	
 	GLuint vs, fs;
+	
+	this->window = window;
 	
 	vbo = new VertexBufferObject();
 	vbo->bind();
@@ -164,8 +167,6 @@ void TestDrawListener::onCanvasDisplayEvent(Canvas &canvas) {
 			0,        // stride
 			0);       // offset
 	
-	ErrorChecker::assertNoError("After glVertexAttribPointer");
-	
 	glDrawArrays(
 			GL_TRIANGLES, // mode
 			0,            // first
@@ -174,9 +175,16 @@ void TestDrawListener::onCanvasDisplayEvent(Canvas &canvas) {
 	vbo->unbind();
 }
 
+void TestDrawListener::onCanvasKeyEvent(Canvas &canvas) {
+	
+	if (canvas.getState().combo.trigger == TOOLKIT_ESCAPE) {
+		window->hide();
+	}
+}
+
 void VertexBufferObjectTest::testDraw() {
 	
-	canvas->addListener(new TestDrawListener());
+	canvas->addListener(new TestDrawListener(window));
 	window->run();
 }
 
