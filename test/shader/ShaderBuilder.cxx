@@ -54,7 +54,7 @@ void ShaderBuilderTest::testBuild() {
 	// Build it
 	handle = ShaderBuilder::build(
 			GL_VERTEX_SHADER,
-			"test/shader/ShaderBuilder.vert");
+			"test/shader/basic.vert");
 	assert(handle > 0);
 	
 	// Get the source
