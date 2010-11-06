@@ -6,7 +6,6 @@
  */
 #include "gloop_common.h"
 #include <cassert>
-#include <gtkmm/main.h>
 #include <glawt/Toolkit.hpp>
 #include <glawt/GLAWTFactory.hpp>
 #include "VertexBufferObject.hpp"
