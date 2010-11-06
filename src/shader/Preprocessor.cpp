@@ -98,6 +98,7 @@ void Preprocessor::parse(const string &filename) {
 	load(filename);
 }
 
+/** Removes comments from @e line. */
 string Preprocessor::stripComments(const string &line, bool &inComment) {
 	
 	int length;
