@@ -98,7 +98,7 @@ ${foreach m,$(modules),${eval ${call module,$(m)}}}
 $(archive): ${notdir $(objects)}
 
 # Tests
-%: %.cxx %.o
+%: %.cxx
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LDFLAGS)
 tests: ${notdir $(tests)}
