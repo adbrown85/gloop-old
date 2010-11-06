@@ -15,6 +15,7 @@ using namespace std;
  */
 class ProgramBuilder {
 public:
+	static GLuint build(GLuint vertexShader, GLuint fragmentShader);
 	static GLuint build(list<GLuint> &shaders);
 protected:
 	static void report(GLuint handle);

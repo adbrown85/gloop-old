@@ -6,6 +6,16 @@
  */
 #include "ProgramBuilder.hpp"
 
+/** Builds a program from a vertex and fragment shader. */
+GLuint ProgramBuilder::build(GLuint vertShader, GLuint fragShader) {
+	
+	list<GLuint> shaders;
+	
+	shaders.push_back(vertShader);
+	shaders.push_back(fragShader);
+	return build(shaders);
+}
+
 /** Builds a program from several shaders. */
 GLuint ProgramBuilder::build(list<GLuint> &shaders) {
 	
