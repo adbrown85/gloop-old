@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef GLOOP_CODELOADER_HPP
-#define GLOOP_CODELOADER_HPP
+#ifndef GLOOP_PREPROCESSOR_HPP
+#define GLOOP_PREPROCESSOR_HPP
 #include "gloop_common.h"
 #include <fstream>
 #include <iomanip>
@@ -23,14 +23,13 @@ using namespace std;
  * that line with the lines from the appropriate file.  Lastly, it strips both 
  * multiline and single line comments, as well as trailing spaces.
  * 
- * @ingroup system
+ * @ingroup shader
  */
 class Preprocessor {
 public:
 	void parse(const string &filename);
-public:    // Accessors
 	Code getCode() const;
-protected: // Helpers
+protected:
 	bool isInclude(const string &line);
 	void load(const string &filename);
 	void onInclude(const string &line);
