@@ -4,6 +4,8 @@
 package      := @PACKAGE_NAME@
 version      := @PACKAGE_VERSION@
 tarname      := @PACKAGE_TARNAME@
+linkername   := lib$(tarname).so
+soname       := lib$(tarname).so.1
 
 # Directories
 prefix       := @prefix@
@@ -42,6 +44,7 @@ objects      := ${subst .cpp,.o,$(sources)}
 headers      := ${subst .cpp,.hpp,$(sources)}
 mains        := ${foreach m,$(tmoduledirs),${wildcard $(m)*.cxx}}
 archive      := lib$(tarname).a
+library      := lib$(tarname).so.1.0.1
 pkgcfgfile   := $(tarname).pc
 tests        := ${subst .cxx,,$(mains)}
 tarball      := $(tarname)-$(version)-src.tar.gz
@@ -55,7 +58,7 @@ tdepends     := ${subst .cxx,.t,$(mains)}
 doc_targets  := html install-html
 .PHONY: all $(modules) clean mostlyclean tests $(doctargets) dump
 .DEFAULT: all
-all: $(archive)
+all: $(library)
 clean: mostlyclean
 	@echo "  Removing dependencies..."
 	@$(RM) $(depends)
@@ -63,8 +66,8 @@ clean: mostlyclean
 mostlyclean:
 	@echo "  Removing objects..."
 	@$(RM) $(objects)
-	@echo "  Removing archive..."
-	@$(RM) $(archive)
+	@echo "  Removing library..."
+	@$(RM) $(library)
 	@echo "  Removing tests..."
 	@$(RM) $(tests)
 check:
@@ -77,8 +80,6 @@ dump:
 	@echo "  objects = $(objects)"
 	@echo "  mains   = $(mains)"
 	@echo "  tests   = $(tests)"
-	@echo "  VPATH   = $(VPATH)"
-	@echo "  notdir  = ${notdir $(tests)}"
 
 # Modules
 .PHONY: $(modules)
@@ -87,19 +88,21 @@ $(1): $${filter $(srcdir)/$(1)/%.o,$(objects)}
 endef
 ${foreach m,$(modules),${eval ${call module,$(m)}}}
 
-# Objects and archive
+# Objects
 %.o: %.cpp %.hpp
 	@echo "  $<"
 	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} -c $<
-	@$(AR) $(ARFLAGS) $(archive) ${dir $<}${notdir $@}
-$(archive): ${notdir $(objects)}
+
+# Library
+$(library): ${notdir $(objects)}
+	@echo "  $@"
+	@$(CXX) -shared -Wl,-soname,$(soname) -o $(library) $(objects)
 
 # Tests
+tests: ${notdir $(tests)}
 %: %.cxx
 	@echo "  $<"
-	@$(CXX) $(CXXFLAGS) -o ${dir $<}${notdir $@} $< $(archive) $(LDFLAGS)
-tests: ${notdir $(tests)}
-${notdir $(tests)}:
+	@$(CXX) $(CXXFLAGS) -o ${dir $<}$@ $< ${filter %.o,$^} $(LDFLAGS)
 
 # Dependencies
 %.d: %.hpp
@@ -119,9 +122,11 @@ endif
 # Installation
 .PHONY: install uninstall
 install:
-	@echo "  Installing archive in $(libdir)..."
+	@echo "  Installing library in $(libdir)..."
 	@$(INSTALL) -d $(libdir)
-	@$(INSTALL) -m 0644 $(archive) $(libdir)
+	@$(INSTALL) -m 0644 $(library) $(libdir)
+	@ln -s -f -T $(libdir)/$(library) $(libdir)/$(linkername)
+	@ldconfig $(libdir)
 	@echo "  Installing headers in $(includedir)/$(tarname)..."
 	@$(INSTALL) -d $(includedir)/$(tarname)
 	@$(INSTALL) -m 0644 config.h $(includedir)/$(tarname)
@@ -130,8 +135,10 @@ install:
 	@echo "  Installing pkg-config file in $(pkgcfgdir)..."
 	@$(INSTALL) -m 0644 $(pkgcfgfile) $(pkgcfgdir)
 uninstall:
-	@echo "  Uninstalling archive from $(libdir)..."
-	@$(RM) $(libdir)/$(archive)
+	@echo "  Uninstalling library from $(libdir)..."
+	@$(RM) $(libdir)/$(library)
+	@$(RM) $(libdir)/$(linkername)
+	@ldconfig $(libdir)
 	@echo "  Uninstalling headers from $(includedir)/$(tarname)..."
 	@$(RM) -r $(includedir)/$(tarname)
 	@echo "  Uninstalling pkg-config file from $(pkgcfgdir)..."
