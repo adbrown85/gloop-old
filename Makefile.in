@@ -170,7 +170,7 @@ $(distdir):
 	@echo "    src"
 	@mkdir $(distdir)/src
 	@cp src/Makefile.in $(distdir)/src
-	@cp src/common.h $(distdir)/src
+	@cp src/gloop_common.h $(distdir)/src
 	@for i in $(modules); do \
         echo "      $${i}"; \
         mkdir $(distdir)/src/$${i}; \
