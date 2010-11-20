@@ -46,6 +46,7 @@ public:
 	virtual void read(const string &filename);
 	virtual void toArray(char *array, size_t size);
 // Getters and setters
+	virtual GLuint getAlignment();
 	virtual GLenum getFormat();
 	virtual GLuint getSize();
 	virtual GLuint getWidth();

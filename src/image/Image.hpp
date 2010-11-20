@@ -23,6 +23,7 @@ class ImageReader {
 public:
 	virtual void read(const string &filename) = 0;
 	virtual void toArray(char* array, size_t size) = 0;
+	virtual GLuint getAlignment() = 0;
 	virtual GLenum getFormat() = 0;
 	virtual GLuint getSize() = 0;
 	virtual GLuint getWidth() = 0;

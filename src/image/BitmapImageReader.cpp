@@ -169,6 +169,11 @@ void BitmapImageReader::readPixels() {
 // Getters and setters
 //
 
+/** @return Number of bytes that row length should be multiples of. */
+GLuint BitmapImageReader::getAlignment() {
+	return 4;
+}
+
 /** @return Format of the image (GL_BGR). */
 GLenum BitmapImageReader::getFormat() {
 	return GL_BGR;
