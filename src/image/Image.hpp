@@ -10,7 +10,6 @@
 #include <edo/BasicException.hpp>
 using namespace std;
 
-
 /* Exception thrown from an image. */
 class ImageException : public BasicException {
 public:
@@ -27,15 +26,16 @@ class Image {
 public:
 	Image(const string &filename);
 	virtual ~Image() {}
-	string getFilename() const;
 	virtual GLchar* getData() const = 0;
+// Getters and setters
+	string getFilename() const;
 	GLenum getFormat() const;
 	int getWidth() const;
 	int getHeight() const;
 protected:
 	void setFormat(GLenum format);
-	void setHeight(int height);
 	void setWidth(int width);
+	void setHeight(int height);
 private:
 	GLenum format;
 	int width, height;
