@@ -7,20 +7,16 @@
 #ifndef GLOOP_IMAGE_HPP
 #define GLOOP_IMAGE_HPP
 #include "gloop_common.h"
+#include <edo/BasicException.hpp>
 using namespace std;
 
 
-/* Exception thrown from a canvas. */
-class ImageException : public exception {
+/* Exception thrown from an image. */
+class ImageException : public BasicException {
 public:
 	ImageException() {};
-	ImageException(const ImageException &e) : message(e.getMessage()) {}
-	ImageException(const string &message) : message(message) {}
-	~ImageException() throw() {}
-	string getMessage() const {return message;}
-	const char* what() const throw() {return message.c_str();}
-private:
-	string message;
+	ImageException(const ImageException &e) : BasicException(e) {}
+	ImageException(const string &message) : BasicException(message) {}
 };
 
 /** @brief Abstract class representing an image loaded from a file.
