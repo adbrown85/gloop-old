@@ -18,6 +18,17 @@ public:
 	ImageException(const string &message) : BasicException(message) {}
 };
 
+/* Interface for an object that reads an image into memory. */
+class ImageReader {
+public:
+	virtual void read(const string &filename) = 0;
+	virtual void toArray(char* array, size_t size) = 0;
+	virtual GLenum getFormat() = 0;
+	virtual GLuint getSize() = 0;
+	virtual GLuint getWidth() = 0;
+	virtual GLuint getHeight() = 0;
+};
+
 /** @brief Abstract class representing an image loaded from a file.
  * 
  * @ingroup image
