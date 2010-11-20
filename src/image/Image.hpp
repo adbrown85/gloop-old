@@ -21,7 +21,7 @@ public:
 
 /** @brief Abstract class representing an image loaded from a file.
  * 
- * @ingroup graphics
+ * @ingroup image
  */
 class Image {
 public:
