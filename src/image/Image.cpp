@@ -14,5 +14,7 @@ Image::Image(const string &filename) {
 	this->width = 0;
 	this->height = 0;
 	this->format = GL_RGB;
+	this->size = 0;
+	this->alignment = 0;
 }
 
