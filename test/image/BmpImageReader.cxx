@@ -92,16 +92,16 @@ int main(int argc, char *argv[]) {
 	
 	cout << "setUp()" << endl;
 	test.setUp();
-	cout << "testGetters()" << endl;
+	cout << "BmpImageReaderTest::testGetters()" << endl;
 	test.testGetters();
 	cout << "PASSED" << endl;
-	cout << "testToArrayWithBadArray()" << endl;
+	cout << "BmpImageReaderTest::testToArrayWithBadArray()" << endl;
 	test.testToArrayWithBadArray();
 	cout << "PASSED" << endl;
-	cout << "testToArrayWithBadSize()" << endl;
+	cout << "BmpImageReaderTest::testToArrayWithBadSize()" << endl;
 	test.testToArrayWithBadSize();
 	cout << "PASSED" << endl;
-	cout << "testToArray()" << endl;
+	cout << "BmpImageReaderTest::testToArray()" << endl;
 	test.testToArray();
 	cout << "PASSED" << endl;
 	cout << "PASSED ALL TESTS" << endl;
