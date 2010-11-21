@@ -10,8 +10,6 @@
 #include <glawt/GLAWTFactory.hpp>
 #include "VertexBufferObject.hpp"
 #include "ErrorChecker.hpp"
-#include "ShaderBuilder.hpp"
-#include "ProgramBuilder.hpp"
 
 
 /** Unit test for VertexBufferObject. */
@@ -22,7 +20,6 @@ public:
 	void testAllocate();
 	void testPut();
 	void testFlush();
-	void testDraw();
 private:
 	Window *window;
 	Canvas *canvas;
@@ -33,7 +30,7 @@ void VertexBufferObjectTest::setUp() {
 	
 	window = GLAWTFactory::createWindow();
 	canvas = GLAWTFactory::createCanvas(512, 512);
-	window->setTitle("VertexBufferObject Test");
+	window->setTitle("VertexBufferObjectTest");
 	window->add(canvas);
 	window->show();
 }
@@ -108,86 +105,6 @@ void VertexBufferObjectTest::testFlush() {
 	ErrorChecker::assertNoError("testFlush");
 }
 
-class TestDrawListener : public CanvasListener {
-public:
-	TestDrawListener(Window *window);
-	virtual void onCanvasInitEvent(Canvas &canvas) {}
-	virtual void onCanvasDisplayEvent(Canvas &canvas);
-	virtual void onCanvasKeyEvent(Canvas &canvas);
-	virtual void onCanvasButtonEvent(Canvas &canvas) {}
-	virtual void onCanvasDragEvent(Canvas &canvas) {}
-private:
-	VertexBufferObject *vbo;
-	GLuint program;
-	GLint pointLoc;
-	Window *window;
-};
-
-TestDrawListener::TestDrawListener(Window *window) {
-	
-	GLuint vs, fs;
-	
-	this->window = window;
-	
-	vbo = new VertexBufferObject();
-	vbo->bind();
-	vbo->addAttribute("MCVertex", 3);
-	vbo->allocate(GL_STATIC_DRAW, 3);
-	vbo->put(-0.5, +0.5, 0);
-	vbo->put(-0.5, -0.5, 0);
-	vbo->put(+0.5, +0.5, 0);
-	vbo->flush();
-	vbo->unbind();
-	
-	vs = ShaderBuilder::build(GL_VERTEX_SHADER, "test/shader/basic.vert");
-	fs = ShaderBuilder::build(GL_FRAGMENT_SHADER, "test/shader/basic.frag");
-	program = ProgramBuilder::build(vs, fs);
-	
-	pointLoc = glGetAttribLocation(program, "MCVertex");
-	if (pointLoc < 0) {
-		throw BasicException("Location of MCVertex not found!");
-	}
-}
-
-void TestDrawListener::onCanvasDisplayEvent(Canvas &canvas) {
-	
-//	glViewport(0, 512, 0, 512);
-	glClearColor(0, 1, 0, 1);
-	glClear(GL_COLOR_BUFFER_BIT);
-	
-	glUseProgram(program);
-	vbo->bind();
-	
-	glEnableVertexAttribArray(pointLoc);
-	glVertexAttribPointer(
-			pointLoc, // index
-			3,        // size
-			GL_FLOAT, // type
-			false,    // normalized
-			0,        // stride
-			0);       // offset
-	
-	glDrawArrays(
-			GL_TRIANGLES, // mode
-			0,            // first
-			3);           // count
-	
-	vbo->unbind();
-}
-
-void TestDrawListener::onCanvasKeyEvent(Canvas &canvas) {
-	
-	if (canvas.getState().combo.trigger == TOOLKIT_ESCAPE) {
-		window->hide();
-	}
-}
-
-void VertexBufferObjectTest::testDraw() {
-	
-	canvas->addListener(new TestDrawListener(window));
-	window->run();
-}
-
 /* Runs the test. */
 int main(int argc, char *argv[]) {
 	
@@ -204,9 +121,6 @@ int main(int argc, char *argv[]) {
 		cout << "PASSED" << endl;
 		cout << "VertexBufferObjectTest::testFlush" << endl;
 		test.testFlush();
-		cout << "PASSED" << endl;
-		cout << "VertexBufferObjectTest::testDraw" << endl;
-		test.testDraw();
 		cout << "PASSED" << endl;
 	} catch (exception &e) {
 		cerr << e.what() << endl;

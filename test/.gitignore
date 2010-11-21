@@ -23,4 +23,5 @@ Tag
 Text
 Vec4
 VertexBufferObject
+VertexBufferObjectDrawTest
 *.t
