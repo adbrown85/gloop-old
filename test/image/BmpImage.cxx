@@ -1,25 +1,25 @@
 /*
- * BitmapImage.cxx
+ * BmpImage.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
 #include <cassert>
-#include "BitmapImage.hpp"
+#include "BmpImage.hpp"
 
-/** @brief Test for BitmapImage. */
-class BitmapImageTest {
+/** @brief Test for BmpImage. */
+class BmpImageTest {
 public:
 	void testLoad();
 };
 
 /** Ensures the file can be loaded. */
-void BitmapImageTest::testLoad() {
+void BmpImageTest::testLoad() {
 	
-	BitmapImage *image;
+	BmpImage *image;
 	
-	image = new BitmapImage("test/image/rgbw.bmp");
+	image = new BmpImage("test/image/rgbw.bmp");
 	assert(image->getAlignment() == 4);
 	assert(image->getFormat() == GL_BGR);
 	assert(image->getWidth() == 2);
@@ -30,9 +30,9 @@ void BitmapImageTest::testLoad() {
 /* Runs the test. */
 int main(int argc, char *argv[]) {
 	
-	BitmapImageTest test;
+	BmpImageTest test;
 	
-	cout << "BitmapImageTest::testLoad()" << endl;
+	cout << "BmpImageTest::testLoad()" << endl;
 	test.testLoad();
 	cout << "PASSED" << endl;
 	cout << "PASSED ALL TESTS" << endl;

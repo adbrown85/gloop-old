@@ -1,15 +1,15 @@
 /*
- * BitmapImageReader.cxx
+ * BmpImageReader.cxx
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
 #include <cassert>
-#include "BitmapImageReader.hpp"
+#include "BmpImageReader.hpp"
 
-/** @brief Test for BitmapImageReader. */
-class BitmapImageReaderTest {
+/** @brief Test for BmpImageReader. */
+class BmpImageReaderTest {
 public:
 	void setUp();
 	void testGetters();
@@ -17,17 +17,17 @@ public:
 	void testToArrayWithBadSize();
 	void testToArray();
 private:
-	BitmapImageReader reader;
+	BmpImageReader reader;
 };
 
 /** Read the image into memory. */
-void BitmapImageReaderTest::setUp() {
+void BmpImageReaderTest::setUp() {
 	
 	reader.read("test/image/rgbw.bmp");
 }
 
 /** Ensures the file can be loaded. */
-void BitmapImageReaderTest::testGetters() {
+void BmpImageReaderTest::testGetters() {
 	
 	assert(reader.getWidth() == 2);
 	assert(reader.getHeight() == 2);
@@ -36,7 +36,7 @@ void BitmapImageReaderTest::testGetters() {
 }
 
 /** Ensures an exception is thrown. */
-void BitmapImageReaderTest::testToArrayWithBadArray() {
+void BmpImageReaderTest::testToArrayWithBadArray() {
 	
 	char *array = NULL;
 	
@@ -49,7 +49,7 @@ void BitmapImageReaderTest::testToArrayWithBadArray() {
 }
 
 /** Ensures an exception is thrown. */
-void BitmapImageReaderTest::testToArrayWithBadSize() {
+void BmpImageReaderTest::testToArrayWithBadSize() {
 	
 	char array[6];
 	
@@ -62,7 +62,7 @@ void BitmapImageReaderTest::testToArrayWithBadSize() {
 }
 
 /** Ensures pixel data is correct. */
-void BitmapImageReaderTest::testToArray() {
+void BmpImageReaderTest::testToArray() {
 	
 	unsigned char arr[16];
 	
@@ -88,7 +88,7 @@ void BitmapImageReaderTest::testToArray() {
 /* Runs the test. */
 int main(int argc, char *argv[]) {
 	
-	BitmapImageReaderTest test;
+	BmpImageReaderTest test;
 	
 	cout << "setUp()" << endl;
 	test.setUp();

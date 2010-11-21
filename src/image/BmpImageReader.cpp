@@ -1,19 +1,19 @@
 /*
- * BitmapImageReader.cpp
+ * BmpImageReader.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "BitmapImageReader.hpp"
+#include "BmpImageReader.hpp"
 
 /** Creates a new image reader. */
-BitmapImageReader::BitmapImageReader() {
+BmpImageReader::BmpImageReader() {
 	
 	pixels = NULL;
 }
 
 /** Destroys the image reader. */
-BitmapImageReader::~BitmapImageReader() {
+BmpImageReader::~BmpImageReader() {
 	
 	if (pixels != NULL) {
 		delete[] pixels;
@@ -33,7 +33,7 @@ BitmapImageReader::~BitmapImageReader() {
  * @see getWidth()
  * @see getHeight()
  */
-void BitmapImageReader::read(const string &filename) {
+void BmpImageReader::read(const string &filename) {
 	
 	try {
 		open(filename);
@@ -52,17 +52,17 @@ void BitmapImageReader::read(const string &filename) {
  * @throw ImageException if array is NULL
  * @throw ImageException if size is not equal to the image's size
  */
-void BitmapImageReader::toArray(char *array, size_t size) {
+void BmpImageReader::toArray(char *array, size_t size) {
 	
 	if (array == NULL) {
 		ImageException e;
-		e << "[BitmapImageReader] Array is NULL!";
+		e << "[BmpImageReader] Array is NULL!";
 		throw e;
 	}
 	
 	if (size != getSize()) {
 		ImageException e;
-		e << "[BitmapImageReader] Array is not the right size!";
+		e << "[BmpImageReader] Array is not the right size!";
 		throw e;
 	}
 	
@@ -77,24 +77,24 @@ void BitmapImageReader::toArray(char *array, size_t size) {
  * 
  * @throw ImageException if file cannot be read
  */
-void BitmapImageReader::open(const string &filename) {
+void BmpImageReader::open(const string &filename) {
 	
 	file.open(filename.c_str(), ios_base::binary);
 	if (!file) {
 		ImageException e;
-		e << "[BitmapImageReader] Image '" << filename << "' does not exist!";
+		e << "[BmpImageReader] Image '" << filename << "' does not exist!";
 		throw e;
 	}
 }
 
 /** Closes the file. */
-void BitmapImageReader::close() {
+void BmpImageReader::close() {
 	
 	file.close();
 }
 
 /** Reads just the file header section. */
-void BitmapImageReader::readFileHeader() {
+void BmpImageReader::readFileHeader() {
 	
 	file.read((char*)&fileHeader.bfType, 2);
 	file.read((char*)&fileHeader.bfSize, 4);
@@ -104,7 +104,7 @@ void BitmapImageReader::readFileHeader() {
 	
 	if (!isValidFileHeader()) {
 		ImageException e;
-		e << "[BitmapImageReader] Not a valid bitmap file header!";
+		e << "[BmpImageReader] Not a valid bitmap file header!";
 		throw e;
 	}
 }
@@ -115,7 +115,7 @@ void BitmapImageReader::readFileHeader() {
  * @throw ImageException if bitmap is compressed
  * @throw ImageException if bitmap is not 24-bit
  */
-void BitmapImageReader::readInfoHeader() {
+void BmpImageReader::readInfoHeader() {
 	
 	file.read((char*)&infoHeader.biSize, 4);
 	file.read((char*)&infoHeader.biWidth, 4);
@@ -131,19 +131,19 @@ void BitmapImageReader::readInfoHeader() {
 	
 	if (!isValidInfoHeader()) {
 		ImageException e;
-		e << "[BitmapImageReader] Not a valid bitmap info header!";
+		e << "[BmpImageReader] Not a valid bitmap info header!";
 		throw e;
 	}
 	
 	if (isCompressed()) {
 		ImageException e;
-		e << "[BitmapImageReader] Only supports uncompressed data.";
+		e << "[BmpImageReader] Only supports uncompressed data.";
 		throw e;
 	}
 	
 	if (!is24Bit()) {
 		ImageException e;
-		e << "[BitmapImageReader] Only supports 24-bit data.";
+		e << "[BmpImageReader] Only supports 24-bit data.";
 		throw e;
 	}
 }
@@ -152,7 +152,7 @@ void BitmapImageReader::readInfoHeader() {
  * 
  * @throw ImageException if improper amount of pixels were read 
  */
-void BitmapImageReader::readPixels() {
+void BmpImageReader::readPixels() {
 	
 	size_t size = getSize();
 	
@@ -160,7 +160,7 @@ void BitmapImageReader::readPixels() {
 	file.read(pixels, size);
 	if (file.gcount() != size) {
 		ImageException e;
-		e << "[BitmapImageReader] All pixels could not be read!";
+		e << "[BmpImageReader] All pixels could not be read!";
 		throw e;
 	}
 }
@@ -170,27 +170,27 @@ void BitmapImageReader::readPixels() {
 //
 
 /** @return Number of bytes that row length should be multiples of. */
-GLuint BitmapImageReader::getAlignment() {
+GLuint BmpImageReader::getAlignment() {
 	return 4;
 }
 
 /** @return Format of the image (GL_BGR). */
-GLenum BitmapImageReader::getFormat() {
+GLenum BmpImageReader::getFormat() {
 	return GL_BGR;
 }
 
 /** @return Total number of bytes required to hold the image. */
-GLuint BitmapImageReader::getSize() {
+GLuint BmpImageReader::getSize() {
 	return infoHeader.biSizeImage;
 }
 
 /** @return Number of pixels in the X direction. */
-GLuint BitmapImageReader::getWidth() {
+GLuint BmpImageReader::getWidth() {
 	return infoHeader.biWidth;
 }
 
 /** @return Number of pixels in the Y direction. */
-GLuint BitmapImageReader::getHeight() {
+GLuint BmpImageReader::getHeight() {
 	return infoHeader.biHeight;
 }
 
@@ -199,7 +199,7 @@ GLuint BitmapImageReader::getHeight() {
 //
 
 /** @return True if the file header is valid. */
-bool BitmapImageReader::isValidFileHeader() {
+bool BmpImageReader::isValidFileHeader() {
 	return fileHeader.bfType[0] == 'B' 
 			&& fileHeader.bfType[1] == 'M'
 			&& fileHeader.bfReserved1 == 0
@@ -207,7 +207,7 @@ bool BitmapImageReader::isValidFileHeader() {
 }
 
 /** @return True if the info header is valid. */
-bool BitmapImageReader::isValidInfoHeader() {
+bool BmpImageReader::isValidInfoHeader() {
 	return infoHeader.biSize == 40
 			&& infoHeader.biWidth > 0
 			&& infoHeader.biHeight > 0
@@ -215,12 +215,12 @@ bool BitmapImageReader::isValidInfoHeader() {
 }
 
 /** @return True if any info header fields indicate the data is compressed. */
-bool BitmapImageReader::isCompressed() {
+bool BmpImageReader::isCompressed() {
 	return infoHeader.biCompression != 0;
 }
 
 /** @return True if info header fields indicate the data is 24-bit. */
-bool BitmapImageReader::is24Bit() {
+bool BmpImageReader::is24Bit() {
 	return infoHeader.biBitCount == 24
 			&& infoHeader.biClrUsed == 0
 			&& infoHeader.biClrImportant == 0;

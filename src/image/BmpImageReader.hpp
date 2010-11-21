@@ -1,18 +1,18 @@
 /*
- * BitmapImageReader.hpp
+ * BmpImageReader.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef BITMAPIMAGEREADER_HPP
-#define BITMAPIMAGEREADER_HPP
+#ifndef BMPIMAGEREADER_HPP
+#define BMPIMAGEREADER_HPP
 #include "gloop_common.h"
 #include <fstream>
 #include <cstring>
 #include "Image.hpp"
 
 /* File header of a bitmap image. */
-struct BitmapFileHeader {
+struct BmpFileHeader {
 	char bfType[2];
 	GLuint bfSize;
 	GLushort bfReserved1;
@@ -21,7 +21,7 @@ struct BitmapFileHeader {
 };
 
 /* Information header of a bitmap image. */
-struct BitmapInfoHeader {
+struct BmpInfoHeader {
 	GLuint biSize;
 	GLuint biWidth;
 	GLuint biHeight;
@@ -39,10 +39,10 @@ struct BitmapInfoHeader {
  * 
  * @ingroup image
  */
-class BitmapImageReader : public ImageReader {
+class BmpImageReader : public ImageReader {
 public:
-	BitmapImageReader();
-	virtual ~BitmapImageReader();
+	BmpImageReader();
+	virtual ~BmpImageReader();
 	virtual void read(const string &filename);
 	virtual void toArray(char *array, size_t size);
 // Getters and setters
@@ -64,8 +64,8 @@ protected:
 	virtual bool is24Bit();
 private:
 	ifstream file;
-	BitmapFileHeader fileHeader;
-	BitmapInfoHeader infoHeader;
+	BmpFileHeader fileHeader;
+	BmpInfoHeader infoHeader;
 	char *pixels;
 };
 

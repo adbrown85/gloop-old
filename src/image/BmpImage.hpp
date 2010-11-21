@@ -1,24 +1,24 @@
 /*
- * BitmapImage.hpp
+ * BmpImage.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef BITMAPIMAGE_HPP
-#define BITMAPIMAGE_HPP
+#ifndef BMPIMAGE_HPP
+#define BMPIMAGE_HPP
 #include "gloop_common.h"
 #include <fstream>
 #include "Image.hpp"
-#include "BitmapImageReader.hpp"
+#include "BmpImageReader.hpp"
 
 /** @brief Bitmap image.
  * 
  * @ingroup image
  */
-class BitmapImage : public Image {
+class BmpImage : public Image {
 public:
-	BitmapImage(const string &filename);
-	virtual ~BitmapImage();
+	BmpImage(const string &filename);
+	virtual ~BmpImage();
 // Getters and setters
 	virtual GLchar* getData() const;
 protected:
@@ -28,6 +28,6 @@ private:
 };
 
 /** @return Pointer to the pixels in the image. */
-inline GLchar* BitmapImage::getData() const {return (char*)data;}
+inline GLchar* BmpImage::getData() const {return (char*)data;}
 
 #endif

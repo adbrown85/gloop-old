@@ -1,6 +1,6 @@
 BasicException
-BitmapImage
-BitmapImageReader
+BmpImage
+BmpImageReader
 BufferObject
 Configuration
 Dataset

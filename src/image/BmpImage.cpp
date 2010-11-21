@@ -1,13 +1,13 @@
 /*
- * BitmapImage.cpp
+ * BmpImage.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "BitmapImage.hpp"
+#include "BmpImage.hpp"
 
 /** Creates a new bitmap image. */
-BitmapImage::BitmapImage(const string &filename) : Image(filename) {
+BmpImage::BmpImage(const string &filename) : Image(filename) {
 	
 	this->data = NULL;
 	
@@ -15,7 +15,7 @@ BitmapImage::BitmapImage(const string &filename) : Image(filename) {
 }
 
 /** Destroys the bitmap image. */
-BitmapImage::~BitmapImage() {
+BmpImage::~BmpImage() {
 	
 	if (data != NULL) {
 		delete[] data;
@@ -23,9 +23,9 @@ BitmapImage::~BitmapImage() {
 }
 
 /** Loads the image into memory. */
-void BitmapImage::load() {
+void BmpImage::load() {
 	
-	BitmapImageReader reader;
+	BmpImageReader reader;
 	
 	reader.read(getFilename());
 	
