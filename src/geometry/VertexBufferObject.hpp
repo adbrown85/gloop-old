@@ -48,6 +48,8 @@ public:
 	bool isInterleaved() const;
 	void setInterleaved(bool interleaved);
 	GLsizei getSize() const;
+	GLuint getOffset(const string &name) const;
+	GLuint getStride() const;
 private:
 	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
 	bool interleaved;
@@ -60,6 +62,9 @@ private:
 
 /** @return Size in bytes of the VBO. */
 inline GLsizei VertexBufferObject::getSize() const {return size;}
+
+/** @return Number of bytes between attributes. */
+inline GLuint VertexBufferObject::getStride() const {return stride;}
 
 /** @return True if the VBO has been allocated. */
 inline bool VertexBufferObject::isAllocated() const {return end != data;}

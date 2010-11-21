@@ -182,3 +182,23 @@ void VertexBufferObject::seek(const string &name) {
 		throw e;
 	}
 }
+
+// GETTERS AND SETTERS
+
+/** @return Position of attribute @e name in the VBO.
+ * 
+ * @throw BasicException if @e name is not an attribute in the VBO 
+ */
+GLuint VertexBufferObject::getOffset(const string &name) const {
+	
+	map<string,GLuint>::const_iterator it;
+	
+	it = positions.find(name);
+	if (it != positions.end()) {
+		return it->second;
+	} else {
+		BasicException e;
+		e << "[VertexBufferObject] Attribute '" << name << "' is not stored!";
+		throw e;
+	}
+}
