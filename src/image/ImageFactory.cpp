@@ -6,12 +6,17 @@
  */
 #include "ImageFactory.hpp"
 
-
 Image* ImageFactory::create(const string &filename) {
-#ifdef HAVE_PIXBUFS
-	return new ImagePixbuf(filename);
-#else
-	throw ImageException("[ImageFactory] Compiled without image support.");
-#endif
+	
+	string extension;
+	
+	extension = Text::toLower(Path::getExtension(filename));
+	if (extension == "bmp") {
+		return new BmpImage(filename);
+	} else {
+		ImageException e;
+		e << "[ImageFactory] Image type not supported!";
+		throw e;
+	}
 }
 

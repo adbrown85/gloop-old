@@ -7,13 +7,16 @@
 #ifndef GLOOP_IMAGEFACTORY_HPP
 #define GLOOP_IMAGEFACTORY_HPP
 #include "gloop_common.h"
+#include <edo/Path.hpp>
+#include <edo/Text.hpp>
 #include "Image.hpp"
-#include "ImagePixbuf.hpp"
+#include "BmpImage.hpp"
 using namespace std;
 
 
 /** @brief Creates an image of the appropriate type.
- * @ingroup graphics
+ * 
+ * @ingroup image
  */
 class ImageFactory {
 public:
