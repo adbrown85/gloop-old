@@ -19,9 +19,13 @@ void TextureBuilder2D::assemble(const string &filename, bool compress) {
 		format = PixelFormat::getCompressedFormat(image->getFormat());
 	} else {
 		format = image->getFormat();
+		if (format == GL_BGR) {
+			format = GL_RGB;
+		}
 	}
 	
 	// Upload data
+	glPixelStorei(GL_UNPACK_ALIGNMENT, image->getAlignment());
 	glTexImage2D(GL_TEXTURE_2D,                   // target
 	             0,                               // level
 	             format,                          // internalFormat

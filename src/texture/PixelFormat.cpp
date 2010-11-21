@@ -100,6 +100,7 @@ void PixelFormat::loadNameConversions() {
 	// RGB
 	addFormat("rgb", GL_RGB);
 	addFormat("rgb8", GL_RGB8);
+	addFormat("bgr", GL_BGR);
 	addFormat("compressed_rgb", GL_COMPRESSED_RGB);
 	addFormat("compressed_srgb", GL_COMPRESSED_SRGB);
 	addFormat("compressed_rgb_s3tc_dxt1", GL_COMPRESSED_RGB_S3TC_DXT1_EXT);
