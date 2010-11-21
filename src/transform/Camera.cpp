@@ -46,13 +46,7 @@ void Camera::load(int width, int height) {
 	
 	// Set up viewport
 	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(30.0, static_cast<float>(width)/height, 0.8, 15.0);
-	
-	// Shortcut for generating projection matrix
-	glGetFloatv(GL_PROJECTION_MATRIX, array);
-	matrix.set(array);
+	matrix = Projection::getPerspective(30.0, (float)width/height, 0.8, 15.0);
 	State::setMode(PROJECTION_MODE);
 	State::loadIdentity();
 	State::apply(matrix);

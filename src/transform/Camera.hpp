@@ -12,6 +12,7 @@
 #include "Quaternion.hpp"
 #include "Vec4.hpp"
 #include "State.hpp"
+#include "Projection.hpp"
 #define CAMERA_DEFAULT_ZOOM -10.0
 #define CAMERA_ROTATE_AMOUNT 5.0
 using namespace std;
