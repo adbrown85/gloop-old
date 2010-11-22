@@ -33,19 +33,16 @@ private:
 };
 
 Test::Test() {
-	
 	window = GLAWTFactory::createWindow();
 	canvas = GLAWTFactory::createCanvas();
 }
 
 Test::~Test() {
-	
 	delete window;
 	delete canvas;
 }
 
 void Test::init() {
-	
 	canvas->addListener(this);
 	window->setTitle("Test");
 	window->add(canvas);
