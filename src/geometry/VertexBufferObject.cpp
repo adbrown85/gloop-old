@@ -64,7 +64,13 @@ void VertexBufferObject::allocate(GLenum usage, GLuint count) {
 		position += sizeof(GLfloat) * it->getComponents();
 	}
 	size = position * count;
-	stride = size / count;
+	
+	// Compute stride
+	if (attributes.size() == 1) {
+		stride = 0;
+	} else {
+		stride = size / this->count;
+	}
 	
 	// Recompute positions if not interleaved
 	if (!isInterleaved()) {
