@@ -18,6 +18,7 @@ public:
 	virtual void init();
 	virtual void setUp() {}
 	virtual void tearDown() {}
+// Event handling
 	virtual void onCanvasInitEvent(Canvas &canvas) {}
 	virtual void onCanvasDisplayEvent(Canvas &canvas) {}
 	virtual void onCanvasKeyEvent(Canvas &canvas);
