@@ -10,6 +10,7 @@
 #include <cassert>
 #include "BufferObject.hpp"
 #include "ErrorChecker.hpp"
+#include "../Test.h"
 
 /* Fake BufferObject for exposing some methods. */
 class FakeBufferObject : public BufferObject {
@@ -24,10 +25,10 @@ inline void FakeBufferObject::allocate(GLenum usage, GLsizei size) {
 }
 
 /** Unit test for BufferObject. */
-class BufferObjectTest {
+class BufferObjectTest : public Test {
 public:
-	void setUp();
-	void tearDown();
+	BufferObjectTest();
+	virtual ~BufferObjectTest();
 	void testConstructor();
 	void testBind();
 	void testAllocate();
@@ -37,18 +38,16 @@ private:
 };
 
 /** Create a window/canvas so we can call GL functions. */
-void BufferObjectTest::setUp() {
+BufferObjectTest::BufferObjectTest() {
 	
 	window = GLAWTFactory::createWindow();
 	canvas = GLAWTFactory::createCanvas();
-	
-	window->setTitle("BufferObjectTest");
 	window->add(canvas);
 	window->show();
 }
 
 /** Destroy the window/canvas. */
-void BufferObjectTest::tearDown() {
+BufferObjectTest::~BufferObjectTest() {
 	
 	delete window;
 	delete canvas;
@@ -59,12 +58,12 @@ void BufferObjectTest::testConstructor() {
 	
 	BufferObject *bo;
 	
-	cout << "BufferObjectTest::testConstructor" << endl;
+//	cout << "BufferObjectTest::testConstructor" << endl;
 	bo = new BufferObject(GL_ARRAY_BUFFER);
 	assert(bo->getType() == GL_ARRAY_BUFFER);
 	assert(bo->getHandle() != 0);
-	ErrorChecker::assertNoError("testConstructor");
-	cout << "PASSED" << endl;
+//	ErrorChecker::assertNoError("testConstructor");
+//	cout << "PASSED" << endl;
 }
 
 /** Ensure BufferObject will be bound and unbound correctly. */
@@ -73,7 +72,7 @@ void BufferObjectTest::testBind() {
 	BufferObject *bo;
 	int handle;
 	
-	cout << "BufferObjectTest::testConstructor" << endl;
+//	cout << "BufferObjectTest::testConstructor" << endl;
 	bo = new BufferObject(GL_ARRAY_BUFFER);
 	bo->bind();
 	assert(bo->isBound());
@@ -83,8 +82,8 @@ void BufferObjectTest::testBind() {
 	assert(!bo->isBound());
 	glGetIntegerv(GL_ARRAY_BUFFER_BINDING, &handle);
 	assert(handle == 0);
-	ErrorChecker::assertNoError("testBind");
-	cout << "PASSED" << endl;
+//	ErrorChecker::assertNoError("testBind");
+//	cout << "PASSED" << endl;
 }
 
 /** Ensure memory gets allocated correctly. */
@@ -93,7 +92,7 @@ void BufferObjectTest::testAllocate() {
 	FakeBufferObject *bo;
 	int param;
 	
-	cout << "BufferObjectTest::testAllocate" << endl;
+//	cout << "BufferObjectTest::testAllocate" << endl;
 	bo = new FakeBufferObject(GL_ARRAY_BUFFER);
 	bo->bind();
 	bo->allocate(GL_STATIC_DRAW, 128);
@@ -102,20 +101,15 @@ void BufferObjectTest::testAllocate() {
 	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &param);
 	assert(param == 128);
 	bo->unbind();
-	ErrorChecker::assertNoError("testAllocate");
-	cout << "PASSED" << endl;
+//	ErrorChecker::assertNoError("testAllocate");
+//	cout << "PASSED" << endl;
 }
 
 /* Run the test. */
-int main(int argc, char *argv[]) {
-	
-	Toolkit toolkit(argc, argv);
-	BufferObjectTest test;
-	
-	test.setUp();
-	test.testConstructor();
-	test.testBind();
-	test.testAllocate();
-	test.tearDown();
-	cout << "ALL TESTS PASSED" << endl;
-}
+#define HARNESS BufferObjectTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testConstructor)
+ADD_TEST(testBind)
+ADD_TEST(testAllocate)
+RUN_TESTS
