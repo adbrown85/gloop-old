@@ -10,63 +10,70 @@
 #include <glawt/GLAWTFactory.hpp>
 #include "VertexBufferObject.hpp"
 #include "ErrorChecker.hpp"
-
+#include "../Test.h"
 
 /** Unit test for VertexBufferObject. */
-class VertexBufferObjectTest {
+class VertexBufferObjectTest : public Test {
 public:
-	void setUp();
-	void tearDown();
+	VertexBufferObjectTest();
+	virtual ~VertexBufferObjectTest();
+	virtual void setUp();
+	virtual void tearDown();
 	void testAllocate();
 	void testPut();
 	void testFlush();
 private:
+	VertexBufferObject *vbo;
 	Window *window;
 	Canvas *canvas;
 };
 
-/** Create a window/canvas so we can call GL functions. */
-void VertexBufferObjectTest::setUp() {
+/** Create and prepare a window/canvas so we can call GL functions. */
+VertexBufferObjectTest::VertexBufferObjectTest() {
 	
 	window = GLAWTFactory::createWindow();
 	canvas = GLAWTFactory::createCanvas(512, 512);
-	window->setTitle("VertexBufferObjectTest");
 	window->add(canvas);
 	window->show();
 }
 
 /** Destroy the window/canvas. */
-void VertexBufferObjectTest::tearDown() {
+VertexBufferObjectTest::~VertexBufferObjectTest() {
 
 	delete window;
 	delete canvas;
 }
 
-/** Ensures the VBO creates the correct size. */
-void VertexBufferObjectTest::testAllocate() {
-	
-	VertexBufferObject *vbo;
-	int param;
+/** Create a fresh VBO. */
+void VertexBufferObjectTest::setUp() {
 	
 	vbo = new VertexBufferObject();
 	vbo->bind();
+}
+
+/** Destroy the VBO. */
+void VertexBufferObjectTest::tearDown() {
+	
+	vbo->unbind();
+	delete vbo;
+}
+
+/** Ensures the VBO creates the correct size. */
+void VertexBufferObjectTest::testAllocate() {
+	
+	int param;
+	
 	vbo->addAttribute("MCVertex", 3);
 	vbo->addAttribute("TexCoord0", 3);
 	vbo->allocate(GL_STATIC_DRAW, 3);
 	
 	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &param);
 	assert(param == sizeof(float) * (3 + 3) * 3);
-	
-	ErrorChecker::assertNoError("testAllocate");
 }
 
 /** Ensures an exception will be thrown when put is exceeded. */
 void VertexBufferObjectTest::testPut() {
 	
-	VertexBufferObject *vbo;
-	
-	vbo = new VertexBufferObject();
-	vbo->bind();
 	vbo->addAttribute("MCVertex", 3);
 	vbo->addAttribute("TexCoord0", 3);
 	vbo->allocate(GL_STATIC_DRAW, 3);
@@ -81,7 +88,6 @@ void VertexBufferObjectTest::testPut() {
 	try {
 		vbo->put(0.0, 0.0, 0.0);
 	} catch (exception &e) {
-		ErrorChecker::assertNoError("testPut");
 		return;
 	}
 	assert(false);
@@ -90,9 +96,6 @@ void VertexBufferObjectTest::testPut() {
 /** Ensures the data can be sent to the card. */
 void VertexBufferObjectTest::testFlush() {
 	
-	VertexBufferObject *vbo;
-	
-	vbo = new VertexBufferObject();
 	vbo->bind();
 	vbo->addAttribute("MCVertex", 3);
 	vbo->allocate(GL_STATIC_DRAW, 3);
@@ -102,31 +105,13 @@ void VertexBufferObjectTest::testFlush() {
 	vbo->put(+0.5, +0.5, 0);
 	
 	vbo->flush();
-	ErrorChecker::assertNoError("testFlush");
 }
 
-/* Runs the test. */
-int main(int argc, char *argv[]) {
-	
-	Toolkit kit(argc, argv);
-	VertexBufferObjectTest test;
-	
-	test.setUp();
-	try {
-		cout << "VertexBufferObjectTest::testAllocate" << endl;
-		test.testAllocate();
-		cout << "PASSED" << endl;
-		cout << "VertexBufferObjectTest::testPut" << endl;
-		test.testPut();
-		cout << "PASSED" << endl;
-		cout << "VertexBufferObjectTest::testFlush" << endl;
-		test.testFlush();
-		cout << "PASSED" << endl;
-	} catch (exception &e) {
-		cerr << e.what() << endl;
-		cout << "FAILED!" << endl;
-		exit(1);
-	}
-	test.tearDown();
-	cout << "PASSED ALL TESTS" << endl;
-}
+/* Run the test. */
+#define HARNESS VertexBufferObjectTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testAllocate)
+ADD_TEST(testPut)
+ADD_TEST(testFlush)
+RUN_TESTS
