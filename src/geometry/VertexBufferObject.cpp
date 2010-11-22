@@ -46,6 +46,13 @@ void VertexBufferObject::allocate(GLenum usage, GLuint count) {
 	list<VertexAttribute>::iterator it;
 	GLuint position;
 	
+	// Check size
+	if (attributes.empty()) {
+		BasicException e;
+		e << "[VertexBufferObject] No attributes were added!" << endl;
+		throw e;
+	}
+	
 	// Reset
 	this->count = count;
 	positions.clear();
