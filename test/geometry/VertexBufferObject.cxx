@@ -17,6 +17,8 @@ public:
 	void testAllocate();
 	void testPut();
 	void testFlush();
+	void testStride();
+	void testSize();
 private:
 	VertexBufferObject *vbo;
 };
@@ -84,6 +86,23 @@ void VertexBufferObjectTest::testFlush() {
 	vbo->flush();
 }
 
+/** Ensures the stride is allocated correctly. */
+void VertexBufferObjectTest::testStride() {
+	
+	vbo->addAttribute("MCVertex", 3);
+	vbo->allocate(GL_STATIC_DRAW, 3);
+	
+	assert(vbo->getStride() == 0);
+}
+
+void VertexBufferObjectTest::testSize() {
+	
+	vbo->addAttribute("MCVertex", 3);
+	vbo->allocate(GL_STATIC_DRAW, 4);
+	
+	assert(vbo->getSize() == 48);
+}
+
 /* Run the test. */
 #define HARNESS VertexBufferObjectTest
 #include "../Runner.h"
@@ -91,4 +110,6 @@ START_TESTS
 ADD_TEST(testAllocate)
 ADD_TEST(testPut)
 ADD_TEST(testFlush)
+ADD_TEST(testStride)
+ADD_TEST(testSize)
 RUN_TESTS
