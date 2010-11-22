@@ -7,6 +7,7 @@
 #ifndef GLOOP_TEST_H
 #define GLOOP_TEST_H
 #include "gloop_common.h"
+#include <cassert>
 #include <glawt/GLAWTFactory.hpp>
 
 class Test : public CanvasListener {

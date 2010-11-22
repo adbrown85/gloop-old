@@ -5,12 +5,9 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
-#include <cassert>
-#include <glawt/Toolkit.hpp>
-#include <glawt/GLAWTFactory.hpp>
+#include "../Test.h"
 #include "VertexBufferObject.hpp"
 #include "ErrorChecker.hpp"
-#include "../Test.h"
 
 /** Unit test for VertexBufferObject. */
 class VertexBufferObjectTest : public Test {

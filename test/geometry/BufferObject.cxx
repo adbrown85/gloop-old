@@ -5,10 +5,9 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
-#include <cassert>
+#include "../Test.h"
 #include "BufferObject.hpp"
 #include "ErrorChecker.hpp"
-#include "../Test.h"
 
 /* Fake BufferObject for exposing some methods. */
 class FakeBufferObject : public BufferObject {
