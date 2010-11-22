@@ -15,7 +15,8 @@ typedef void (HARNESS::*method_t)();
 #define START_TESTS \
 int main(int argc, char *argv[]) { \
     Toolkit kit(argc, argv); \
-    HARNESS test;
+    HARNESS test; \
+    test.init();
 
 #define ADD_TEST(X) \
     Runner::add(#X, &HARNESS::X);
