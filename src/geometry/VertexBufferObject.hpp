@@ -39,8 +39,8 @@ public:
 	void put(float x, float y, float z, float w);
 	void flush();
 // Secondary interface
-	void enableStriding();
-	void disableStriding();
+	void enableAutoStriding();
+	void disableAutoStriding();
 	void rewind();
 	void seek(const string &name);
 // Getters and setters
@@ -54,7 +54,7 @@ private:
 	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
 	bool interleaved;
 	GLubyte *data, *current, *end;
-	GLuint count, stride;
+	GLuint count, stride, autoStride;
 	GLsizei size;
 	map<string,GLuint> positions;
 	list<VertexAttribute> attributes;
@@ -63,7 +63,7 @@ private:
 /** @return Size in bytes of the VBO. */
 inline GLsizei VertexBufferObject::getSize() const {return size;}
 
-/** @return Number of bytes between attributes. */
+/** @return Number of bytes between vertices. */
 inline GLuint VertexBufferObject::getStride() const {return stride;}
 
 /** @return True if the VBO has been allocated. */

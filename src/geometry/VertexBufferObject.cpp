@@ -17,6 +17,7 @@ VertexBufferObject::VertexBufferObject() : BufferObject(GL_ARRAY_BUFFER) {
 	this->count = 0;
 	this->size = 0;
 	this->stride = 0;
+	this->autoStride = 0;
 	data = NULL;
 	current = NULL;
 	end = NULL;
@@ -47,7 +48,6 @@ void VertexBufferObject::allocate(GLenum usage, GLuint count) {
 	
 	// Reset
 	this->count = count;
-	stride = 0;
 	positions.clear();
 	
 	// Compute size and positions
@@ -57,6 +57,7 @@ void VertexBufferObject::allocate(GLenum usage, GLuint count) {
 		position += sizeof(GLfloat) * it->getComponents();
 	}
 	size = position * count;
+	stride = size / count;
 	
 	// Recompute positions if not interleaved
 	if (!isInterleaved()) {
@@ -76,7 +77,7 @@ void VertexBufferObject::allocate(GLenum usage, GLuint count) {
  * 
  * @throw BasicException if not an interleaved vertex buffer object. 
  */
-void VertexBufferObject::enableStriding() {
+void VertexBufferObject::enableAutoStriding() {
 	
 	if (!isInterleaved()) {
 		BasicException e;
@@ -88,14 +89,14 @@ void VertexBufferObject::enableStriding() {
 		BasicException e;
 		e << "[VertexBufferObject] Cannot set striding before allocated.";
 	}
-
-	stride = size / count;
+	
+	autoStride = stride;
 }
 
 /** Move to the next vertex in the buffer after a put. */
-void VertexBufferObject::disableStriding() {
+void VertexBufferObject::disableAutoStriding() {
 	
-	stride = 0;
+	autoStride = 0;
 }
 
 /** Flushes the data to the video card. */
@@ -119,7 +120,7 @@ void VertexBufferObject::put(float x, float y) {
 	
 	((GLfloat*)current)[0] = x;
 	((GLfloat*)current)[1] = y;
-	current += SIZEOF_VEC2 + stride;
+	current += SIZEOF_VEC2 + autoStride;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -132,7 +133,7 @@ void VertexBufferObject::put(float x, float y, float z) {
 	((GLfloat*)current)[0] = x;
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
-	current += SIZEOF_VEC3 + stride;
+	current += SIZEOF_VEC3 + autoStride;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -146,7 +147,7 @@ void VertexBufferObject::put(float x, float y, float z, float w) {
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
 	((GLfloat*)current)[3] = w;
-	current += SIZEOF_VEC4 + stride;
+	current += SIZEOF_VEC4 + autoStride;
 }
 
 /** Returns the current position to the beginning of the buffer. */
