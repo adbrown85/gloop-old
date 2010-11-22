@@ -27,6 +27,7 @@ protected:
 	void assertEquals(float x, float y);
 	Window* getWindow() {return window;}
 	Canvas* getCanvas() {return canvas;}
+	void runWindow() {window->run();}
 private:
 	Window *window;
 	Canvas *canvas;

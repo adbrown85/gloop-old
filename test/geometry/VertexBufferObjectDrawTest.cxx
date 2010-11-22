@@ -32,7 +32,7 @@ VertexBufferObjectDrawTest::VertexBufferObjectDrawTest() {
 
 void VertexBufferObjectDrawTest::testDraw() {
 	
-	getWindow()->run();
+	runWindow();
 }
 
 void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
