@@ -16,7 +16,7 @@ public:
 	virtual void init();
 	virtual void setUp() {}
 	virtual void tearDown() {}
-	virtual void onCanvasInitEvent(Canvas &canvas);
+	virtual void onCanvasInitEvent(Canvas &canvas) {}
 	virtual void onCanvasDisplayEvent(Canvas &canvas) {}
 	virtual void onCanvasKeyEvent(Canvas &canvas);
 	virtual void onCanvasButtonEvent(Canvas &canvas) {}
@@ -47,11 +47,6 @@ void Test::init() {
 	window->setTitle("Test");
 	window->add(canvas);
 	window->show();
-}
-
-void Test::onCanvasInitEvent(Canvas &canvas) {
-	
-	cout << "Test::onCanvasInitEvent" << endl;
 }
 
 void Test::onCanvasKeyEvent(Canvas &canvas) {
