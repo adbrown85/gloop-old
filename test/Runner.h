@@ -23,6 +23,7 @@ int main(int argc, char *argv[]) { \
 
 #define RUN_TESTS \
     Runner::run(test); \
+    return 0; \
 }
 
 struct TestCase {
