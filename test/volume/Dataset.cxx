@@ -9,38 +9,44 @@
 #include "Dataset.hpp"
 #define DATASETTEST_FILENAME "test/volume/bunny128.vlb"
 
-/** @brief Utility for viewing a dataset. */
-class DatasetViewer : public CanvasListener {
+/** Test for Dataset. */
+class DatasetTest : public Test {
 public:
-	DatasetViewer(Dataset *dataset);
-	void goToNext(Canvas &canvas);
-	void goToPrevious(Canvas &canvas);
-	void load();
-	virtual void onCanvasInitEvent(Canvas &canvas) {}
+	DatasetTest();
+	virtual ~DatasetTest();
+	void testDisplay();
+// Event handlers
 	virtual void onCanvasDisplayEvent(Canvas &canvas);
 	virtual void onCanvasKeyEvent(Canvas &canvas);
 	virtual void onCanvasButtonEvent(Canvas &canvas);
-	virtual void onCanvasDragEvent(Canvas &canvas) {}
-	void setDataset(Dataset *dataset);
+// Hooks
+	virtual int doGetWidth() {return dataset->getWidth();}
+	virtual int doGetHeight() {return dataset->getHeight();}
+	virtual string doGetTitle() {return dataset->getFilename();}
+protected:
+	void goToNext(Canvas &canvas);
+	void goToPrevious(Canvas &canvas);
 private:
 	Dataset *dataset;
-	GLenum type;
-	int slice, width, height, depth;
+	int slice;
 };
 
-/** Creates a new %DatasetViewer. */
-DatasetViewer::DatasetViewer(Dataset *dataset) {
+/** Initialize the fixture. */
+DatasetTest::DatasetTest() {
 	
-	this->dataset = dataset;
-	this->type = dataset->getType();
-	this->slice = 0;
-	this->width = dataset->getWidth();
-	this->height = dataset->getHeight();
-	this->depth = dataset->getDepth();
+	dataset = new Dataset(DATASETTEST_FILENAME);
+	dataset->load();
+	slice = 0;
+}
+
+/** Cleans up the test fixture. */
+DatasetTest::~DatasetTest() {
+	
+	delete dataset;
 }
 
 /** Shows the next slice in the dataset. */
-void DatasetViewer::goToNext(Canvas &canvas) {
+void DatasetTest::goToNext(Canvas &canvas) {
 	
 	if (slice == dataset->getDepth()-1)
 		slice = -1;
@@ -49,7 +55,7 @@ void DatasetViewer::goToNext(Canvas &canvas) {
 }
 
 /** Shows the previous slice in the dataset. */
-void DatasetViewer::goToPrevious(Canvas &canvas) {
+void DatasetTest::goToPrevious(Canvas &canvas) {
 	
 	if (slice == 0)
 		slice = dataset->getDepth();
@@ -58,7 +64,9 @@ void DatasetViewer::goToPrevious(Canvas &canvas) {
 }
 
 /** Prints the value in the volume under the cursor. */
-void DatasetViewer::onCanvasButtonEvent(Canvas &canvas) {
+void DatasetTest::onCanvasButtonEvent(Canvas &canvas) {
+	
+	Index index;
 	
 	// Ignore down state
 	if (canvas.getState().combo.action == TOOLKIT_DOWN) {
@@ -67,8 +75,10 @@ void DatasetViewer::onCanvasButtonEvent(Canvas &canvas) {
 	
 	// Standard buttons
 	if (canvas.getState().combo.trigger == TOOLKIT_LEFT_BUTTON) {
-		Index index((height-(canvas.getState().y)), (canvas.getState().x), slice);
-		switch (type) {
+		index.i = dataset->getHeight() - canvas.getState().y;
+		index.j = canvas.getState().x;
+		index.k = slice;
+		switch (dataset->getType()) {
 		case GL_UNSIGNED_BYTE:
 			cout << (int)(dataset->getAsByte(index)) << endl;
 			break;
@@ -93,10 +103,11 @@ void DatasetViewer::onCanvasButtonEvent(Canvas &canvas) {
 }
 
 /** Draws a slice to the screen. */
-void DatasetViewer::onCanvasDisplayEvent(Canvas &canvas) {
+void DatasetTest::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	ostringstream stream;
 	char *data;
+	int area = dataset->getWidth() * dataset->getHeight();
 	
 	// Clear
 	glClearColor(0, 0, 0, 1);
@@ -120,12 +131,19 @@ void DatasetViewer::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	// Draw pixels
 	data = reinterpret_cast<char*>(dataset->getData());
-	data += slice * width * height * dataset->getBlock();
-	glDrawPixels(width, height, GL_LUMINANCE, dataset->getType(), data);
+	data += slice * area * dataset->getBlock();
+	glDrawPixels(
+			dataset->getWidth(),
+			dataset->getHeight(),
+			GL_LUMINANCE,
+			dataset->getType(),
+			data);
 }
 
 /** Changes the slice. */
-void DatasetViewer::onCanvasKeyEvent(Canvas &canvas) {
+void DatasetTest::onCanvasKeyEvent(Canvas &canvas) {
+	
+	Test::onCanvasKeyEvent(canvas);
 	
 	switch (canvas.getState().combo.trigger) {
 	case TOOLKIT_KEY_UP:
@@ -137,38 +155,6 @@ void DatasetViewer::onCanvasKeyEvent(Canvas &canvas) {
 		goToPrevious(canvas);
 		break;
 	}
-}
-
-/** Test for Dataset. */
-class DatasetTest : public Test {
-public:
-	DatasetTest();
-	virtual ~DatasetTest();
-	void testDisplay();
-// Hooks
-	virtual void doAddCanvasListeners() {addCanvasListener(viewer);}
-	virtual int doGetWidth() {return dataset->getWidth();}
-	virtual int doGetHeight() {return dataset->getHeight();}
-	virtual string doGetTitle() {return dataset->getFilename();}
-private:
-	Dataset *dataset;
-	DatasetViewer *viewer;
-};
-
-/** Initialize the fixture. */
-DatasetTest::DatasetTest() {
-	
-	dataset = new Dataset(DATASETTEST_FILENAME);
-	dataset->load();
-	dataset->print();
-	viewer = new DatasetViewer(dataset);
-}
-
-/** Cleans up the test fixture. */
-DatasetTest::~DatasetTest() {
-	
-	delete viewer;
-	delete dataset;
 }
 
 /** Tests the dataset can be viewed. */
