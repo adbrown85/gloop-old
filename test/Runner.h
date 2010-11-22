@@ -64,7 +64,7 @@ void Runner::run(test_t &test) {
 		cout << "PASSED" << endl;
 		test.tearDown();
 	}
-	cout << "PASSED ALL TESTS" << endl;
+	cout << "ALL TESTS PASSED" << endl;
 }
 
 #endif
