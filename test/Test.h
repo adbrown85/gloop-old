@@ -9,6 +9,7 @@
 
 class Test {
 public:
+	virtual ~Test() {}
 	virtual void setUp() {}
 	virtual void tearDown() {}
 };
