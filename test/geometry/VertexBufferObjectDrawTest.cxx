@@ -5,26 +5,19 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
-#include <glawt/Toolkit.hpp>
-#include <glawt/GLAWTFactory.hpp>
+#include "../Test.h"
 #include "VertexBufferObject.hpp"
-#include "ErrorChecker.hpp"
 #include "ShaderBuilder.hpp"
 #include "ProgramBuilder.hpp"
 
 
-class VertexBufferObjectDrawTest : public CanvasListener {
+class VertexBufferObjectDrawTest : public Test {
 public:
 	VertexBufferObjectDrawTest();
 	void testDraw();
 	virtual void onCanvasInitEvent(Canvas &canvas);
 	virtual void onCanvasDisplayEvent(Canvas &canvas);
-	virtual void onCanvasKeyEvent(Canvas &canvas);
-	virtual void onCanvasButtonEvent(Canvas &canvas) {}
-	virtual void onCanvasDragEvent(Canvas &canvas) {}
 private:
-	Window *window;
-	Canvas *canvas;
 	VertexBufferObject *vbo;
 	GLuint program;
 	GLint pointLoc;
@@ -32,8 +25,6 @@ private:
 
 VertexBufferObjectDrawTest::VertexBufferObjectDrawTest() {
 	
-	window = NULL;
-	canvas = NULL;
 	vbo = NULL;
 	program = 0;
 	pointLoc = -1;
@@ -41,17 +32,7 @@ VertexBufferObjectDrawTest::VertexBufferObjectDrawTest() {
 
 void VertexBufferObjectDrawTest::testDraw() {
 	
-	window = GLAWTFactory::createWindow();
-	canvas = GLAWTFactory::createCanvas();
-	canvas->addListener(this);
-	
-	window->setTitle("VertexBufferObjectDrawTest");
-	window->add(canvas);
-	window->show();
-	window->run();
-	
-	delete window;
-	delete canvas;
+	getWindow()->run();
 }
 
 void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
@@ -110,21 +91,9 @@ void VertexBufferObjectDrawTest::onCanvasDisplayEvent(Canvas &canvas) {
 	vbo->unbind();
 }
 
-void VertexBufferObjectDrawTest::onCanvasKeyEvent(Canvas &canvas) {
-	
-	if (canvas.getState().combo.trigger == TOOLKIT_ESCAPE) {
-		window->hide();
-	}
-}
+#define HARNESS VertexBufferObjectDrawTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testDraw)
+RUN_TESTS
 
-/* Runs the test. */
-int main(int argc, char *argv[]) {
-	
-	Toolkit kit(argc, argv);
-	VertexBufferObjectDrawTest test;
-	
-	cout << "VertexBufferObjectDrawTest::testDraw" << endl;
-	test.testDraw();
-	cout << "PASSED" << endl;
-	cout << "PASSED ALL TESTS" << endl;
-}
