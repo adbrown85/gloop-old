@@ -5,12 +5,9 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
-#include <cstring>
-#include <glawt/Toolkit.hpp>
-#include <glawt/GLAWTFactory.hpp>
+#include "../Test.h"
 #include "Dataset.hpp"
-#define DATASETTEST_FILENAME "textures/bunny128.vlb"
-
+#define DATASETTEST_FILENAME "test/volume/bunny128.vlb"
 
 /** @brief Utility for viewing a dataset. */
 class DatasetViewer : public CanvasListener {
@@ -143,63 +140,46 @@ void DatasetViewer::onCanvasKeyEvent(Canvas &canvas) {
 }
 
 /** Test for Dataset. */
-class DatasetTest {
+class DatasetTest : public Test {
 public:
-	void setUp();
-	void tearDown();
+	DatasetTest();
+	virtual ~DatasetTest();
 	void testDisplay();
+// Hooks
+	virtual void doAddCanvasListeners() {addCanvasListener(viewer);}
+	virtual int doGetWidth() {return dataset->getWidth();}
+	virtual int doGetHeight() {return dataset->getHeight();}
+	virtual string doGetTitle() {return dataset->getFilename();}
 private:
 	Dataset *dataset;
+	DatasetViewer *viewer;
 };
 
 /** Initialize the fixture. */
-void DatasetTest::setUp() {
-
+DatasetTest::DatasetTest() {
+	
 	dataset = new Dataset(DATASETTEST_FILENAME);
 	dataset->load();
 	dataset->print();
+	viewer = new DatasetViewer(dataset);
 }
 
 /** Cleans up the test fixture. */
-void DatasetTest::tearDown() {
+DatasetTest::~DatasetTest() {
 	
+	delete viewer;
 	delete dataset;
 }
 
 /** Tests the dataset can be viewed. */
 void DatasetTest::testDisplay() {
 	
-	Window *window;
-	Canvas *canvas;
-	DatasetViewer *viewer;
-	
-	// Initialize
-	window = GLAWTFactory::createWindow();
-	canvas = GLAWTFactory::createCanvas(
-			dataset->getWidth(),
-			dataset->getHeight());
-	viewer = new DatasetViewer(dataset);
-	
-	// Pack window
-	canvas->addListener(viewer);
-	window->setTitle(dataset->getFilename());
-	window->add(canvas);
-	window->show();
-	
-	// Run
-	window->run();
-	delete window;
-	delete canvas;
+	runWindow();
 }
 
-/** Runs the test. */
-int main(int argc, char *argv[]) {
-	
-	Toolkit kit(argc, argv);
-	DatasetTest test;
-	
-	test.setUp();
-	test.testDisplay();
-	test.tearDown();
-}
-
+/* Run the test. */
+#define HARNESS DatasetTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testDisplay)
+RUN_TESTS
