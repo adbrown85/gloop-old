@@ -25,8 +25,6 @@ public:
 	virtual void onCanvasDragEvent(Canvas &canvas) {}
 protected:
 	void assertEquals(float x, float y);
-	Window* getWindow() {return window;}
-	Canvas* getCanvas() {return canvas;}
 	void runWindow() {window->run();}
 private:
 	Window *window;
