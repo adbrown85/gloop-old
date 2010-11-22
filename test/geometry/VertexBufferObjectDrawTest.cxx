@@ -61,10 +61,16 @@ void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	vbo = new VertexBufferObject();
 	vbo->bind();
 	vbo->addAttribute("MCVertex", 3);
+	vbo->addAttribute("TexCoord0", 3);
 	vbo->allocate(GL_STATIC_DRAW, 3);
-	vbo->put(-0.5, +0.5, 0);
-	vbo->put(-0.5, -0.5, 0);
-	vbo->put(+0.5, +0.5, 0);
+	
+	vbo->put(-0.5, +0.5, 0); // 1
+	vbo->put( 0.0,  1.0, 0);
+	vbo->put(-0.5, -0.5, 0); // 2
+	vbo->put( 0.0,  0.0, 0);
+	vbo->put(+0.5, +0.5, 0); // 3
+	vbo->put( 1.0,  1.0, 0);
+	
 	vbo->flush();
 	vbo->unbind();
 	
@@ -89,12 +95,12 @@ void VertexBufferObjectDrawTest::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	glEnableVertexAttribArray(pointLoc);
 	glVertexAttribPointer(
-			pointLoc, // index
-			3,        // size
-			GL_FLOAT, // type
-			false,    // normalized
-			0,        // stride
-			0);       // offset
+			pointLoc,         // index
+			3,                // size
+			GL_FLOAT,         // type
+			false,            // normalized
+			vbo->getStride(), // stride
+			0);               // offset
 	
 	glDrawArrays(
 			GL_TRIANGLES, // mode
