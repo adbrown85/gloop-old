@@ -50,6 +50,8 @@ public:
 	GLsizei getSize() const;
 	GLuint getOffset(const string &name) const;
 	GLuint getStride() const;
+protected:
+	GLuint max(GLuint x, GLuint y);
 private:
 	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
 	bool interleaved;
@@ -71,5 +73,10 @@ inline bool VertexBufferObject::isAllocated() const {return end != data;}
 
 /** @return True if this VBO keeps all attributes of a vertex together. */
 inline bool VertexBufferObject::isInterleaved() const {return interleaved;}
+
+/** @return Greater of @e x and @e y. */
+inline GLuint VertexBufferObject::max(GLuint x, GLuint y) {
+	return x > y ? x : y;
+}
 
 #endif

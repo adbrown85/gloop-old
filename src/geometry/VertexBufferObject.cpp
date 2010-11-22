@@ -133,7 +133,7 @@ void VertexBufferObject::put(float x, float y) {
 	
 	((GLfloat*)current)[0] = x;
 	((GLfloat*)current)[1] = y;
-	current += SIZEOF_VEC2 + autoStride;
+	current += max(SIZEOF_VEC2, autoStride);
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -146,7 +146,7 @@ void VertexBufferObject::put(float x, float y, float z) {
 	((GLfloat*)current)[0] = x;
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
-	current += SIZEOF_VEC3 + autoStride;
+	current += max(SIZEOF_VEC3, autoStride);
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -160,7 +160,7 @@ void VertexBufferObject::put(float x, float y, float z, float w) {
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
 	((GLfloat*)current)[3] = w;
-	current += SIZEOF_VEC4 + autoStride;
+	current += max(SIZEOF_VEC4, autoStride);
 }
 
 /** Returns the current position to the beginning of the buffer. */
