@@ -9,6 +9,7 @@
 #include "gloop_common.h"
 #include <cassert>
 #include <glawt/GLAWTFactory.hpp>
+#define TEST_EQUALS_TOLERANCE 0.00000001
 
 class Test : public CanvasListener {
 public:
@@ -23,6 +24,7 @@ public:
 	virtual void onCanvasButtonEvent(Canvas &canvas) {}
 	virtual void onCanvasDragEvent(Canvas &canvas) {}
 protected:
+	void assertEquals(float x, float y);
 	Window* getWindow() {return window;}
 	Canvas* getCanvas() {return canvas;}
 private:
@@ -51,10 +53,14 @@ void Test::init() {
 }
 
 void Test::onCanvasKeyEvent(Canvas &canvas) {
-	
 	if (canvas.getState().combo.trigger == TOOLKIT_ESCAPE) {
 		window->hide();
 	}
+}
+
+void Test::assertEquals(float x, float y) {
+	assert((x - y) < TEST_EQUALS_TOLERANCE
+			&& (y - x) < TEST_EQUALS_TOLERANCE);
 }
 
 #endif
