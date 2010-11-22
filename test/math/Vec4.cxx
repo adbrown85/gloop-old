@@ -4,69 +4,67 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
+#include "gloop_common.h"
+#include "../Test.h"
 #include "Vec4.hpp"
 
-class Vec4Test {
+/** @brief Unit test for Vec4. */
+class Vec4Test : public Test {
 public:
-	void setUp();
-	void tearDown();
-	void testPrint();
-	void testAddSubtract();
-	void testMultiplyDivide();
-	void testDoubleHalf();
+	virtual void setUp();
+	void testAdd();
+	void testSubtract();
+	void testMultiply();
+	void testDivide();
 private:
-	Vec4 *A, *B;
+	Vec4 A, B, C;
 };
 
 void Vec4Test::setUp() {
 	
-	A = new Vec4(2, 2, 2);
-	B = new Vec4(3, 4, 5);
+	A.set(2, 2, 2);
+	B.set(2, 4, 5);
 }
 
-void Vec4Test::tearDown() {
+void Vec4Test::testAdd() {
 	
-	delete A;
-	delete B;
+	C = A + B;
+	assertEquals(C.x, 4);
+	assertEquals(C.y, 6);
+	assertEquals(C.z, 7);
 }
 
-void Vec4Test::testPrint() {
+void Vec4Test::testSubtract() {
 	
-	cout << "Printing vectors:" << endl;
-	cout << " A: " << (*A) << endl;
-	cout << " B: " << (*B) << endl;
+	C = A - B;
+	assertEquals(C.x, 0);
+	assertEquals(C.y, -2);
+	assertEquals(C.z, -3);
 }
 
-void Vec4Test::testAddSubtract() {
+void Vec4Test::testMultiply() {
 	
-	cout << "\nAdd/subtract of A, B:" << endl;
-	cout << "  " <<  (*A) + (*B) << endl;
-	cout << "  " <<  (*A) - (*B) << endl;
+	C = A * B;
+	assertEquals(C.x, 4);
+	assertEquals(C.y, 8);
+	assertEquals(C.z, 10);
 }
 
-void Vec4Test::testMultiplyDivide() {
+void Vec4Test::testDivide() {
 	
-	cout << "\nMultiply/divide of A, B:" << endl;
-	cout << "  " <<  (*A) * (*B) << endl;
-	cout << "  " <<  (*A) / (*B) << endl;
+	C = A / B;
+	assertEquals(C.x, 1.0);
+	assertEquals(C.y, 0.5);
+	assertEquals(C.z, 0.4);
 }
 
-void Vec4Test::testDoubleHalf() {
-	
-	cout << "\nDouble/half of A:" << endl;
-	cout << "  " <<  (*A) * 2 << endl;
-	cout << "  " <<  (*A) / 2 << endl;
-}
-
-int main(int argc, char *argv[]) {
-	
-	Vec4Test test;
-	
-	test.setUp();
-	test.testPrint();
-	test.testAddSubtract();
-	test.testMultiplyDivide();
-	test.testDoubleHalf();
-	test.tearDown();
-}
+/* Run the test. */
+#define HARNESS Vec4Test
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testAdd)
+ADD_TEST(testSubtract)
+ADD_TEST(testMultiply)
+ADD_TEST(testDivide)
+RUN_TESTS
 

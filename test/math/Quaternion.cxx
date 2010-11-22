@@ -4,44 +4,42 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
+#include "gloop_common.h"
+#include "../Test.h"
 #include "Quaternion.hpp"
 
-
-int main() {
-	
+/** @brief Unit test for Quaternion. */
+class QuaternionTest : public Test {
+public:
+	void testGetMatrix();
+	void testMultiply();
+private:
 	Matrix mat;
 	Quaternion quaA, quaB, quaC;
+};
+
+void QuaternionTest::testGetMatrix() {
 	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Quaternion" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test getMatrix
-	cout << "Testing 'set' and 'getMatrix'..." << endl;
-	cout << "Using 45 degrees..." << endl;
 	quaA.set(45, Vec4(0,1,0));
 	quaA.print();
 	mat = quaA.getMatrix();
 	mat.print();
+}
+
+void QuaternionTest::testMultiply() {
 	
-	// Test multiplication
-	cout << "\nTesting 'operator*'..." << endl;
-	cout << "Using 45 and 30 degrees..." << endl;
 	quaA.set(45, Vec4(0,1,0));
 	quaB.set(30, Vec4(0,1,0));
 	quaC = quaA * quaB;
 	mat = quaC.getMatrix();
 	mat.print();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Quaternion" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	return 0;
 }
+
+/* Run the test. */
+#define HARNESS QuaternionTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testGetMatrix)
+ADD_TEST(testMultiply)
+RUN_TESTS
 

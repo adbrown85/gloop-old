@@ -6,10 +6,11 @@
  */
 #include "gloop_common.h"
 #include <cassert>
+#include "../Test.h"
 #include "Preprocessor.hpp"
 
 /** Unit test for Preprocessor. */
-class PreprocessorTest {
+class PreprocessorTest : public Test {
 public:
 	void testParse();
 };
@@ -30,8 +31,6 @@ void PreprocessorTest::testParse() {
 	                   "    FragColor = Color;\n",
 	                   "}\n"};
 	
-	cout << "PreprocessorTest::testParse" << endl;
-	
 	pp.parse(filename);
 	code = pp.getCode();
 	for (it=code.begin(); it!=code.end(); ++it) {
@@ -40,16 +39,11 @@ void PreprocessorTest::testParse() {
 		assert(it->number == numbers[i]);
 		assert(it->text == lines[i]);
 	}
-	
-	cout << "PASSED" << endl;
 }
 
-int main(int argc, char *argv[]) {
-	
-	PreprocessorTest test;
-	
-	test.testParse();
-	cout << "ALL TESTS PASSED" << endl;
-	return 0;
-}
+#define HARNESS PreprocessorTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testParse)
+RUN_TESTS
 

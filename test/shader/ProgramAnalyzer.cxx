@@ -6,38 +6,15 @@
  */
 #include "gloop_common.h"
 #include <cassert>
-#include <glawt/GLAWTFactory.hpp>
+#include "../Test.h"
 #include "ProgramAnalyzer.hpp"
 
 /** Unit test for ProgramAnalyzer. */
-class ProgramAnalyzerTest {
+class ProgramAnalyzerTest : public Test {
 public:
-	void setUpBeforeClass();
-	void tearDownAfterClass();
 	void testGetTypeName();
 	void testListUniforms();
-private:
-	Window *window;
-	Canvas *canvas;
 };
-
-/** Initializes the fixture. */
-void ProgramAnalyzerTest::setUpBeforeClass() {
-	
-	window = GLAWTFactory::createWindow();
-	canvas = GLAWTFactory::createCanvas();
-	
-	window->setTitle("ProgramAnalyzerTest");
-	window->add(canvas);
-	window->show();
-}
-
-/** Destroys the fixture. */
-void ProgramAnalyzerTest::tearDownAfterClass() {
-	
-	delete window;
-	delete canvas;
-}
 
 /** Ensures the human-readable description of uniform types is correct. */
 void ProgramAnalyzerTest::testGetTypeName() {
@@ -81,21 +58,10 @@ void ProgramAnalyzerTest::testListUniforms() {
 	assert(uniforms["MVPMatrix"].type == GL_FLOAT_MAT4);
 }
 
-/* Runs the test. */
-int main(int argc, char *argv[]) {
-	
-	Toolkit toolkit(argc, argv);
-	ProgramAnalyzerTest test;
-	
-	test.setUpBeforeClass();
-	cout << "ProgramAnalyzer::testGetTypeName" << endl;
-	test.testGetTypeName();
-	cout << "PASSED" << endl;
-	cout << "ProgramAnalyzer::testListUniforms" << endl;
-	test.testListUniforms();
-	cout << "PASSED" << endl;
-	test.tearDownAfterClass();
-	cout << "PASSED ALL TESTS" << endl;
-	
-	return 0;
-}
+/* Run the test. */
+#define HARNESS ProgramAnalyzerTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testGetTypeName)
+ADD_TEST(testListUniforms)
+RUN_TESTS

@@ -5,13 +5,13 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
-#include <cassert>
+#include "../Test.h"
 #include "BmpImageReader.hpp"
 
 /** @brief Test for BmpImageReader. */
-class BmpImageReaderTest {
+class BmpImageReaderTest : public Test {
 public:
-	void setUp();
+	BmpImageReaderTest();
 	void testGetters();
 	void testToArrayWithBadArray();
 	void testToArrayWithBadSize();
@@ -21,7 +21,7 @@ private:
 };
 
 /** Read the image into memory. */
-void BmpImageReaderTest::setUp() {
+BmpImageReaderTest::BmpImageReaderTest() {
 	
 	reader.read("test/image/rgbw.bmp");
 }
@@ -85,25 +85,13 @@ void BmpImageReaderTest::testToArray() {
 	assert(arr[13] ==   0); // R
 }
 
-/* Runs the test. */
-int main(int argc, char *argv[]) {
-	
-	BmpImageReaderTest test;
-	
-	cout << "setUp()" << endl;
-	test.setUp();
-	cout << "BmpImageReaderTest::testGetters()" << endl;
-	test.testGetters();
-	cout << "PASSED" << endl;
-	cout << "BmpImageReaderTest::testToArrayWithBadArray()" << endl;
-	test.testToArrayWithBadArray();
-	cout << "PASSED" << endl;
-	cout << "BmpImageReaderTest::testToArrayWithBadSize()" << endl;
-	test.testToArrayWithBadSize();
-	cout << "PASSED" << endl;
-	cout << "BmpImageReaderTest::testToArray()" << endl;
-	test.testToArray();
-	cout << "PASSED" << endl;
-	cout << "PASSED ALL TESTS" << endl;
-	return 0;
-}
+/* Run the test. */
+#define HARNESS BmpImageReaderTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testGetters)
+ADD_TEST(testToArrayWithBadArray)
+ADD_TEST(testToArrayWithBadSize)
+ADD_TEST(testToArray)
+RUN_TESTS
+

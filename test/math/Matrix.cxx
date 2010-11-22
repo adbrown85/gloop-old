@@ -4,12 +4,13 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "Matrix.hpp"
-#include <cassert>
+#include "gloop_common.h"
+#include "../Test.h"
 #include <ctime>
+#include "Matrix.hpp"
 
-
-class MatrixTest {
+/** @brief Unit test for Matrix. */
+class MatrixTest : public Test {
 public:
 	void setUp();
 	void testDeterminant();
@@ -41,20 +42,14 @@ void MatrixTest::testDeterminant() {
 	
 	float result;
 	
-	cout << "\nTesting determinant..." << endl;
 	result = m1.getDeterminant();
-	cout << "  " << result << endl;
 	assert(result == 69);
 }
 
 void MatrixTest::testInverse() {
 	
-	cout << "\nTesting inverse..." << endl;
 	m2 = m1.getInverse();
-	m2.print();
-	cout << "  ------------------------------------" << endl;
 	m3 = m1 * m2;
-	m3.print();
 	for (int i=0; i<4; ++i)
 		assert(fabs(m3(i,i)-1.0) < TOLERANCE);
 	for (int i=0; i<3; ++i) {
@@ -71,7 +66,6 @@ void MatrixTest::testInverseTime() {
 	
 	clock_t beg, end;
 	
-	cout << "\nTesting inverse time..." << endl;
 	beg = clock();
 	for (int i=0; i<ITERATIONS; ++i)
 		m1.getInverse();
@@ -84,7 +78,6 @@ void MatrixTest::testMultiplyTime() {
 	
 	clock_t beg, end;
 	
-	cout << "\nTesting operator* time..." << endl;
 	beg = clock();
 	for (int i=0; i<ITERATIONS; ++i)
 		m1 * m2;
@@ -100,9 +93,7 @@ void MatrixTest::testSetFromArray() {
 	                  9.0, 10.0, 11.0, 12.0,
 	                 13.0, 14.0, 15.0, 16.0};
 	
-	cout << "\nSetting from array..." << endl;
 	m2.set(arr);
-	m2.print();
 	for (int i=0; i<4; ++i) {
 		for (int j=0; j<4; ++j) {
 			assert(arr[i*4+j] == m2(j,i));
@@ -112,18 +103,14 @@ void MatrixTest::testSetFromArray() {
 
 void MatrixTest::testTranspose() {
 	
-	cout << "\nTesting transpose..." << endl;
 	m3 = m1.getTranspose();
-	m3.print();
 }
 
 void MatrixTest::testVectorMultiply() {
 	
 	Vec4 v1(1.0, 1.0, 1.0, 1.0), v2;
 	
-	cout << "\nTesting Vector multiply..." << endl;
 	v2 = m2 * v1;
-	cout << "  " << v2 << endl;
 }
 
 void MatrixTest::testVectorMultiplyTime() {
@@ -131,7 +118,6 @@ void MatrixTest::testVectorMultiplyTime() {
 	clock_t beg, end;
 	Vec4 v;
 	
-	cout << "\nTesting vector multiply time..." << endl;
 	beg = clock();
 	for (int i=0; i<ITERATIONS; ++i)
 		m1 * v;
@@ -140,34 +126,16 @@ void MatrixTest::testVectorMultiplyTime() {
 	cout << "  " << ((double)end-beg) / CLOCKS_PER_SEC << " seconds." << endl;
 }
 
-
-int main() {
-	
-	MatrixTest test;
-	
-	// Start
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Matrix" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-	
-	// Test
-	test.setUp();
-	test.testDeterminant();
-	test.testInverse();
-	test.testTranspose();
-	test.testVectorMultiply();
-	test.testSetFromArray();
-	test.testMultiplyTime();
-	test.testVectorMultiplyTime();
-	test.testInverseTime();
-	
-	// Finish
-	cout << endl;
-	cout << "****************************************" << endl;
-	cout << "Matrix" << endl;
-	cout << "****************************************" << endl;
-	cout << endl;
-}
+#define HARNESS MatrixTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testDeterminant)
+ADD_TEST(testInverse)
+ADD_TEST(testInverseTime)
+ADD_TEST(testMultiplyTime)
+ADD_TEST(testSetFromArray)
+ADD_TEST(testTranspose)
+ADD_TEST(testVectorMultiply)
+ADD_TEST(testVectorMultiplyTime)
+RUN_TESTS
 

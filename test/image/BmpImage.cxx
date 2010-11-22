@@ -5,11 +5,11 @@
  *     Andrew Brown <adb1413@rit.edu>
  */
 #include "gloop_common.h"
-#include <cassert>
+#include "../Test.h"
 #include "BmpImage.hpp"
 
 /** @brief Test for BmpImage. */
-class BmpImageTest {
+class BmpImageTest : public Test {
 public:
 	void testLoad();
 };
@@ -27,14 +27,9 @@ void BmpImageTest::testLoad() {
 	assert(image->getSize() == 16);
 }
 
-/* Runs the test. */
-int main(int argc, char *argv[]) {
-	
-	BmpImageTest test;
-	
-	cout << "BmpImageTest::testLoad()" << endl;
-	test.testLoad();
-	cout << "PASSED" << endl;
-	cout << "PASSED ALL TESTS" << endl;
-	return 0;
-}
+/* Run the test. */
+#define HARNESS BmpImageTest
+#include "../Runner.h"
+START_TESTS
+ADD_TEST(testLoad)
+RUN_TESTS
