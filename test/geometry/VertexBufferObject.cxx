@@ -15,8 +15,6 @@
 /** Unit test for VertexBufferObject. */
 class VertexBufferObjectTest : public Test {
 public:
-	VertexBufferObjectTest();
-	virtual ~VertexBufferObjectTest();
 	virtual void setUp();
 	virtual void tearDown();
 	void testAllocate();
@@ -24,25 +22,7 @@ public:
 	void testFlush();
 private:
 	VertexBufferObject *vbo;
-	Window *window;
-	Canvas *canvas;
 };
-
-/** Create and prepare a window/canvas so we can call GL functions. */
-VertexBufferObjectTest::VertexBufferObjectTest() {
-	
-	window = GLAWTFactory::createWindow();
-	canvas = GLAWTFactory::createCanvas(512, 512);
-	window->add(canvas);
-	window->show();
-}
-
-/** Destroy the window/canvas. */
-VertexBufferObjectTest::~VertexBufferObjectTest() {
-
-	delete window;
-	delete canvas;
-}
 
 /** Create a fresh VBO. */
 void VertexBufferObjectTest::setUp() {
