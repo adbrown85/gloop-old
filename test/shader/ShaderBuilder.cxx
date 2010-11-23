@@ -20,16 +20,19 @@ void ShaderBuilderTest::testBuild() {
 	
 	int handle;
 	GLchar buffer[1024];
+	GLint type, compiled;
 	GLsizei length;
 	stringstream stream;
 	string line;
 	vector<string> lines;
 	
 	// Build it
-	handle = ShaderBuilder::build(
-			GL_VERTEX_SHADER,
-			"test/shader/basic.vert");
+	handle = ShaderBuilder::build("test/shader/basic.vert");
 	assert(handle > 0);
+	glGetShaderiv(handle, GL_SHADER_TYPE, &type);
+	assert(type == GL_VERTEX_SHADER);
+	glGetShaderiv(handle, GL_COMPILE_STATUS, &compiled);
+	assert(compiled == GL_TRUE);
 	
 	// Get the source
 	glGetShaderSource(handle, 1024, &length, buffer);

@@ -7,6 +7,22 @@
 #include "ShaderBuilder.hpp"
 
 /** Builds a shader from @e filename. */
+int ShaderBuilder::build(const string &filename) {
+	
+	string extension = Path::getExtensionLower(filename);
+	
+	if (extension == "frag") {
+		return build(GL_FRAGMENT_SHADER, filename);
+	} else if (extension == "vert") {
+		return build(GL_VERTEX_SHADER, filename);
+	} else {
+		BasicException e;
+		e << "[ShaderBuilder] '" << extension << "' not recognized as type";
+		throw e;
+	}
+}
+
+/** Builds a shader from @e filename. */
 int ShaderBuilder::build(GLenum type, const string &filename) {
 	
 	int handle;

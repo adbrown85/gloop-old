@@ -7,6 +7,7 @@
 #ifndef GLOOP_SHADERBUILDER_HPP
 #define GLOOP_SHADERBUILDER_HPP
 #include "gloop_common.h"
+#include <edo/Path.hpp>
 #include "Preprocessor.hpp"
 #include "Error.hpp"
 using namespace std;
@@ -17,6 +18,7 @@ using namespace std;
  */
 class ShaderBuilder {
 public:
+	static int build(const string &filename);
 	static int build(GLenum type, const string &filename);
 protected:
 	static int create(GLenum type);
