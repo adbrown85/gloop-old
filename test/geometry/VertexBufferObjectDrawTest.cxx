@@ -37,7 +37,7 @@ void VertexBufferObjectDrawTest::testDraw() {
 
 void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	
-	GLuint vs, fs;
+	GLuint vertShader, fragShader;
 	
 	vbo = new VertexBufferObject();
 	vbo->bind();
@@ -55,9 +55,9 @@ void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	vbo->flush();
 	vbo->unbind();
 	
-	vs = ShaderBuilder::build(GL_VERTEX_SHADER, "test/shader/basic.vert");
-	fs = ShaderBuilder::build(GL_FRAGMENT_SHADER, "test/shader/basic.frag");
-	program = ProgramBuilder::build(vs, fs);
+	vertShader = ShaderBuilder::build("test/shader/basic.vert");
+	fragShader = ShaderBuilder::build("test/shader/basic.frag");
+	program = ProgramBuilder::build(vertShader, fragShader);
 	
 	pointLoc = glGetAttribLocation(program, "MCVertex");
 	if (pointLoc < 0) {

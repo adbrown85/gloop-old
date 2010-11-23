@@ -47,11 +47,11 @@ void ProgramAnalyzerTest::testListUniforms() {
 	
 	map<string,UniformInfo> uniforms;
 	GLenum type;
-	GLuint vs, fs, program;
+	GLuint vertShader, fragShader, program;
 	
-	vs = ShaderBuilder::build(GL_VERTEX_SHADER, "test/shader/basic.vert");
-	fs = ShaderBuilder::build(GL_FRAGMENT_SHADER, "test/shader/basic.frag");
-	program = ProgramBuilder::build(vs, fs);
+	vertShader = ShaderBuilder::build("test/shader/basic.vert");
+	fragShader = ShaderBuilder::build("test/shader/basic.frag");
+	program = ProgramBuilder::build(vertShader, fragShader);
 	
 	uniforms = ProgramAnalyzer::listUniforms(program);
 	assert(uniforms["Color"].type == GL_FLOAT_VEC4);

@@ -22,13 +22,9 @@ void ProgramBuilderTest::testBuild() {
 	list<GLuint> shaders;
 	GLuint program, shader;
 	
-	shader = ShaderBuilder::build(
-			GL_FRAGMENT_SHADER,
-			"test/shader/basic.frag");
+	shader = ShaderBuilder::build("test/shader/basic.frag");
 	shaders.push_back(shader);
-	shader = ShaderBuilder::build(
-			GL_VERTEX_SHADER,
-			"test/shader/basic.vert");
+	shader = ShaderBuilder::build("test/shader/basic.vert");
 	shaders.push_back(shader);
 	
 	program = ProgramBuilder::build(shaders);
