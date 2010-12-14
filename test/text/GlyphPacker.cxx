@@ -8,30 +8,23 @@
 #include "../Test.h"
 #include "GlyphPacker.hpp"
 
-class FakeGlyphPacker : public GlyphPacker {
-public:
-	static GlyphPackage measure(const Font &font);
-};
-
-GlyphPackage FakeGlyphPacker::measure(const Font &font) {
-	return GlyphPacker::measure(font);
-}
-
 
 /** Test fixture for GlyphPacker. */
 class GlyphPackerTest : public Test {
 public:
 	void testMeasure();
 	void testPack();
-private:
-	FakeGlyphPacker packer;
 };
 
 /** Ensures font is measured properly. */
 void GlyphPackerTest::testMeasure() {
 	
 	Font font("Arial", Font::PLAIN, 72);
-	GlyphPackage gp  = FakeGlyphPacker::measure(font);
+	GlyphPacker packer(font);
+	GlyphPackage gp;
+	
+	packer.pack();
+	gp = packer.getPackage();
 	
 //	cout << gp.width << endl;
 //	cout << gp.height << endl;
@@ -48,7 +41,11 @@ void GlyphPackerTest::testMeasure() {
 void GlyphPackerTest::testPack() {
 	
 	Font font("Arial", Font::PLAIN, 72);
-	GlyphPackage gp = packer.pack(font);
+	GlyphPacker packer(font);
+	GlyphPackage gp;
+	
+	packer.pack();
+	gp = packer.getPackage();
 	
 	gp.image->write_to_png("test/text/GlyphPacker.png");
 }
