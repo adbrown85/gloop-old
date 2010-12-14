@@ -30,8 +30,6 @@ public:
 protected:
 	static GlyphPackageSize measure(const Font &font);
 	static int findMaxWidth(const Font &font);
-	static Cairo::FontSlant toFontSlant(Font::Style style);
-	static Cairo::FontWeight toFontWeight(Font::Style style);
 };
 
 #endif

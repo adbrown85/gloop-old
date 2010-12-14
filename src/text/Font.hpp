@@ -7,6 +7,7 @@
 #ifndef FONT_HPP
 #define FONT_HPP
 #include "gloop_common.h"
+#include <cairomm/cairomm.h>
 using namespace std;
 
 
@@ -22,6 +23,8 @@ public:
 	int getSize() const;
 // Converters
 	string toString() const;
+	Cairo::FontSlant toCairoFontSlant() const;
+	Cairo::FontWeight toCairoFontWeight() const;
 // Operators
 	bool operator==(const Font &that) const;
 	bool operator<(const Font &that) const;

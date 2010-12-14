@@ -90,8 +90,8 @@ void GlyphFactory::initScaledFont(const Font &font) {
 	// Get the scaled font from it
 	context->select_font_face(
 			font.getFamily(),
-			toFontSlant(font.getStyle()),
-			toFontWeight(font.getStyle()));
+			font.toCairoFontSlant(),
+			font.toCairoFontWeight());
 	context->set_font_size(font.getSize());
 	scaledFont = context->get_scaled_font();
 }
@@ -99,26 +99,6 @@ void GlyphFactory::initScaledFont(const Font &font) {
 void GlyphFactory::initFontExtents(Cairo::RefPtr<Cairo::ScaledFont> sf) {
 	
 	sf->extents(fontExtents);
-}
-
-Cairo::FontSlant GlyphFactory::toFontSlant(Font::Style style) {
-	
-	switch (style) {
-	case Font::ITALIC:
-		return Cairo::FONT_SLANT_ITALIC;
-	default:
-		return Cairo::FONT_SLANT_NORMAL;
-	}
-}
-
-Cairo::FontWeight GlyphFactory::toFontWeight(Font::Style style) {
-	
-	switch (style) {
-	case Font::BOLD:
-		return Cairo::FONT_WEIGHT_BOLD;
-	default:
-		return Cairo::FONT_WEIGHT_NORMAL;
-	}
 }
 
 Glyph* GlyphFactory::makeGlyph(char character) {

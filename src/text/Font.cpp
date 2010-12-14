@@ -27,6 +27,28 @@ string Font::toString() const {
 	return ss.str();
 }
 
+/** @return Cairo's representation of font slant. */
+Cairo::FontSlant Font::toCairoFontSlant() const {
+	
+	switch (style) {
+	case Font::ITALIC:
+		return Cairo::FONT_SLANT_ITALIC;
+	default:
+		return Cairo::FONT_SLANT_NORMAL;
+	}
+}
+
+/** @return Cairo's representation of font weight. */
+Cairo::FontWeight Font::toCairoFontWeight() const {
+	
+	switch (style) {
+	case Font::BOLD:
+		return Cairo::FONT_WEIGHT_BOLD;
+	default:
+		return Cairo::FONT_WEIGHT_NORMAL;
+	}
+}
+
 //--------------------------------------------------------
 // Operators
 //

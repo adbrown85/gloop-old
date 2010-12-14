@@ -28,8 +28,8 @@ Cairo::RefPtr<Cairo::ImageSurface> GlyphPacker::pack(const Font &font) {
 	// Set context to use font
 	context->select_font_face(
 			font.getFamily(),
-			toFontSlant(font.getStyle()),
-			toFontWeight(font.getStyle()));
+			font.toCairoFontSlant(),
+			font.toCairoFontWeight());
 	context->set_font_size(font.getSize());
 	
 	x = 0;
@@ -94,24 +94,4 @@ int GlyphPacker::findMaxWidth(const Font &font) {
 			max = glyph->getWidth();
 	}
 	return max;
-}
-
-Cairo::FontSlant GlyphPacker::toFontSlant(Font::Style style) {
-	
-	switch (style) {
-	case Font::ITALIC:
-		return Cairo::FONT_SLANT_ITALIC;
-	default:
-		return Cairo::FONT_SLANT_NORMAL;
-	}
-}
-
-Cairo::FontWeight GlyphPacker::toFontWeight(Font::Style style) {
-	
-	switch (style) {
-	case Font::BOLD:
-		return Cairo::FONT_WEIGHT_BOLD;
-	default:
-		return Cairo::FONT_WEIGHT_NORMAL;
-	}
 }
