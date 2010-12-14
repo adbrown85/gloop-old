@@ -9,7 +9,7 @@
 #include "gloop_common.h"
 #include <cassert>
 #include <glawt/GLAWTFactory.hpp>
-#define TEST_EQUALS_TOLERANCE 0.00000001
+#define TEST_EQUALS_TOLERANCE 0.0001
 
 class Test : public CanvasListener {
 public:
@@ -71,8 +71,7 @@ void Test::addCanvasListener(CanvasListener *listener) {
 }
 
 void Test::assertEquals(float x, float y) {
-	assert((x - y) < TEST_EQUALS_TOLERANCE
-			&& (y - x) < TEST_EQUALS_TOLERANCE);
+	assert(fabs(x - y) < TEST_EQUALS_TOLERANCE);
 }
 
 #endif
