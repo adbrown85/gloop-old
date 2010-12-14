@@ -15,8 +15,8 @@ using namespace std;
 
 /* Position and size of a glyph in the image. */
 struct GlyphLocation {
-	int x, y;
-	int width, height;
+	int left, right;
+	int top, bottom;
 };
 
 /* Image with glyphs in it. */

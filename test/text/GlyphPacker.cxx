@@ -55,16 +55,24 @@ void GlyphPackerTest::testPack() {
 void GlyphPackerTest::testLocations() {
 	
 	map<char,GlyphLocation>::iterator it;
+	GlyphLocation *loc;
 	
 	it = package.locations.find('A');
 	if (it == package.locations.end()) {
 		throw BasicException("Could not find location!");
 	}
 	
-	assert(it->second.x == 680);
-	assert(it->second.y == 233);
-	assert(it->second.height == 83);
-	assert(it->second.width == 50);
+	loc = &it->second;
+	
+//	cout << loc->left << endl;
+//	cout << loc->right << endl;
+//	cout << loc->top << endl;
+//	cout << loc->bottom << endl;
+	
+	assert(loc->left == 680);
+	assert(loc->right == 730);
+	assert(loc->top == 167);
+	assert(loc->bottom == 249);
 }
 
 /* Run the test. */

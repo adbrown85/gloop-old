@@ -101,10 +101,10 @@ void GlyphPacker::store(char c, int x, int y) {
 	context->move_to(x, y);
 	context->show_text(arr);
 	
-	location.x = x;
-	location.y = y;
-	location.height = glyph->getHeight();
-	location.width = glyph->getWidth();
+	location.left   = x;
+	location.right  = x + glyph->getWidth();
+	location.top    = y - glyph->getAscent();
+	location.bottom = y + glyph->getDescent();
 	
 	package.locations[c] = location;
 }
