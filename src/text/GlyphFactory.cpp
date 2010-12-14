@@ -56,6 +56,25 @@ Glyph* GlyphFactory::create(char character) {
 }
 
 //--------------------------------------------------------
+// Getters
+//
+
+/** @return Distance font extends below the baseline. */
+int GlyphFactory::getFontDescent() const {
+	return fontExtents.descent;
+}
+
+/** @return Line height of the font. */
+int GlyphFactory::getFontHeight() const {
+	return fontExtents.height;
+}
+
+/** @return Maximum X advance that a glyph may contain with this font. */
+int GlyphFactory::getFontMaxAdvance() const {
+	return fontExtents.max_x_advance;
+}
+
+//--------------------------------------------------------
 // Helpers
 //
 

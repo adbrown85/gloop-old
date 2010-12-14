@@ -18,7 +18,11 @@ class GlyphFactory {
 public:
 	static GlyphFactory* getInstance(Font font);
 	virtual ~GlyphFactory() { }
-	Glyph* create(char c);
+	virtual Glyph* create(char c);
+// Getters
+	virtual int getFontHeight() const;
+	virtual int getFontMaxAdvance() const;
+	virtual int getFontDescent() const;
 private:
 	map<char,Glyph*> inventory;
 	Font font;
