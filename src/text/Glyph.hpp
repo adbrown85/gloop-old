@@ -13,7 +13,8 @@ using namespace std;
 
 /* Measurements of a glyph. */
 struct GlyphMetrics {
-	int advance, ascent, descent;
+	int advance;
+	int ascent, descent;
 	int width, height;
 };
 
@@ -24,6 +25,7 @@ public:
 	virtual ~Glyph() { }
 // Getters and setters
 	virtual int getAdvance() const;
+	virtual int getAscent() const;
 	virtual int getDescent() const;
 	virtual int getWidth() const;
 	virtual int getHeight() const;
@@ -39,6 +41,9 @@ private:
 
 /** @return Distance from the start of this glyph to the start of the next. */
 inline int Glyph::getAdvance() const {return metrics.advance;}
+
+/** @return Distance from baseline to top of glyph. */
+inline int Glyph::getAscent() const {return metrics.ascent;}
 
 /** @return Distance glyph extends below the baseline. */
 inline int Glyph::getDescent() const {return metrics.descent;}
