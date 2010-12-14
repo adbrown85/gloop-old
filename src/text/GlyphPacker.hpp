@@ -13,12 +13,12 @@
 #define GLYPH_PACKER_GLYPHS_COUNT 96
 using namespace std;
 
-/* Measure of width and height. */
-struct GlyphPackageSize {
+/* Image with glyphs in it. */
+struct GlyphPackage {
+	Cairo::RefPtr<Cairo::ImageSurface> image;
 	int width, height;
 	int rows, cols;
-	int glyphWidth, glyphHeight;
-	int glyphDescent;
+	GlyphMetrics metrics;
 };
 
 /** @brief Delegate responsible for putting glyphs in an image. */
@@ -26,9 +26,9 @@ class GlyphPacker {
 public:
 	GlyphPacker();
 	virtual ~GlyphPacker() { }
-	virtual Cairo::RefPtr<Cairo::ImageSurface> pack(const Font &font);
+	virtual GlyphPackage pack(const Font &font);
 protected:
-	static GlyphPackageSize measure(const Font &font);
+	static GlyphPackage measure(const Font &font);
 	static int findMaxWidth(const Font &font);
 };
 

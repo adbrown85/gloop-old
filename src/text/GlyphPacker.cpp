@@ -10,20 +10,19 @@ GlyphPacker::GlyphPacker() {
 	// TODO Auto-generated method stub
 }
 
-Cairo::RefPtr<Cairo::ImageSurface> GlyphPacker::pack(const Font &font) {
+GlyphPackage GlyphPacker::pack(const Font &font) {
 	
-	Cairo::RefPtr<Cairo::ImageSurface> surface;
 	Cairo::RefPtr<Cairo::Context> context;
-	GlyphPackageSize size = measure(font);
+	GlyphPackage gp = measure(font);
 	int x, y;
 	char character = '!';
 	char arr[2] = { '\0', '\0' };
 	
-	// Make surface and context
-	surface = Cairo::ImageSurface::create(
+	// Make image and context
+	gp.image = Cairo::ImageSurface::create(
 			Cairo::FORMAT_A8,
-			size.width, size.height);
-	context = Cairo::Context::create(surface);
+			gp.width, gp.height);
+	context = Cairo::Context::create(gp.image);
 	
 	// Set context to use font
 	context->select_font_face(
@@ -32,54 +31,55 @@ Cairo::RefPtr<Cairo::ImageSurface> GlyphPacker::pack(const Font &font) {
 			font.toCairoFontWeight());
 	context->set_font_size(font.getSize());
 	
+	// Draw into image
 	x = 0;
-	y = size.glyphHeight - size.glyphDescent;
-	for (int i=0; i<size.rows; ++i) {
-		for (int j=0; j<size.cols && character<127; ++j) {
+	y = gp.metrics.height - gp.metrics.descent;
+	for (int i=0; i<gp.rows; ++i) {
+		for (int j=0; j<gp.cols && character<127; ++j) {
 			arr[0] = character;
 			context->move_to(x, y);
 			context->show_text(arr);
-			x += size.glyphWidth;
+			x += gp.metrics.width;
 			++character;
 		}
 		x = 0;
-		y += size.glyphHeight;
+		y += gp.metrics.height;
 	}
 	
-	return surface;
+	return gp;
 }
 
 //--------------------------------------------------------
 // Helpers
 //
 
-/** @return Size of image needed to hold font. */
-GlyphPackageSize GlyphPacker::measure(const Font &font) {
+/** @return Package with size information. */
+GlyphPackage GlyphPacker::measure(const Font &font) {
 	
-	GlyphPackageSize size;
+	GlyphPackage gp;
 	GlyphFactory *gf = GlyphFactory::getInstance(font);
     
-    size.rows = 1;
-    size.cols = 1;
-    size.glyphWidth = findMaxWidth(font);
-    size.glyphHeight = gf->getFontHeight();
-    size.glyphDescent = gf->getFontDescent();
-    size.width = size.glyphWidth;
-    size.height = size.glyphHeight;
+    gp.metrics.width = findMaxWidth(font);
+    gp.metrics.height = gf->getFontHeight();
+    gp.metrics.descent = gf->getFontDescent();
+    gp.rows = 1;
+    gp.cols = 1;
+    gp.width = gp.metrics.width;
+    gp.height = gp.metrics.height;
     
     for (int tally=1; tally<GLYPH_PACKER_GLYPHS_COUNT; ) {
-       if (size.width < size.height) {
-          size.width += size.glyphWidth;
-          tally += size.rows;
-          size.cols++;
+       if (gp.width < gp.height) {
+          gp.width += gp.metrics.width;
+          tally += gp.rows;
+          gp.cols++;
        } else {
-          size.height += size.glyphHeight;
-          tally += size.cols;
-          size.rows++;
+          gp.height += gp.metrics.height;
+          tally += gp.cols;
+          gp.rows++;
        }
     }
-	
-	return size;
+    
+	return gp;
 }
 
 int GlyphPacker::findMaxWidth(const Font &font) {

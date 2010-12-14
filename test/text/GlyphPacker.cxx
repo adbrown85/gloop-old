@@ -10,10 +10,10 @@
 
 class FakeGlyphPacker : public GlyphPacker {
 public:
-	static GlyphPackageSize measure(const Font &font);
+	static GlyphPackage measure(const Font &font);
 };
 
-GlyphPackageSize FakeGlyphPacker::measure(const Font &font) {
+GlyphPackage FakeGlyphPacker::measure(const Font &font) {
 	return GlyphPacker::measure(font);
 }
 
@@ -31,29 +31,26 @@ private:
 void GlyphPackerTest::testMeasure() {
 	
 	Font font("Arial", Font::PLAIN, 72);
-	GlyphPackageSize size;
+	GlyphPackage gp  = FakeGlyphPacker::measure(font);
 	
-	size = FakeGlyphPacker::measure(font);
+//	cout << gp.width << endl;
+//	cout << gp.height << endl;
+//	cout << gp.rows << endl;
+//	cout << gp.cols << endl;
 	
-	cout << size.width << endl;
-	cout << size.height << endl;
-	cout << size.rows << endl;
-	cout << size.cols << endl;
-	
-//	assert(size.width == 1152);
-//	assert(size.height == 1079);
-//	assert(size.rows == 13);
-//	assert(size.cols == 8);
+	assert(gp.width == 748);
+	assert(gp.height == 747);
+	assert(gp.rows == 9);
+	assert(gp.cols == 11);
 }
 
 /** Ensures font is packed into the image properly. */
 void GlyphPackerTest::testPack() {
 	
 	Font font("Arial", Font::PLAIN, 72);
-	Cairo::RefPtr<Cairo::ImageSurface> surface;
+	GlyphPackage gp = packer.pack(font);
 	
-	surface = packer.pack(font);
-	surface->write_to_png("test/text/GlyphPacker.png");
+	gp.image->write_to_png("test/text/GlyphPacker.png");
 }
 
 /* Run the test. */
