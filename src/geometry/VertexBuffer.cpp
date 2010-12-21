@@ -1,19 +1,19 @@
 /*
- * VertexBufferObject.cpp
+ * VertexBuffer.cpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#include "VertexBufferObject.hpp"
-int VertexBufferObject::SIZEOF_VEC2 = sizeof(float) * 2;
-int VertexBufferObject::SIZEOF_VEC3 = sizeof(float) * 3;
-int VertexBufferObject::SIZEOF_VEC4 = sizeof(float) * 4;
+#include "VertexBuffer.hpp"
+int VertexBuffer::SIZEOF_VEC2 = sizeof(float) * 2;
+int VertexBuffer::SIZEOF_VEC3 = sizeof(float) * 3;
+int VertexBuffer::SIZEOF_VEC4 = sizeof(float) * 4;
 
 /** Creates a new VBO.
  * 
  * @throw BasicException if prototype is not complete 
  */
-VertexBufferObject* VertexBufferObject::newInstance(const VertexBufferPrototype &vbp) {
+VertexBuffer* VertexBuffer::newInstance(const VertexBufferPrototype &vbp) {
 	
 	if (!vbp.isComplete()) {
 		BasicException e;
@@ -21,11 +21,11 @@ VertexBufferObject* VertexBufferObject::newInstance(const VertexBufferPrototype 
 		throw e;
 	}
 	
-	return new VertexBufferObject(vbp);
+	return new VertexBuffer(vbp);
 }
 
 /** Creates a new VBO. */
-VertexBufferObject::VertexBufferObject(const VertexBufferPrototype &vbp) : 
+VertexBuffer::VertexBuffer(const VertexBufferPrototype &vbp) : 
 		BufferObject(GL_ARRAY_BUFFER) {
 	
 	offsets = vbp.getOffsets();
@@ -47,7 +47,7 @@ VertexBufferObject::VertexBufferObject(const VertexBufferPrototype &vbp) :
 }
 
 /** Destroys the data held by the VBO. */
-VertexBufferObject::~VertexBufferObject() {
+VertexBuffer::~VertexBuffer() {
 	
 	if (data != NULL) {
 		delete[] data;
@@ -64,7 +64,7 @@ VertexBufferObject::~VertexBufferObject() {
  * 
  * @throw BasicException if not an interleaved vertex buffer object. 
  */
-void VertexBufferObject::setStriding(bool striding) {
+void VertexBuffer::setStriding(bool striding) {
 	
 	if (!isInterleaved()) {
 		BasicException e;
@@ -80,12 +80,12 @@ void VertexBufferObject::setStriding(bool striding) {
 }
 
 /** Flushes the data to the video card. */
-void VertexBufferObject::flush() {
+void VertexBuffer::flush() {
 	BufferObject::update(size, data, 0);
 }
 
 /** Specifies the value of a vertex for the current attribute. */
-void VertexBufferObject::put(float x, float y) {
+void VertexBuffer::put(float x, float y) {
 	
 	if ((current + SIZEOF_VEC2) > end) {
 		throw BasicException("Put would exceed buffer.");
@@ -97,7 +97,7 @@ void VertexBufferObject::put(float x, float y) {
 }
 
 /** Specifies the value of a vertex for the current attribute. */
-void VertexBufferObject::put(float x, float y, float z) {
+void VertexBuffer::put(float x, float y, float z) {
 
 	if ((current + SIZEOF_VEC3) > end) {
 		throw BasicException("Put would exceed buffer.");
@@ -110,7 +110,7 @@ void VertexBufferObject::put(float x, float y, float z) {
 }
 
 /** Specifies the value of a vertex for the current attribute. */
-void VertexBufferObject::put(float x, float y, float z, float w) {
+void VertexBuffer::put(float x, float y, float z, float w) {
 	
 	if ((current + SIZEOF_VEC4) > end) {
 		throw BasicException("Put would exceed buffer.");
@@ -124,12 +124,12 @@ void VertexBufferObject::put(float x, float y, float z, float w) {
 }
 
 /** Returns the current position to the beginning of the buffer. */
-void VertexBufferObject::rewind() {
+void VertexBuffer::rewind() {
 	current = data;
 }
 
 /** Moves to the start of an attribute. */
-void VertexBufferObject::seek(const string &name) {
+void VertexBuffer::seek(const string &name) {
 	
 	map<string,GLuint>::iterator it;
 	
@@ -150,7 +150,7 @@ void VertexBufferObject::seek(const string &name) {
  * 
  * @throw BasicException if @e name is not an attribute in the VBO 
  */
-GLuint VertexBufferObject::getOffset(const string &name) const {
+GLuint VertexBuffer::getOffset(const string &name) const {
 	
 	map<string,GLuint>::const_iterator it;
 	

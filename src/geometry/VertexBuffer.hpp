@@ -1,11 +1,11 @@
 /*
- * VertexBufferObject.hpp
+ * VertexBuffer.hpp
  * 
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef GLOOP_VERTEXBUFFEROBJECT_HPP
-#define GLOOP_VERTEXBUFFEROBJECT_HPP
+#ifndef GLOOP_VERTEXBUFFER_HPP
+#define GLOOP_VERTEXBUFFER_HPP
 #include "gloop_common.h"
 #include <edo/BasicException.hpp>
 #include "BufferObject.hpp"
@@ -40,10 +40,10 @@ public:
  * 
  * @ingroup graphics
  */
-class VertexBufferObject : public BufferObject {
+class VertexBuffer : public BufferObject {
 public:
-	static VertexBufferObject* newInstance(const VertexBufferPrototype &vbp);
-	virtual ~VertexBufferObject();
+	static VertexBuffer* newInstance(const VertexBufferPrototype &vbp);
+	virtual ~VertexBuffer();
 	void put(float x, float y);
 	void put(float x, float y, float z);
 	void put(float x, float y, float z, float w);
@@ -66,17 +66,17 @@ private:
 // Constants
 	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
 // Constructors
-	VertexBufferObject(const VertexBufferPrototype &vbd);
+	VertexBuffer(const VertexBufferPrototype &vbd);
 };
 
 /** @return Size in bytes of the VBO. */
-inline GLsizei VertexBufferObject::getSize() const {return size;}
+inline GLsizei VertexBuffer::getSize() const {return size;}
 
 /** @return Number of bytes between vertices. */
-inline GLuint VertexBufferObject::getStride() const {return stride;}
+inline GLuint VertexBuffer::getStride() const {return stride;}
 
 /** @return True if this VBO keeps all attributes of a vertex together. */
-inline bool VertexBufferObject::isInterleaved() const {return interleaved;}
+inline bool VertexBuffer::isInterleaved() const {return interleaved;}
 
 
 #endif

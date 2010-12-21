@@ -6,12 +6,12 @@
  */
 #include "gloop_common.h"
 #include "../Test.h"
-#include "VertexBufferObject.hpp"
-#include "VertexBufferObjectBuilder.hpp"
+#include "VertexBuffer.hpp"
+#include "VertexBufferBuilder.hpp"
 #include "ErrorChecker.hpp"
 
 /** Unit test for VertexBufferObject. */
-class VertexBufferObjectTest : public Test {
+class VertexBufferTest : public Test {
 public:
 	virtual void setUp();
 	virtual void tearDown();
@@ -21,14 +21,14 @@ public:
 	void testStride();
 	void testSize();
 private:
-	VertexBufferObjectBuilder *builder;
-	VertexBufferObject *vbo;
+	VertexBufferBuilder *builder;
+	VertexBuffer *vbo;
 };
 
 /** Create a fresh VBO. */
-void VertexBufferObjectTest::setUp() {
+void VertexBufferTest::setUp() {
 	
-	builder = new VertexBufferObjectBuilder();
+	builder = new VertexBufferBuilder();
 	builder->addAttribute("MCVertex", 3);
 	builder->addAttribute("TexCoord0", 3);
 	builder->setCapacity(3);
@@ -39,14 +39,14 @@ void VertexBufferObjectTest::setUp() {
 }
 
 /** Destroy the VBO. */
-void VertexBufferObjectTest::tearDown() {
+void VertexBufferTest::tearDown() {
 	
 	vbo->unbind();
 	delete vbo;
 }
 
 /** Ensures the VBO creates the correct size. */
-void VertexBufferObjectTest::testAllocate() {
+void VertexBufferTest::testAllocate() {
 	
 	int param;
 	
@@ -55,7 +55,7 @@ void VertexBufferObjectTest::testAllocate() {
 }
 
 /** Ensures an exception will be thrown when put is exceeded. */
-void VertexBufferObjectTest::testPut() {
+void VertexBufferTest::testPut() {
 	
 	vbo->put(-0.5, +0.5, 0); // 1
 	vbo->put( 0.0,  0.1, 0);
@@ -73,7 +73,7 @@ void VertexBufferObjectTest::testPut() {
 }
 
 /** Ensures the data can be sent to the card. */
-void VertexBufferObjectTest::testFlush() {
+void VertexBufferTest::testFlush() {
 	
 	vbo->put(-0.5, +0.5, 0);
 	vbo->put(-0.5, -0.5, 0);
@@ -83,18 +83,18 @@ void VertexBufferObjectTest::testFlush() {
 }
 
 /** Ensures the stride is allocated correctly. */
-void VertexBufferObjectTest::testStride() {
+void VertexBufferTest::testStride() {
 	
 	assert(vbo->getStride() == 24);
 }
 
-void VertexBufferObjectTest::testSize() {
+void VertexBufferTest::testSize() {
 	
 	assert(vbo->getSize() == 72);
 }
 
 /* Run the test. */
-#define HARNESS VertexBufferObjectTest
+#define HARNESS VertexBufferTest
 #include "../Runner.h"
 START_TESTS
 ADD_TEST(testAllocate)

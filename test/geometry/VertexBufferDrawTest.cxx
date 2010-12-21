@@ -6,40 +6,40 @@
  */
 #include "gloop_common.h"
 #include "../Test.h"
-#include "VertexBufferObject.hpp"
-#include "VertexBufferObjectBuilder.hpp"
+#include "VertexBuffer.hpp"
+#include "VertexBufferBuilder.hpp"
 #include "ShaderBuilder.hpp"
 #include "ProgramBuilder.hpp"
 
 
-class VertexBufferObjectDrawTest : public Test {
+class VertexBufferDrawTest : public Test {
 public:
-	VertexBufferObjectDrawTest();
+	VertexBufferDrawTest();
 	void testDraw();
 	virtual void onCanvasInitEvent(Canvas &canvas);
 	virtual void onCanvasDisplayEvent(Canvas &canvas);
 private:
-	VertexBufferObject *vbo;
+	VertexBuffer *vbo;
 	GLuint program;
 	GLint pointLoc;
 };
 
-VertexBufferObjectDrawTest::VertexBufferObjectDrawTest() {
+VertexBufferDrawTest::VertexBufferDrawTest() {
 	
 	vbo = NULL;
 	program = 0;
 	pointLoc = -1;
 }
 
-void VertexBufferObjectDrawTest::testDraw() {
+void VertexBufferDrawTest::testDraw() {
 	
 	runWindow();
 }
 
-void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
+void VertexBufferDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	
 	GLuint vertShader, fragShader;
-	VertexBufferObjectBuilder builder;
+	VertexBufferBuilder builder;
 	
 	builder.addAttribute("MCVertex", 3);
 	builder.addAttribute("TexCoord0", 3);
@@ -67,7 +67,7 @@ void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	}
 }
 
-void VertexBufferObjectDrawTest::onCanvasDisplayEvent(Canvas &canvas) {
+void VertexBufferDrawTest::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	glClearColor(0, 1, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -93,7 +93,7 @@ void VertexBufferObjectDrawTest::onCanvasDisplayEvent(Canvas &canvas) {
 	vbo->unbind();
 }
 
-#define HARNESS VertexBufferObjectDrawTest
+#define HARNESS VertexBufferDrawTest
 #include "../Runner.h"
 START_TESTS
 ADD_TEST(testDraw)
