@@ -104,7 +104,7 @@ void GlyphTexture::allocate(int x, int y) {
 			0,                                    // border
 			GL_LUMINANCE,                         // format
 			GL_UNSIGNED_BYTE,                     // type
-			(GLvoid*) package.image.get_data());  // pixels
+			(GLvoid*) package.image->get_data()); // pixels
 	
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
