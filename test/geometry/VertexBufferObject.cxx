@@ -7,6 +7,7 @@
 #include "gloop_common.h"
 #include "../Test.h"
 #include "VertexBufferObject.hpp"
+#include "VertexBufferObjectBuilder.hpp"
 #include "ErrorChecker.hpp"
 
 /** Unit test for VertexBufferObject. */
@@ -20,13 +21,20 @@ public:
 	void testStride();
 	void testSize();
 private:
+	VertexBufferObjectBuilder *builder;
 	VertexBufferObject *vbo;
 };
 
 /** Create a fresh VBO. */
 void VertexBufferObjectTest::setUp() {
 	
-	vbo = new VertexBufferObject();
+	builder = new VertexBufferObjectBuilder();
+	builder->addAttribute("MCVertex", 3);
+	builder->addAttribute("TexCoord0", 3);
+	builder->setCapacity(3);
+	builder->setUsage(GL_STATIC_DRAW);
+	
+	vbo = builder->toVertexBuffer();
 	vbo->bind();
 }
 
@@ -42,20 +50,12 @@ void VertexBufferObjectTest::testAllocate() {
 	
 	int param;
 	
-	vbo->addAttribute("MCVertex", 3);
-	vbo->addAttribute("TexCoord0", 3);
-	vbo->allocate(GL_STATIC_DRAW, 3);
-	
 	glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &param);
-	assert(param == sizeof(float) * (3 + 3) * 3);
+	assert(param == (sizeof(float) * (3 + 3) * 3));
 }
 
 /** Ensures an exception will be thrown when put is exceeded. */
 void VertexBufferObjectTest::testPut() {
-	
-	vbo->addAttribute("MCVertex", 3);
-	vbo->addAttribute("TexCoord0", 3);
-	vbo->allocate(GL_STATIC_DRAW, 3);
 	
 	vbo->put(-0.5, +0.5, 0); // 1
 	vbo->put( 0.0,  0.1, 0);
@@ -75,10 +75,6 @@ void VertexBufferObjectTest::testPut() {
 /** Ensures the data can be sent to the card. */
 void VertexBufferObjectTest::testFlush() {
 	
-	vbo->bind();
-	vbo->addAttribute("MCVertex", 3);
-	vbo->allocate(GL_STATIC_DRAW, 3);
-	
 	vbo->put(-0.5, +0.5, 0);
 	vbo->put(-0.5, -0.5, 0);
 	vbo->put(+0.5, +0.5, 0);
@@ -89,18 +85,12 @@ void VertexBufferObjectTest::testFlush() {
 /** Ensures the stride is allocated correctly. */
 void VertexBufferObjectTest::testStride() {
 	
-	vbo->addAttribute("MCVertex", 3);
-	vbo->allocate(GL_STATIC_DRAW, 3);
-	
-	assert(vbo->getStride() == 0);
+	assert(vbo->getStride() == 24);
 }
 
 void VertexBufferObjectTest::testSize() {
 	
-	vbo->addAttribute("MCVertex", 3);
-	vbo->allocate(GL_STATIC_DRAW, 4);
-	
-	assert(vbo->getSize() == 48);
+	assert(vbo->getSize() == 72);
 }
 
 /* Run the test. */

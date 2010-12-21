@@ -13,53 +13,57 @@
 using namespace std;
 
 
+/* Parameters to create a vertex buffer. */ 
+class VertexBufferDescription {
+public:
+	virtual map<string,GLuint> getOffsets() const = 0;
+	virtual GLuint getCapacity() const = 0;
+	virtual bool isInterleaved() const = 0;
+	virtual GLenum getUsage() const = 0;
+	virtual GLsizei getSizeInBytes() const = 0;
+	virtual GLuint getStrideInBytes() const = 0;
+};
+
 /** @brief OpenGL buffer object for vertex attributes.
  * 
- * To use, create a new VertexBufferObject.  Before adding values, reserve 
- * space for the VBO using allocate().  Then use the variations of put() to 
- * fill the buffer.  Finally, call flush() to send the data to the card.
+ * To create a VertexBufferObject, use VertexBufferObjectBuilder.  Then 
+ * use the variations of put() to fill the buffer.  Finally, call flush()
+ * to send the data to the card.
  * 
  * To update data, call rewind() to go back to the beginning of the buffer and
  * then call the put() methods again to overwrite the data in the buffer.  
  * Remember to call flush() when you are done.
  * 
  * Lastly, if you would like to update just one attribute, call 
- * enableStriding() before making any calls to put.  
+ * setStriding() before making any calls to put.  
  * 
  * @ingroup graphics
  */
-class VertexBufferObject: public BufferObject {
+class VertexBufferObject : public BufferObject {
 public:
-	VertexBufferObject();
+	VertexBufferObject(const VertexBufferDescription &vbd);
 	virtual ~VertexBufferObject();
-	void addAttribute(const string &name, int components);
-	void allocate(GLenum usage, GLuint count);
 	void put(float x, float y);
 	void put(float x, float y, float z);
 	void put(float x, float y, float z, float w);
 	void flush();
-// Secondary interface
-	void enableAutoStriding();
-	void disableAutoStriding();
 	void rewind();
 	void seek(const string &name);
+	void setStriding(bool striding);
 // Getters and setters
-	bool isAllocated() const;
 	bool isInterleaved() const;
-	void setInterleaved(bool interleaved);
 	GLsizei getSize() const;
 	GLuint getOffset(const string &name) const;
 	GLuint getStride() const;
-protected:
-	GLuint max(GLuint x, GLuint y);
 private:
-	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
 	bool interleaved;
 	GLubyte *data, *current, *end;
-	GLuint count, stride, autoStride;
+	GLuint count, stride, striding;
 	GLsizei size;
-	map<string,GLuint> positions;
-	list<VertexAttribute> attributes;
+	GLenum usage;
+	map<string,GLuint> offsets;
+// Constants
+	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
 };
 
 /** @return Size in bytes of the VBO. */
@@ -68,15 +72,8 @@ inline GLsizei VertexBufferObject::getSize() const {return size;}
 /** @return Number of bytes between vertices. */
 inline GLuint VertexBufferObject::getStride() const {return stride;}
 
-/** @return True if the VBO has been allocated. */
-inline bool VertexBufferObject::isAllocated() const {return end != data;}
-
 /** @return True if this VBO keeps all attributes of a vertex together. */
 inline bool VertexBufferObject::isInterleaved() const {return interleaved;}
 
-/** @return Greater of @e x and @e y. */
-inline GLuint VertexBufferObject::max(GLuint x, GLuint y) {
-	return x > y ? x : y;
-}
 
 #endif

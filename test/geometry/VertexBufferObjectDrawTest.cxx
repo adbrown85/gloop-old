@@ -7,6 +7,7 @@
 #include "gloop_common.h"
 #include "../Test.h"
 #include "VertexBufferObject.hpp"
+#include "VertexBufferObjectBuilder.hpp"
 #include "ShaderBuilder.hpp"
 #include "ProgramBuilder.hpp"
 
@@ -38,20 +39,21 @@ void VertexBufferObjectDrawTest::testDraw() {
 void VertexBufferObjectDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	
 	GLuint vertShader, fragShader;
+	VertexBufferObjectBuilder builder;
 	
-	vbo = new VertexBufferObject();
+	builder.addAttribute("MCVertex", 3);
+	builder.addAttribute("TexCoord0", 3);
+	builder.setUsage(GL_STATIC_DRAW);
+	builder.setCapacity(3);
+	
+	vbo = builder.toVertexBuffer();
 	vbo->bind();
-	vbo->addAttribute("MCVertex", 3);
-	vbo->addAttribute("TexCoord0", 3);
-	vbo->allocate(GL_STATIC_DRAW, 3);
-	
 	vbo->put(-0.5, +0.5, 0); // 1
 	vbo->put( 0.0,  1.0, 0);
 	vbo->put(-0.5, -0.5, 0); // 2
 	vbo->put( 0.0,  0.0, 0);
 	vbo->put(+0.5, +0.5, 0); // 3
 	vbo->put( 1.0,  1.0, 0);
-	
 	vbo->flush();
 	vbo->unbind();
 	
