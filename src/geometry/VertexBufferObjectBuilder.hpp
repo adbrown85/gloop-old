@@ -23,6 +23,7 @@ public:
 	virtual VertexBufferObject* toVertexBuffer();
 // Getters
 	virtual GLuint getCapacity() const;
+	virtual bool isComplete() const;
 	virtual bool isInterleaved() const;
 	virtual GLenum getUsage() const;
 	virtual GLsizei getSizeInBytes() const;
@@ -33,8 +34,6 @@ private:
 	GLenum usage;
 	GLuint capacity; //FIXME: Should be GLsizei
 	list<VertexAttribute> attributes;
-// Helpers
-	bool isComplete() const;
 };
 
 

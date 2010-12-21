@@ -7,6 +7,7 @@
 #ifndef GLOOP_VERTEXBUFFEROBJECT_HPP
 #define GLOOP_VERTEXBUFFEROBJECT_HPP
 #include "gloop_common.h"
+#include <cassert>
 #include <edo/BasicException.hpp>
 #include "BufferObject.hpp"
 #include "VertexAttribute.hpp"
@@ -16,6 +17,7 @@ using namespace std;
 /* Parameters to create a vertex buffer. */ 
 class VertexBufferDescription {
 public:
+	virtual bool isComplete() const = 0;
 	virtual map<string,GLuint> getOffsets() const = 0;
 	virtual GLuint getCapacity() const = 0;
 	virtual bool isInterleaved() const = 0;

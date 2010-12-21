@@ -13,6 +13,8 @@ int VertexBufferObject::SIZEOF_VEC4 = sizeof(float) * 4;
 VertexBufferObject::VertexBufferObject(const VertexBufferDescription &vbd) : 
 		BufferObject(GL_ARRAY_BUFFER) {
 	
+	assert(vbd.isComplete());
+	
 	offsets = vbd.getOffsets();
 	count = vbd.getCapacity();
 	interleaved = vbd.isInterleaved();
