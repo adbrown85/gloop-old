@@ -9,11 +9,24 @@ int VertexBufferObject::SIZEOF_VEC2 = sizeof(float) * 2;
 int VertexBufferObject::SIZEOF_VEC3 = sizeof(float) * 3;
 int VertexBufferObject::SIZEOF_VEC4 = sizeof(float) * 4;
 
+/** Creates a new VBO.
+ * 
+ * @throw BasicException if description is not complete 
+ */
+VertexBufferObject* VertexBufferObject::newInstance(const VertexBufferDescription &vbd) {
+	
+	if (!vbd.isComplete()) {
+		BasicException e;
+		e << "[VertexBufferObject] Description is not complete!";
+		throw e;
+	}
+	
+	return new VertexBufferObject(vbd);
+}
+
 /** Creates a new VBO. */
 VertexBufferObject::VertexBufferObject(const VertexBufferDescription &vbd) : 
 		BufferObject(GL_ARRAY_BUFFER) {
-	
-	assert(vbd.isComplete());
 	
 	offsets = vbd.getOffsets();
 	count = vbd.getCapacity();

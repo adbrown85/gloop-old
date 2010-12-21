@@ -57,14 +57,7 @@ void VertexBufferObjectBuilder::setUsage(GLenum usage) {
 
 /** @return VertexBufferObject that was built. */
 VertexBufferObject* VertexBufferObjectBuilder::toVertexBuffer() {
-	
-	if (!isComplete()) {
-		BasicException e;
-		e << "[VertexBufferObjectBuilder] VBO is not complete!";
-		throw e;
-	}
-	
-	return new VertexBufferObject((*this));
+	return VertexBufferObject::newInstance((*this));
 }
 
 // HELPERS

@@ -7,7 +7,6 @@
 #ifndef GLOOP_VERTEXBUFFEROBJECT_HPP
 #define GLOOP_VERTEXBUFFEROBJECT_HPP
 #include "gloop_common.h"
-#include <cassert>
 #include <edo/BasicException.hpp>
 #include "BufferObject.hpp"
 #include "VertexAttribute.hpp"
@@ -43,7 +42,7 @@ public:
  */
 class VertexBufferObject : public BufferObject {
 public:
-	VertexBufferObject(const VertexBufferDescription &vbd);
+	static VertexBufferObject* newInstance(const VertexBufferDescription &vbd);
 	virtual ~VertexBufferObject();
 	void put(float x, float y);
 	void put(float x, float y, float z);
@@ -66,6 +65,8 @@ private:
 	map<string,GLuint> offsets;
 // Constants
 	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
+// Constructors
+	VertexBufferObject(const VertexBufferDescription &vbd);
 };
 
 /** @return Size in bytes of the VBO. */
