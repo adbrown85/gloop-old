@@ -11,36 +11,36 @@ int VertexBufferObject::SIZEOF_VEC4 = sizeof(float) * 4;
 
 /** Creates a new VBO.
  * 
- * @throw BasicException if description is not complete 
+ * @throw BasicException if prototype is not complete 
  */
-VertexBufferObject* VertexBufferObject::newInstance(const VertexBufferDescription &vbd) {
+VertexBufferObject* VertexBufferObject::newInstance(const VertexBufferPrototype &vbp) {
 	
-	if (!vbd.isComplete()) {
+	if (!vbp.isComplete()) {
 		BasicException e;
-		e << "[VertexBufferObject] Description is not complete!";
+		e << "[VertexBufferObject] Prototype is not complete!";
 		throw e;
 	}
 	
-	return new VertexBufferObject(vbd);
+	return new VertexBufferObject(vbp);
 }
 
 /** Creates a new VBO. */
-VertexBufferObject::VertexBufferObject(const VertexBufferDescription &vbd) : 
+VertexBufferObject::VertexBufferObject(const VertexBufferPrototype &vbp) : 
 		BufferObject(GL_ARRAY_BUFFER) {
 	
-	offsets = vbd.getOffsets();
-	count = vbd.getCapacity();
-	interleaved = vbd.isInterleaved();
-	usage = vbd.getUsage();
-	size = vbd.getSizeInBytes();
-	stride = vbd.getStrideInBytes();
+	offsets = vbp.getOffsets();
+	count = vbp.getCapacity();
+	interleaved = vbp.isInterleaved();
+	usage = vbp.getUsage();
+	size = vbp.getSizeInBytes();
+	stride = vbp.getStrideInBytes();
 	
 	data = new GLubyte[size];
 	current = data;
 	end = data + size;
 	
 	bind();
-	BufferObject::allocate(vbd.getUsage(), size);
+	BufferObject::allocate(vbp.getUsage(), size);
 	unbind();
 	
 	striding = 0;

@@ -11,7 +11,7 @@
 
 
 /** @brief <i>Builder</i> for a VertexBufferObject. */
-class VertexBufferObjectBuilder : public VertexBufferDescription {
+class VertexBufferObjectBuilder : public VertexBufferPrototype {
 public:
 	VertexBufferObjectBuilder();
 	virtual ~VertexBufferObjectBuilder() {}

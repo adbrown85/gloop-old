@@ -14,7 +14,7 @@ using namespace std;
 
 
 /* Parameters to create a vertex buffer. */ 
-class VertexBufferDescription {
+class VertexBufferPrototype {
 public:
 	virtual bool isComplete() const = 0;
 	virtual map<string,GLuint> getOffsets() const = 0;
@@ -42,7 +42,7 @@ public:
  */
 class VertexBufferObject : public BufferObject {
 public:
-	static VertexBufferObject* newInstance(const VertexBufferDescription &vbd);
+	static VertexBufferObject* newInstance(const VertexBufferPrototype &vbp);
 	virtual ~VertexBufferObject();
 	void put(float x, float y);
 	void put(float x, float y, float z);
@@ -66,7 +66,7 @@ private:
 // Constants
 	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
 // Constructors
-	VertexBufferObject(const VertexBufferDescription &vbd);
+	VertexBufferObject(const VertexBufferPrototype &vbd);
 };
 
 /** @return Size in bytes of the VBO. */
