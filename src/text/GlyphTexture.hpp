@@ -27,8 +27,8 @@ public:
 	static GlyphTexture* getInstance(const Font &font);
 	virtual ~GlyphTexture() { }
 	virtual GlyphCoords find(Glyph *glyph);
-	virtual void bind() { }
-	virtual void unbind() { }
+	virtual void bind();
+	virtual void unbind();
 private:
 	Font font;
 	GLuint handle;
@@ -38,7 +38,7 @@ private:
 	void storeCoords();
 	void storeCoords(char c, GlyphLocation &gl);
 	static GlyphPackage makePackage(const Font &font);
-	void allocate(int width, int height);
+	void upload();
 // Instance control
 	static map<Font,GlyphTexture*> instances;
 	GlyphTexture(const Font &font);

@@ -12,6 +12,7 @@ GlyphTexture::GlyphTexture(const Font &font) : font(font) {
 	
 	package = makePackage(font);
 	storeCoords();
+	upload();
 }
 
 /** @throw BasicException if code tries to copy a GlyphTexture. */
@@ -35,6 +36,16 @@ GlyphTexture* GlyphTexture::getInstance(const Font &font) {
 	gt = new GlyphTexture(font);
 	instances[font] = gt;
 	return gt;
+}
+
+/** Enables the texture. */
+void GlyphTexture::bind() {
+	glBindTexture(GL_TEXTURE_2D, handle);
+}
+
+/** Disables the texture. */
+void GlyphTexture::unbind() {
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 /** @return Coordinates of glyph in the texture. */
@@ -88,8 +99,8 @@ GlyphPackage GlyphTexture::makePackage(const Font &font) {
 	return packer.getPackage();
 }
 
-/** Allocate the texture. */
-void GlyphTexture::allocate(int x, int y) {
+/** Allocate and fill the texture. */
+void GlyphTexture::upload() {
 	
 	glGenTextures(1, &handle);
 	glBindTexture(GL_TEXTURE_2D, handle);
