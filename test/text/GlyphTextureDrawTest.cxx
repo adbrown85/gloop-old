@@ -26,6 +26,7 @@ private:
 	VertexBuffer *vbo;
 	GLuint program;
 	GLint pointLoc, coordLoc;
+	Font *font;
 	GlyphFactory *glyphFactory;
 	GlyphTexture *glyphTexture;
 };
@@ -38,6 +39,7 @@ GlyphTextureDrawTest::GlyphTextureDrawTest() {
 	coordLoc = -1;
 	glyphFactory = NULL;
 	glyphTexture = NULL;
+	font = new Font("Arial", Font::PLAIN, 72);
 }
 
 /** Start the test. */
@@ -50,7 +52,13 @@ void GlyphTextureDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	
 	GLuint vShader, fShader;
 	VertexBufferBuilder vbb;
-	Font font("Arial", Font::PLAIN, 72);
+	Glyph *glyph;
+	GlyphCoords gc;
+	
+	glyphFactory = GlyphFactory::getInstance(*font);
+	glyphTexture = GlyphTexture::getInstance(*font);
+	glyph = glyphFactory->create('@');
+	gc = glyphTexture->find(glyph);
 	
 	vbb.addAttribute("MCVertex", 2);
 	vbb.addAttribute("TexCoord0", 2);
@@ -59,17 +67,17 @@ void GlyphTextureDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	
 	vbo->bind();
 	vbo->put(+0.5, +0.5); // 1
-	vbo->put( 1.0,  1.0);
+	vbo->put(gc.right, gc.top);
 	vbo->put(-0.5, +0.5); // 2
-	vbo->put( 0.0,  1.0);
+	vbo->put(gc.left, gc.top);
 	vbo->put(-0.5, -0.5); // 3
-	vbo->put( 0.0,  0.0);
+	vbo->put(gc.left, gc.bottom);
 	vbo->put(+0.5, +0.5); // 4
-	vbo->put( 1.0,  1.0);
+	vbo->put(gc.right, gc.top);
 	vbo->put(-0.5, -0.5); // 5
-	vbo->put( 0.0,  0.0);
+	vbo->put(gc.left, gc.bottom);
 	vbo->put(+0.5, -0.5); // 6
-	vbo->put( 1.0,  0.0);
+	vbo->put(gc.right, gc.bottom);
 	vbo->flush();
 	vbo->unbind();
 	
@@ -86,9 +94,6 @@ void GlyphTextureDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	if (coordLoc < 0) {
 		throw BasicException("Location of TexCoord0 not found!");
 	}
-	
-	glyphFactory = GlyphFactory::getInstance(font);
-	glyphTexture = GlyphTexture::getInstance(font);
 }
 
 /** Draw everything. */
