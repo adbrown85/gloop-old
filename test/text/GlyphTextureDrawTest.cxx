@@ -39,7 +39,7 @@ GlyphTextureDrawTest::GlyphTextureDrawTest() {
 	coordLoc = -1;
 	glyphFactory = NULL;
 	glyphTexture = NULL;
-	font = new Font("Arial", Font::PLAIN, 72);
+	font = new Font("Arial", Font::PLAIN, 200);
 }
 
 /** Start the test. */
@@ -57,7 +57,7 @@ void GlyphTextureDrawTest::onCanvasInitEvent(Canvas &canvas) {
 	
 	glyphFactory = GlyphFactory::getInstance(*font);
 	glyphTexture = GlyphTexture::getInstance(*font);
-	glyph = glyphFactory->create('@');
+	glyph = glyphFactory->create('B');
 	gc = glyphTexture->find(glyph);
 	
 	vbb.addAttribute("MCVertex", 2);

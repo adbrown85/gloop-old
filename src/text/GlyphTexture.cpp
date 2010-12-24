@@ -84,8 +84,8 @@ void GlyphTexture::storeCoords(char c, GlyphLocation &gl) {
 	
 	gc.left   = ((float) gl.left) / package.width;
 	gc.right  = ((float) gl.right) / package.width;
-	gc.top    = 1.0f - (((float) gl.top) / package.height);
-	gc.bottom = 1.0f - (((float) gl.bottom) / package.height);
+	gc.top    = ((float) gl.top) / package.height;
+	gc.bottom = ((float) gl.bottom) / package.height;
 	
 	coords[c] = gc;
 }

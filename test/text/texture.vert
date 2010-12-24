@@ -16,5 +16,4 @@ void main() {
 	
 	gl_Position = MVPMatrix * MCVertex;
 	Coord0 = TexCoord0;
-	Coord0.y = 1.0 - Coord0.y;
 }
