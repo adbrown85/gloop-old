@@ -29,7 +29,7 @@ Matrix Projection::getPerspective(double fovy,
 		throw e;
 	}
 	
-	f = 1 / tan(Math::toRadians(fovy) / 2);
+	f = 1.0 / tan(Math::toRadians(fovy) / 2);
 	
 	mat(0,0) = f / aspect;
 	mat(1,1) = f;
