@@ -105,7 +105,7 @@ void GlyphTexture::upload() {
 	glGenTextures(1, &handle);
 	glBindTexture(GL_TEXTURE_2D, handle);
 	
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 	glTexImage2D(
 			GL_TEXTURE_2D,                        // target
 			0,                                    // level
