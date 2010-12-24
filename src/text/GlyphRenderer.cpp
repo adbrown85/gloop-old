@@ -91,8 +91,8 @@ GLuint GlyphRenderer::makeShaderProgram() {
 	
 	GLuint vs, fs;
 	
-	vs = ShaderFactory::create("src/text/basic.vert");
-	fs = ShaderFactory::create("src/text/basic.frag");
+	vs = ShaderFactory::create("src/text/text.vert");
+	fs = ShaderFactory::create("src/text/text.frag");
 	
 	return ProgramBuilder::build(vs, fs);
 }
