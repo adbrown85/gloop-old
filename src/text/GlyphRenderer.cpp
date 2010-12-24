@@ -14,6 +14,7 @@ GlyphRenderer::GlyphRenderer() {
 	program = makeShaderProgram();
 	uMvpMatrixIndex = glGetUniformLocation(program, "MVPMatrix");
 	aMcVertexIndex = glGetAttribLocation(program, "MCVertex");
+	aTexCoord0Index = glGetAttribLocation(program, "TexCoord0");
 }
 
 /** Destroy the glyph renderer. */
@@ -32,12 +33,21 @@ void GlyphRenderer::beginRendering(int width, int height) {
 	
 	glEnableVertexAttribArray(aMcVertexIndex);
 	glVertexAttribPointer(
-			aMcVertexIndex,                        // index
-			2,                                     // size
-			GL_FLOAT,                              // type
-			false,                                 // normalized
-			vbo->getStride(),                      // stride
-			(GLvoid*) vbo->getOffset("MCVertex")); // offset
+			aMcVertexIndex,                         // index
+			2,                                      // size
+			GL_FLOAT,                               // type
+			false,                                  // normalized
+			vbo->getStride(),                       // stride
+			(GLvoid*) vbo->getOffset("MCVertex"));  // offset
+	
+	glEnableVertexAttribArray(aTexCoord0Index);
+	glVertexAttribPointer(
+			aTexCoord0Index,                        // index
+			2,                                      // size
+			GL_FLOAT,                               // type
+			false,                                  // normalized
+			vbo->getStride(),                       // stride
+			(GLvoid*) vbo->getOffset("TexCoord0")); // offset
 }
 
 void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
@@ -50,12 +60,18 @@ void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	b = y - glyph->getDescent();
 	
 	vbo->rewind();
-	vbo->put(l, t);
-	vbo->put(l, b);
-	vbo->put(r, t);
-	vbo->put(l, b);
-	vbo->put(r, b);
-	vbo->put(r, t);
+	vbo->put(l, t);  // 1
+	vbo->put(gc.left, gc.top);
+	vbo->put(l, b);  // 2
+	vbo->put(gc.left, gc.bottom);
+	vbo->put(r, t);  // 3
+	vbo->put(gc.right, gc.top);
+	vbo->put(l, b);  // 4
+	vbo->put(gc.left, gc.bottom);
+	vbo->put(r, b);  // 5
+	vbo->put(gc.right, gc.bottom);
+	vbo->put(r, t);  // 6
+	vbo->put(gc.right, gc.top);
 	vbo->flush();
 	
 	glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -78,8 +94,7 @@ VertexBuffer* GlyphRenderer::makeVertexBuffer() {
 	VertexBufferBuilder vbb;
 	
 	vbb.addAttribute("MCVertex", 2);
-//	vbb.addAttribute("MCVertex", 2);
-//	vbb.addAttribute("TexCoord0");
+	vbb.addAttribute("TexCoord0", 2);
 	vbb.setCapacity(6);
 	vbb.setUsage(GL_STREAM_DRAW);
 	

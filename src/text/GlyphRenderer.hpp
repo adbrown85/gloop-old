@@ -28,7 +28,8 @@ public:
 private:
 	VertexBuffer *vbo;
 	GLuint program;
-	GLint aMcVertexIndex, uMvpMatrixIndex;
+	GLint uMvpMatrixIndex;
+	GLint aMcVertexIndex, aTexCoord0Index;
 // Helpers
 	static VertexBuffer* makeVertexBuffer();
 	static GLuint makeShaderProgram();
