@@ -2,6 +2,7 @@ Font
 Glyph
 GlyphFactory
 GlyphPacker
+GlyphRenderer
 GlyphTexture
 GlyphTextureDrawTest
 
