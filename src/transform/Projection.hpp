@@ -17,6 +17,7 @@
 class Projection {
 public:
 	static Matrix getPerspective(double fov, double asp, double n, double f);
+	static Matrix orthographic(int width, int height);
 };
 
 #endif

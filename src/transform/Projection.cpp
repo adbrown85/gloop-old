@@ -39,3 +39,27 @@ Matrix Projection::getPerspective(double fovy,
 	
 	return mat;
 }
+
+/** @return Matrix representing orthographic projection.
+ * 
+ * 2/w 0   0  -1
+ * 0   2/h 0  -1
+ * 0   0  -1   0
+ * 0   0   0   1
+ */
+Matrix Projection::orthographic(int width, int height) {
+	
+	Matrix m;
+	
+	// Scale
+	m(0,0) = 2.0 / width;
+	m(1,1) = 2.0 / height;
+	m(2,2) = -1;
+	m(3,3) = 1;
+	
+	// Translate
+	m(0,3) = -1;
+	m(1,3) = -1;
+	
+	return m;
+}
