@@ -144,6 +144,15 @@ void VertexBuffer::seek(const string &name) {
 	}
 }
 
+void VertexBuffer::dump() {
+	
+	GLubyte *pos;
+	
+	for (pos=data; pos<end; pos+=sizeof(GLfloat)) {
+		cout << *((GLfloat*) pos) << endl;
+	}
+}
+
 // GETTERS AND SETTERS
 
 /** @return Position of attribute @e name in the VBO.
