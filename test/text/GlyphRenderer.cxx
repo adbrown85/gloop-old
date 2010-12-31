@@ -28,7 +28,7 @@ private:
 GlyphRendererTest::GlyphRendererTest() {
 	font = new Font("Arial", Font::PLAIN, 72);
 	glyphFactory = GlyphFactory::getInstance(*font);
-	glyphs[0] = glyphFactory->create('e');
+	glyphs[0] = glyphFactory->create('@');
 	glyphs[1] = glyphFactory->create('A');
 }
 
@@ -58,9 +58,6 @@ void GlyphRendererTest::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	ErrorChecker::check("After draw");
 }
-
-
-
 
 /* Run the test. */
 #define HARNESS GlyphRendererTest
