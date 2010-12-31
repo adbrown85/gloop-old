@@ -11,6 +11,7 @@
 #include <cairomm/surface.h>
 #include "GlyphFactory.hpp"
 #define GLYPH_PACKER_GLYPHS_COUNT 96
+#define GLYPH_PACKER_PADDING 8
 using namespace std;
 
 /* Position and size of a glyph in the image. */
@@ -47,6 +48,8 @@ private:
 	void fill();
 	void store(char c, int x, int y);
 	int findMaxWidth();
+	int findStartingX();
+	int findStartingY();
 };
 
 #endif

@@ -34,9 +34,10 @@ GlyphPackage GlyphPacker::getPackage() {
 /** Make package appropriate size. */
 void GlyphPacker::measure() {
 	
-    package.metrics.width = findMaxWidth();
-    package.metrics.height = factory->getFontHeight();
+    package.metrics.width = findMaxWidth() + GLYPH_PACKER_PADDING;
+    package.metrics.height = factory->getFontHeight() + GLYPH_PACKER_PADDING;
     package.metrics.descent = factory->getFontDescent();
+    
     package.rows = 1;
     package.cols = 1;
     package.width = package.metrics.width;
@@ -78,15 +79,15 @@ void GlyphPacker::fill() {
 	int x, y;
 	char character = '!';
 	
-	x = 0;
-	y = package.metrics.height - package.metrics.descent;
+	x = findStartingX();
+	y = findStartingY();
 	for (int i=0; i<package.rows; ++i) {
 		for (int j=0; j<package.cols && character<127; ++j) {
 			store(character, x, y);
 			x += package.metrics.width;
 			++character;
 		}
-		x = 0;
+		x = findStartingX();
 		y += package.metrics.height;
 	}
 }
@@ -102,7 +103,7 @@ void GlyphPacker::store(char c, int x, int y) {
 	context->show_text(arr);
 	
 	location.left   = x;
-	location.right  = x + glyph->getWidth();
+	location.right  = x + glyph->getAdvance();
 	location.top    = y - glyph->getAscent();
 	location.bottom = y + glyph->getDescent();
 	
@@ -117,9 +118,21 @@ int GlyphPacker::findMaxWidth() {
 	
 	for (char c='!'; c<='~'; ++c) {
 		glyph = factory->create(c);
-		if (glyph->getWidth() > max) {
-			max = glyph->getWidth();
+		if (glyph->getAdvance() > max) {
+			max = glyph->getAdvance();
 		}
 	}
 	return max;
+}
+
+/** @return Horizontal offset to start filling the package from. */
+int GlyphPacker::findStartingX() {
+	return GLYPH_PACKER_PADDING / 2;
+}
+
+/** @return Vertical offset to start filling the package from. */
+int GlyphPacker::findStartingY() {
+	return package.metrics.height
+			- package.metrics.descent
+			- (GLYPH_PACKER_PADDING / 2);
 }
