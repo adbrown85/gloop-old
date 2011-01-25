@@ -4,8 +4,8 @@
  * Author
  *     Andrew Brown <adb1413@rit.edu>
  */
-#ifndef GLYPHRENDERER_HPP
-#define GLYPHRENDERER_HPP
+#ifndef GLOOP_GLYPHRENDERER_HPP
+#define GLOOP_GLYPHRENDERER_HPP
 #include "gloop_common.h"
 #include "Font.hpp"
 #include "Glyph.hpp"
