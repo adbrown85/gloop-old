@@ -6,7 +6,6 @@
  */
 #include "GlyphRenderer.hpp"
 
-
 /** Initialize the glyph renderer. */
 GlyphRenderer::GlyphRenderer() {
 	
@@ -24,6 +23,11 @@ GlyphRenderer::~GlyphRenderer() {
 	}
 }
 
+/** Initialize rendering with the glyph renderer.
+ * 
+ * @param width Width of the viewport
+ * @param height Height of the viewport
+ */
 void GlyphRenderer::beginRendering(int width, int height) {
 	
 	glUseProgram(program);
@@ -50,6 +54,13 @@ void GlyphRenderer::beginRendering(int width, int height) {
 			(GLvoid*) vbo->getOffset("TexCoord0")); // offset
 }
 
+/** Draw a glyph at a position.
+ * 
+ * @param glyph Visual representation of a character
+ * @param x Position in X direction to render the glyph
+ * @param y Position in Y direction to render the glyph
+ * @param gc Coordinates of glyph in glyph texture 
+ */
 void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	
 	int l, r, t, b;
@@ -77,12 +88,12 @@ void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
+/** Finish rendering with the glyph renderer. */
 void GlyphRenderer::endRendering() {
 	
 	glUseProgram(0);
 	vbo->unbind();
 }
-
 
 //--------------------------------------------------------
 // Helpers
@@ -112,6 +123,11 @@ GLuint GlyphRenderer::makeShaderProgram() {
 	return ProgramBuilder::build(vs, fs);
 }
 
+/** Change the modelview projection matrix in the program.
+ * 
+ * @param width Width of the viewport
+ * @param height Height of the viewport
+ */
 void GlyphRenderer::setMvpMatrix(int width, int height) {
 	
 	float arr[16];
