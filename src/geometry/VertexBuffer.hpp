@@ -58,11 +58,15 @@ public:
 	GLuint getOffset(const string &name) const;
 	GLuint getStride() const;
 private:
-	bool interleaved;
-	GLubyte *data, *current, *end;
-	GLuint capacity, stride, striding;
-	GLsizei footprint;
-	GLenum usage;
+	bool interleaved;                  // Whether attributes are mixed together
+	GLubyte *data;                     // Start of attribute memory
+	GLubyte *current;                  // Memory location to put next attribute
+	GLubyte *end;                      // End of attribute memory
+	GLuint capacity;                   // Number of vertices VBO can store
+	GLuint stride;                     // Number of bytes between vertices
+	GLuint striding;                   // Number of bytes to jump
+	GLsizei footprint;                 // Size in bytes of total VBO
+	GLenum usage;                      // Hint for how VBO is read and updated
 	map<string,GLuint> offsets;
 // Constants
 	static int SIZEOF_VEC2, SIZEOF_VEC3, SIZEOF_VEC4;
