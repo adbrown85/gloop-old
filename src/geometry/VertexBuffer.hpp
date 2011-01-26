@@ -50,7 +50,6 @@ public:
 	void flush();
 	void rewind();
 	void seek(const string &name);
-	void setStriding(bool striding);
 // Getters and setters
 	bool isInterleaved() const;
 	GLuint getCapacity() const;
@@ -64,7 +63,6 @@ private:
 	GLubyte *end;                      // End of attribute memory
 	GLuint capacity;                   // Number of vertices VBO can store
 	GLuint stride;                     // Number of bytes between vertices
-	GLuint striding;                   // Number of bytes to jump
 	GLsizei footprint;                 // Size in bytes of total VBO
 	GLenum usage;                      // Hint for how VBO is read and updated
 	map<string,GLuint> offsets;

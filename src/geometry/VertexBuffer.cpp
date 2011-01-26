@@ -42,8 +42,6 @@ VertexBuffer::VertexBuffer(const VertexBufferPrototype &vbp) :
 	bind();
 	BufferObject::allocate(vbp.getUsage(), footprint);
 	unbind();
-	
-	striding = 0;
 }
 
 /** Destroys the data held by the VBO. */
@@ -51,31 +49,6 @@ VertexBuffer::~VertexBuffer() {
 	
 	if (data != NULL) {
 		delete[] data;
-	}
-}
-
-/** Change the behavior after a put.
- * 
- * If striding is True, the VBO will automatically skip ahead to the next
- * vertex of the same attribute after a put.  Otherwise it will
- * just move past the attribute value as normal.
- * 
- * Use striding to update all the vertices of a single attribute.
- * 
- * @throw BasicException if not an interleaved vertex buffer object. 
- */
-void VertexBuffer::setStriding(bool striding) {
-	
-	if (!isInterleaved()) {
-		BasicException e;
-		e << "[VertexBufferObject] Cannot use striding when not interleaved.";
-		throw e;
-	}
-	
-	if (striding) {
-		this->striding = stride;
-	} else {
-		this->striding = 0;
 	}
 }
 
@@ -93,7 +66,7 @@ void VertexBuffer::put(float x, float y) {
 	
 	((GLfloat*) current)[0] = x;
 	((GLfloat*) current)[1] = y;
-	current += (SIZEOF_VEC2 > striding ? SIZEOF_VEC2 : striding);
+	current += SIZEOF_VEC2;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -106,7 +79,7 @@ void VertexBuffer::put(float x, float y, float z) {
 	((GLfloat*)current)[0] = x;
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
-	current += (SIZEOF_VEC3 > striding ? SIZEOF_VEC3 : striding);
+	current += SIZEOF_VEC3;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -120,7 +93,7 @@ void VertexBuffer::put(float x, float y, float z, float w) {
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
 	((GLfloat*)current)[3] = w;
-	current += (SIZEOF_VEC4 > striding ? SIZEOF_VEC4 : striding);
+	current += SIZEOF_VEC4;
 }
 
 /** Returns the current position to the beginning of the buffer. */
