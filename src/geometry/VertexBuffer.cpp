@@ -163,6 +163,3 @@ GLuint VertexBuffer::getOffset(const string &name) const {
 		throw e;
 	}
 }
-
-
-
