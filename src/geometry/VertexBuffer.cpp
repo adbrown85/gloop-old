@@ -38,6 +38,7 @@ VertexBuffer::VertexBuffer(const VertexBufferPrototype &vbp) :
 	data = new GLubyte[footprint];
 	current = data;
 	end = data + footprint;
+	extent = current;
 	skip = false;
 	
 	bind();
@@ -69,6 +70,7 @@ void VertexBuffer::put(float x, float y) {
 	((GLfloat*) current)[0] = x;
 	((GLfloat*) current)[1] = y;
 	current += skip ? stride : SIZEOF_VEC2;
+	if (current > extent) extent = current;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -82,6 +84,7 @@ void VertexBuffer::put(float x, float y, float z) {
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
 	current += skip ? stride : SIZEOF_VEC3;
+	if (current > extent) extent = current;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -96,6 +99,14 @@ void VertexBuffer::put(float x, float y, float z, float w) {
 	((GLfloat*)current)[2] = z;
 	((GLfloat*)current)[3] = w;
 	current += skip ? stride : SIZEOF_VEC4;
+	if (current > extent) extent = current;
+}
+
+/** Returns position to beginning and marks data as unused. */
+void VertexBuffer::reset() {
+	current = data;
+	skip = false;
+	extent = current;
 }
 
 /** Returns the current position to the beginning of the buffer. */

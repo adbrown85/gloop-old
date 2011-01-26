@@ -48,6 +48,7 @@ public:
 	void put(float x, float y, float z);
 	void put(float x, float y, float z, float w);
 	void flush();
+	void reset();
 	void rewind();
 	void seek(const string &name);
 // Getters and setters
@@ -62,6 +63,7 @@ private:
 	GLubyte *data;                     // Start of attribute memory
 	GLubyte *current;                  // Memory location to put next attribute
 	GLubyte *end;                      // End of attribute memory
+	GLubyte *extent;                   // Farthest attributes have been put
 	GLuint capacity;                   // Number of vertices VBO can store
 	GLuint stride;                     // Number of bytes between vertices
 	GLsizei footprint;                 // Size in bytes of total VBO
