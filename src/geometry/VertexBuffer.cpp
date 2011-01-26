@@ -32,15 +32,15 @@ VertexBuffer::VertexBuffer(const VertexBufferPrototype &vbp) :
 	capacity = vbp.getCapacity();
 	interleaved = vbp.isInterleaved();
 	usage = vbp.getUsage();
-	size = vbp.getSizeInBytes();
+	footprint = vbp.getSizeInBytes();
 	stride = vbp.getStrideInBytes();
 	
-	data = new GLubyte[size];
+	data = new GLubyte[footprint];
 	current = data;
-	end = data + size;
+	end = data + footprint;
 	
 	bind();
-	BufferObject::allocate(vbp.getUsage(), size);
+	BufferObject::allocate(vbp.getUsage(), footprint);
 	unbind();
 	
 	striding = 0;
@@ -81,7 +81,7 @@ void VertexBuffer::setStriding(bool striding) {
 
 /** Flushes the data to the video card. */
 void VertexBuffer::flush() {
-	BufferObject::update(size, data, 0);
+	BufferObject::update(footprint, data, 0);
 }
 
 /** Specifies the value of a vertex for the current attribute. */

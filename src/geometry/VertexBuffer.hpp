@@ -54,14 +54,14 @@ public:
 // Getters and setters
 	bool isInterleaved() const;
 	GLuint getCapacity() const;
-	GLsizei getSize() const;
+	GLsizei getFootprint() const;
 	GLuint getOffset(const string &name) const;
 	GLuint getStride() const;
 private:
 	bool interleaved;
 	GLubyte *data, *current, *end;
 	GLuint capacity, stride, striding;
-	GLsizei size;
+	GLsizei footprint;
 	GLenum usage;
 	map<string,GLuint> offsets;
 // Constants
@@ -74,7 +74,7 @@ private:
 inline GLuint VertexBuffer::getCapacity() const {return capacity;}
 
 /** @return Size in bytes of the VBO. */
-inline GLsizei VertexBuffer::getSize() const {return size;}
+inline GLsizei VertexBuffer::getFootprint() const {return footprint;}
 
 /** @return Number of bytes between vertices. */
 inline GLuint VertexBuffer::getStride() const {return stride;}
