@@ -51,7 +51,6 @@ public:
 	void rewind();
 	void seek(const string &name);
 	void setStriding(bool striding);
-	void dump();
 // Getters and setters
 	bool isInterleaved() const;
 	GLuint getCapacity() const;
