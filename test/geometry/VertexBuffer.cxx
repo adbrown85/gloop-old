@@ -19,7 +19,6 @@ public:
 	void testPut();
 	void testFlush();
 	void testStride();
-	void testSize();
 private:
 	VertexBufferBuilder *builder;
 	VertexBuffer *vbo;
@@ -88,11 +87,6 @@ void VertexBufferTest::testStride() {
 	assert(vbo->getStride() == 24);
 }
 
-void VertexBufferTest::testSize() {
-	
-	assert(vbo->getSize() == 72);
-}
-
 /* Run the test. */
 #define HARNESS VertexBufferTest
 #include "../Runner.h"
@@ -101,5 +95,4 @@ ADD_TEST(testAllocate)
 ADD_TEST(testPut)
 ADD_TEST(testFlush)
 ADD_TEST(testStride)
-ADD_TEST(testSize)
 RUN_TESTS
