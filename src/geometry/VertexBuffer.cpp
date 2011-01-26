@@ -29,7 +29,7 @@ VertexBuffer::VertexBuffer(const VertexBufferPrototype &vbp) :
 		BufferObject(GL_ARRAY_BUFFER) {
 	
 	offsets = vbp.getOffsets();
-	count = vbp.getCapacity();
+	capacity = vbp.getCapacity();
 	interleaved = vbp.isInterleaved();
 	usage = vbp.getUsage();
 	size = vbp.getSizeInBytes();

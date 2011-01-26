@@ -54,13 +54,14 @@ public:
 	void dump();
 // Getters and setters
 	bool isInterleaved() const;
+	GLuint getCapacity() const;
 	GLsizei getSize() const;
 	GLuint getOffset(const string &name) const;
 	GLuint getStride() const;
 private:
 	bool interleaved;
 	GLubyte *data, *current, *end;
-	GLuint count, stride, striding;
+	GLuint capacity, stride, striding;
 	GLsizei size;
 	GLenum usage;
 	map<string,GLuint> offsets;
@@ -69,6 +70,9 @@ private:
 // Constructors
 	VertexBuffer(const VertexBufferPrototype &vbd);
 };
+
+/** @return Number of vertices the VBO can hold. */
+inline GLuint VertexBuffer::getCapacity() const {return capacity;}
 
 /** @return Size in bytes of the VBO. */
 inline GLsizei VertexBuffer::getSize() const {return size;}
