@@ -58,6 +58,7 @@ public:
 	GLuint getStride() const;
 private:
 	bool interleaved;                  // Whether attributes are mixed together
+	bool skip;                         // Whether to jump to next vertex
 	GLubyte *data;                     // Start of attribute memory
 	GLubyte *current;                  // Memory location to put next attribute
 	GLubyte *end;                      // End of attribute memory

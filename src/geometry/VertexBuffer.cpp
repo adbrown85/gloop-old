@@ -38,6 +38,7 @@ VertexBuffer::VertexBuffer(const VertexBufferPrototype &vbp) :
 	data = new GLubyte[footprint];
 	current = data;
 	end = data + footprint;
+	skip = false;
 	
 	bind();
 	BufferObject::allocate(vbp.getUsage(), footprint);
@@ -55,6 +56,7 @@ VertexBuffer::~VertexBuffer() {
 /** Flushes the data to the video card. */
 void VertexBuffer::flush() {
 	BufferObject::update(footprint, data, 0);
+	skip = false;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -66,7 +68,7 @@ void VertexBuffer::put(float x, float y) {
 	
 	((GLfloat*) current)[0] = x;
 	((GLfloat*) current)[1] = y;
-	current += SIZEOF_VEC2;
+	current += skip ? stride : SIZEOF_VEC2;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -79,7 +81,7 @@ void VertexBuffer::put(float x, float y, float z) {
 	((GLfloat*)current)[0] = x;
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
-	current += SIZEOF_VEC3;
+	current += skip ? stride : SIZEOF_VEC3;
 }
 
 /** Specifies the value of a vertex for the current attribute. */
@@ -93,15 +95,23 @@ void VertexBuffer::put(float x, float y, float z, float w) {
 	((GLfloat*)current)[1] = y;
 	((GLfloat*)current)[2] = z;
 	((GLfloat*)current)[3] = w;
-	current += SIZEOF_VEC4;
+	current += skip ? stride : SIZEOF_VEC4;
 }
 
 /** Returns the current position to the beginning of the buffer. */
 void VertexBuffer::rewind() {
 	current = data;
+	skip = false;
 }
 
-/** Moves to the start of an attribute. */
+/** Moves to the start of an attribute.
+ * 
+ * In addition, when the buffer is interleaved, subsequent calls to any
+ * of the put methods will cause the buffer's internal marker to jump
+ * to the next vertex of the same attribute.  This method should be
+ * used to update all vertices of a single attribute.  Normal behavior
+ * will be restored after the buffer is rewound or flushed.
+ */
 void VertexBuffer::seek(const string &name) {
 	
 	map<string,GLuint>::iterator it;
@@ -115,6 +125,9 @@ void VertexBuffer::seek(const string &name) {
 		e << "[VertexBufferObject] Attribute '" + name + "' not stored.";
 		throw e;
 	}
+	
+	// Enable skipping
+	skip = true;
 }
 
 // GETTERS AND SETTERS
