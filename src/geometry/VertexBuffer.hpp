@@ -56,6 +56,7 @@ public:
 	GLuint getCapacity() const;
 	GLsizei getFootprint() const;
 	GLuint getOffset(const string &name) const;
+	GLuint size() const;
 	GLuint getStride() const;
 private:
 	bool interleaved;                  // Whether attributes are mixed together

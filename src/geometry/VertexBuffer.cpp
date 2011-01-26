@@ -160,3 +160,8 @@ GLuint VertexBuffer::getOffset(const string &name) const {
 		throw e;
 	}
 }
+
+/** @return Number of vertices stored in the VBO. */
+GLuint VertexBuffer::size() const {
+	return (extent - current) / stride;
+}
