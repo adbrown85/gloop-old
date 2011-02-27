@@ -28,9 +28,7 @@ void Glyph::validate() {
 		throw e;
 	}
 	
-	if ((metrics.advance <= 0)
-			|| (metrics.height <= 0)
-			|| (metrics.width <= 0)) {
+	if (metrics.advance <= 0) {
 		BasicException e;
 		e << "[Glyph] Invalid measurements!";
 		throw e;
