@@ -14,6 +14,7 @@ GlyphRenderer::GlyphRenderer() {
 	uMvpMatrixIndex = glGetUniformLocation(program, "MVPMatrix");
 	aMcVertexIndex = glGetAttribLocation(program, "MCVertex");
 	aTexCoord0Index = glGetAttribLocation(program, "TexCoord0");
+	count = 0;
 }
 
 /** Destroys the glyph renderer. */
@@ -34,6 +35,7 @@ void GlyphRenderer::beginRendering(int width, int height) {
 	setMvpMatrix(width, height);
 	
 	vbo->bind();
+	vbo->rewind();
 	
 	glEnableVertexAttribArray(aMcVertexIndex);
 	glVertexAttribPointer(
@@ -70,7 +72,6 @@ void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	t = y + glyph->getAscent();
 	b = y - glyph->getDescent();
 	
-	vbo->rewind();
 	vbo->put(l, t);  // 1
 	vbo->put(gc.left, gc.top);
 	vbo->put(l, b);  // 2
@@ -83,16 +84,31 @@ void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	vbo->put(gc.right, gc.bottom);
 	vbo->put(r, t);  // 6
 	vbo->put(gc.right, gc.top);
-	vbo->flush();
 	
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	if (++count >= GLYPH_CAPACITY) {
+		flush();
+	}
 }
 
 /** Finishes rendering with the glyph renderer. */
 void GlyphRenderer::endRendering() {
 	
+	flush();
+	
 	glUseProgram(0);
 	vbo->unbind();
+}
+
+/** Forces all queued glyphs to be rendered. */
+void GlyphRenderer::flush() {
+	
+	// Push vertices to VBO and draw
+	vbo->flush();
+	glDrawArrays(GL_TRIANGLES, 0, count * VERTICES_PER_GLYPH);
+	
+	// Reset the VBO and glyph count
+	vbo->rewind();
+	count = 0;
 }
 
 //--------------------------------------------------------
@@ -106,7 +122,7 @@ VertexBuffer* GlyphRenderer::makeVertexBuffer() {
 	
 	vbb.addAttribute("MCVertex", 2);
 	vbb.addAttribute("TexCoord0", 2);
-	vbb.setCapacity(6);
+	vbb.setCapacity(VERTEX_CAPACITY);
 	vbb.setUsage(GL_STREAM_DRAW);
 	
 	return vbb.toVertexBuffer();

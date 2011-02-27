@@ -40,11 +40,17 @@ public:
 	virtual void beginRendering(int width, int height);
 	virtual void draw(Glyph *glyph, int x, int y, const GlyphCoords &gc);
 	virtual void endRendering();
+	virtual void flush();
 private:
 	VertexBuffer *vbo;
+	GLuint count;                           // Number of queued glyphs
 	GLuint program;
 	GLint uMvpMatrixIndex;
 	GLint aMcVertexIndex, aTexCoord0Index;
+// Constants
+	static const int GLYPH_CAPACITY = 100;
+	static const int VERTICES_PER_GLYPH = 6;
+	static const int VERTEX_CAPACITY = GLYPH_CAPACITY * VERTICES_PER_GLYPH;
 // Helpers
 	static VertexBuffer* makeVertexBuffer();
 	static GLuint makeShaderProgram();
