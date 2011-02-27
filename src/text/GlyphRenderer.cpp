@@ -70,19 +70,23 @@ void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	int t = y + glyph->getAscent();              // Top screen coordinate
 	int b = y - glyph->getDescent();             // Bottom screen coordinate
 	
-	vbo->put(l, t);  // 1
+	// Left triangle
+	vbo->put(l, t);
 	vbo->put(gc.left, gc.top);
-	vbo->put(l, b);  // 2
+	vbo->put(l, b);
 	vbo->put(gc.left, gc.bottom);
-	vbo->put(r, t);  // 3
-	vbo->put(gc.right, gc.top);
-	vbo->put(l, b);  // 4
-	vbo->put(gc.left, gc.bottom);
-	vbo->put(r, b);  // 5
-	vbo->put(gc.right, gc.bottom);
-	vbo->put(r, t);  // 6
+	vbo->put(r, t);
 	vbo->put(gc.right, gc.top);
 	
+	// Right triangle
+	vbo->put(l, b);
+	vbo->put(gc.left, gc.bottom);
+	vbo->put(r, b);
+	vbo->put(gc.right, gc.bottom);
+	vbo->put(r, t);
+	vbo->put(gc.right, gc.top);
+	
+	// Check if need to flush
 	if (++count >= GLYPH_CAPACITY) {
 		flush();
 	}
