@@ -6,7 +6,7 @@
  */
 #include "GlyphRenderer.hpp"
 
-/** Initialize the glyph renderer. */
+/** Initializes the glyph renderer. */
 GlyphRenderer::GlyphRenderer() {
 	
 	vbo = makeVertexBuffer();
@@ -16,14 +16,14 @@ GlyphRenderer::GlyphRenderer() {
 	aTexCoord0Index = glGetAttribLocation(program, "TexCoord0");
 }
 
-/** Destroy the glyph renderer. */
+/** Destroys the glyph renderer. */
 GlyphRenderer::~GlyphRenderer() {
 	if (vbo != NULL) {
 		delete vbo;
 	}
 }
 
-/** Initialize rendering with the glyph renderer.
+/** Initializes rendering with the glyph renderer.
  * 
  * @param width Width of the viewport
  * @param height Height of the viewport
@@ -54,7 +54,7 @@ void GlyphRenderer::beginRendering(int width, int height) {
 			(GLvoid*) vbo->getOffset("TexCoord0")); // offset
 }
 
-/** Draw a glyph at a position.
+/** Draws a glyph at a position.
  * 
  * @param glyph Visual representation of a character
  * @param x Position in X direction to render the glyph
@@ -88,7 +88,7 @@ void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-/** Finish rendering with the glyph renderer. */
+/** Finishes rendering with the glyph renderer. */
 void GlyphRenderer::endRendering() {
 	
 	glUseProgram(0);
@@ -99,7 +99,7 @@ void GlyphRenderer::endRendering() {
 // Helpers
 //
 
-/** @return VertexBuffer for a glyph renderer. */
+/** Returns vertex buffer object for a glyph renderer. */
 VertexBuffer* GlyphRenderer::makeVertexBuffer() {
 	
 	VertexBufferBuilder vbb;
@@ -112,7 +112,7 @@ VertexBuffer* GlyphRenderer::makeVertexBuffer() {
 	return vbb.toVertexBuffer();
 }
 
-/** @return Shader program for a glyph renderer. */
+/** Returns shader program for a glyph renderer. */
 GLuint GlyphRenderer::makeShaderProgram() {
 	
 	GLuint vs, fs;
@@ -123,7 +123,7 @@ GLuint GlyphRenderer::makeShaderProgram() {
 	return ProgramBuilder::build(vs, fs);
 }
 
-/** Change the modelview projection matrix in the program.
+/** Changes the modelview projection matrix in the program.
  * 
  * @param width Width of the viewport
  * @param height Height of the viewport
