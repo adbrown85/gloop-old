@@ -42,11 +42,12 @@ public:
 	virtual void endRendering();
 	virtual void flush();
 private:
-	VertexBuffer *vbo;
+	VertexBuffer *vbo;                      // Vertex buffer object
 	GLuint count;                           // Number of queued glyphs
-	GLuint program;
-	GLint uMvpMatrixIndex;
-	GLint aMcVertexIndex, aTexCoord0Index;
+	GLuint program;                         // Handle to shader program
+	GLint uMvpMatrixIndex;                  // Index of MVPMatrix uniform
+	GLint aMcVertexIndex;                   // Index of point attribute
+	GLint aTexCoord0Index;                  // Index of coord attribute
 // Constants
 	static const int GLYPH_CAPACITY = 100;
 	static const int VERTICES_PER_GLYPH = 6;
