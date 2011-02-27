@@ -51,8 +51,8 @@ void GlyphRendererTest::onCanvasDisplayEvent(Canvas &canvas) {
 	
 	glyphCoords = glyphTexture->find(glyphs[0]);
 	glyphRenderer->draw(glyphs[0], 200, 50, glyphCoords);
-//	glyphCoords = glyphTexture->find(glyphs[1]);
-//	glyphRenderer->draw(glyphs[1], 300, 50, glyphCoords);
+	glyphCoords = glyphTexture->find(glyphs[1]);
+	glyphRenderer->draw(glyphs[1], 300, 50, glyphCoords);
 	
 	glyphRenderer->endRendering();
 	
