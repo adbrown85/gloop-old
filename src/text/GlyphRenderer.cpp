@@ -65,12 +65,10 @@ void GlyphRenderer::beginRendering(int width, int height) {
  */
 void GlyphRenderer::draw(Glyph *glyph, int x, int y, const GlyphCoords &gc) {
 	
-	int l, r, t, b;
-	
-	l = x;
-	r = x + glyph->getWidth();
-	t = y + glyph->getAscent();
-	b = y - glyph->getDescent();
+	int l = x;                                   // Left screen coordinate
+	int r = x + glyph->getWidth();               // Right screen coordinate
+	int t = y + glyph->getAscent();              // Top screen coordinate
+	int b = y - glyph->getDescent();             // Bottom screen coordinate
 	
 	vbo->put(l, t);  // 1
 	vbo->put(gc.left, gc.top);
