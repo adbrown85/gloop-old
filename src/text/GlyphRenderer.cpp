@@ -102,6 +102,11 @@ void GlyphRenderer::endRendering() {
 /** Forces all queued glyphs to be rendered. */
 void GlyphRenderer::flush() {
 	
+	// Do nothing if no glyphs queued
+	if (count == 0) {
+		return;
+	}
+	
 	// Push vertices to VBO and draw
 	vbo->flush();
 	glDrawArrays(GL_TRIANGLES, 0, count * VERTICES_PER_GLYPH);
