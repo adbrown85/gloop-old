@@ -17,7 +17,22 @@
 #include "ProgramBuilder.hpp"
 
 
-/** @brief Draw glyphs to the screen. */
+/** @brief Component for drawing glyphs.
+ * 
+ * To use a glyph renderer, first create one.  Then call
+ * beginRendering() and start drawing glyphs using draw().  When all
+ * the glyphs have been drawn, call endRendering().
+ * 
+ * To increase performance, <i>GlyphRenderer</i> buffers the glyphs
+ * that are drawn with it.  For that reason nothing is actually
+ * rendered until endRendering() or flush() is called.
+ * 
+ * Because quads are no longer supported directly by OpenGL, this
+ * implementation represents glyphs as two triangles.  Therefore each
+ * glyph has six vertices.  It then follows that when we do flush
+ * that we must pass the number of queued glyphs multiplied by six to
+ * OpenGL.
+ */
 class GlyphRenderer {
 public:
 	GlyphRenderer();
