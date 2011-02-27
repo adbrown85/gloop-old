@@ -77,7 +77,7 @@ void GlyphPacker::prepare() {
 void GlyphPacker::fill() {
 	
 	int x, y;
-	char character = '!';
+	char character = ' ';
 	
 	x = findStartingX();
 	y = findStartingY();
